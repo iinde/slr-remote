@@ -1,0 +1,793 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="666pt" viewBox="0 0 864 666" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <title>SLR Remote: wiring</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>SLR Remote: wiring</dc:title>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Aaron Phull</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 666 
+L 864 666 
+L 864 0 
+L 0 0 
+z
+" style="fill: #f6f7f8"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 38.88 144 
+L 418.32 144 
+Q 424.8 144 424.8 150.48 
+L 424.8 504.72 
+Q 424.8 511.2 418.32 511.2 
+L 38.88 511.2 
+Q 32.4 511.2 32.4 504.72 
+L 32.4 150.48 
+Q 32.4 144 38.88 144 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ffffff; stroke: #d3d6da; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 445.68 144 
+L 825.12 144 
+Q 831.6 144 831.6 150.48 
+L 831.6 504.72 
+Q 831.6 511.2 825.12 511.2 
+L 445.68 511.2 
+Q 439.2 511.2 439.2 504.72 
+L 439.2 150.48 
+Q 439.2 144 445.68 144 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ffffff; stroke: #d3d6da; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 32.4 33.12 
+L 52.56 33.12 
+L 52.56 36 
+L 32.4 36 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ff6410"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 199.8 269.64 
+L 199.8 253.8 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #23272b; stroke-width: 3"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 142.2 426.6 
+L 170.64 426.6 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #ff6410; stroke-width: 3"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 142.2 437.4 
+L 170.64 437.4 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #23272b; stroke-width: 3"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 286.56 324 
+L 315 324 
+L 315 333.36 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #868a8f; stroke-width: 3"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 286.56 356.4 
+L 315 356.4 
+L 315 347.04 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #868a8f; stroke-width: 3"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 606.6 269.64 
+L 606.6 253.8 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #23272b; stroke-width: 3"/>
+   </g>
+   <g id="line2d_7">
+    <path d="M 549 426.6 
+L 577.44 426.6 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #ff6410; stroke-width: 3"/>
+   </g>
+   <g id="line2d_8">
+    <path d="M 549 437.4 
+L 577.44 437.4 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #23272b; stroke-width: 3"/>
+   </g>
+   <g id="line2d_9">
+    <path d="M 693.36 309.6 
+L 720 309.6 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #868a8f; stroke-width: 7"/>
+   </g>
+   <g id="line2d_10">
+    <path d="M 693.36 392.4 
+L 754.2 392.4 
+L 754.2 402.48 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #ff6410; stroke-width: 3"/>
+   </g>
+   <g id="line2d_11">
+    <path d="M 693.36 428.4 
+L 754.2 428.4 
+L 754.2 418.32 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #23272b; stroke-width: 3"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 32.4 537.84 
+L 48.24 537.84 
+L 48.24 540 
+L 32.4 540 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 304.8 537.84 
+L 320.64 537.84 
+L 320.64 540 
+L 304.8 540 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 577.2 537.84 
+L 593.04 537.84 
+L 593.04 540 
+L 577.2 540 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 182.52 273.6 
+L 274.68 273.6 
+Q 282.6 273.6 282.6 281.52 
+L 282.6 456.48 
+Q 282.6 464.4 274.68 464.4 
+L 182.52 464.4 
+Q 174.6 464.4 174.6 456.48 
+L 174.6 281.52 
+Q 174.6 273.6 182.52 273.6 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #eceef0; stroke: #23272b; stroke-width: 2.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 193.68 244.08 
+L 205.92 244.08 
+L 205.92 254.88 
+L 193.68 254.88 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #868a8f"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 199.08 197.28 
+L 200.52 197.28 
+Q 208.44 197.28 208.44 205.2 
+L 208.44 236.88 
+Q 208.44 244.8 200.52 244.8 
+L 199.08 244.8 
+Q 191.16 244.8 191.16 236.88 
+L 191.16 205.2 
+Q 191.16 197.28 199.08 197.28 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 57.24 409.68 
+L 137.16 409.68 
+Q 142.2 409.68 142.2 414.72 
+L 142.2 449.28 
+Q 142.2 454.32 137.16 454.32 
+L 57.24 454.32 
+Q 52.2 454.32 52.2 449.28 
+L 52.2 414.72 
+Q 52.2 409.68 57.24 409.68 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ffffff; stroke: #23272b; stroke-width: 2.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_12">
+    <path d="M 315 347.04 
+L 322.92 334.8 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #23272b; stroke-width: 3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 589.32 273.6 
+L 681.48 273.6 
+Q 689.4 273.6 689.4 281.52 
+L 689.4 456.48 
+Q 689.4 464.4 681.48 464.4 
+L 589.32 464.4 
+Q 581.4 464.4 581.4 456.48 
+L 581.4 281.52 
+Q 581.4 273.6 589.32 273.6 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #eceef0; stroke: #23272b; stroke-width: 2.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 600.48 244.08 
+L 612.72 244.08 
+L 612.72 254.88 
+L 600.48 254.88 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #868a8f"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 605.88 197.28 
+L 607.32 197.28 
+Q 615.24 197.28 615.24 205.2 
+L 615.24 236.88 
+Q 615.24 244.8 607.32 244.8 
+L 605.88 244.8 
+Q 597.96 244.8 597.96 236.88 
+L 597.96 205.2 
+Q 597.96 197.28 605.88 197.28 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 464.04 409.68 
+L 543.96 409.68 
+Q 549 409.68 549 414.72 
+L 549 449.28 
+Q 549 454.32 543.96 454.32 
+L 464.04 454.32 
+Q 459 454.32 459 449.28 
+L 459 414.72 
+Q 459 409.68 464.04 409.68 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ffffff; stroke: #23272b; stroke-width: 2.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 725.04 287.28 
+L 812.16 287.28 
+Q 817.2 287.28 817.2 292.32 
+L 817.2 326.88 
+Q 817.2 331.92 812.16 331.92 
+L 725.04 331.92 
+Q 720 331.92 720 326.88 
+L 720 292.32 
+Q 720 287.28 725.04 287.28 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #f6f7f8; stroke-dasharray: 8,6.4; stroke-dashoffset: 0; stroke: #868a8f; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_13">
+    <path d="M 766.44 408.24 
+L 776.566455 403.176773 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #ff6410; stroke-width: 2"/>
+   </g>
+   <g id="line2d_14">
+    <path d="M 766.44 416.16 
+L 776.566455 411.096773 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #ff6410; stroke-width: 2"/>
+   </g>
+   <g id="line2d_15">
+    <path d="M 32.4 627.84 
+L 831.6 627.84 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #d3d6da; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 193.68 302.4 
+L 263.52 302.4 
+Q 266.4 302.4 266.4 305.28 
+L 266.4 335.52 
+Q 266.4 338.4 263.52 338.4 
+L 193.68 338.4 
+Q 190.8 338.4 190.8 335.52 
+L 190.8 305.28 
+Q 190.8 302.4 193.68 302.4 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #0e0f11"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 206.28 358.56 
+C 209.526086 358.56 212.639658 359.849684 214.934987 362.145013 
+C 217.230316 364.440342 218.52 367.553914 218.52 370.8 
+C 218.52 374.046086 217.230316 377.159658 214.934987 379.454987 
+C 212.639658 381.750316 209.526086 383.04 206.28 383.04 
+C 203.033914 383.04 199.920342 381.750316 197.625013 379.454987 
+C 195.329684 377.159658 194.04 374.046086 194.04 370.8 
+C 194.04 367.553914 195.329684 364.440342 197.625013 362.145013 
+C 199.920342 359.849684 203.033914 358.56 206.28 358.56 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ffffff; stroke: #d3d6da; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 250.92 358.56 
+C 254.166086 358.56 257.279658 359.849684 259.574987 362.145013 
+C 261.870316 364.440342 263.16 367.553914 263.16 370.8 
+C 263.16 374.046086 261.870316 377.159658 259.574987 379.454987 
+C 257.279658 381.750316 254.166086 383.04 250.92 383.04 
+C 247.673914 383.04 244.560342 381.750316 242.265013 379.454987 
+C 239.969684 377.159658 238.68 374.046086 238.68 370.8 
+C 238.68 367.553914 239.969684 364.440342 242.265013 362.145013 
+C 244.560342 359.849684 247.673914 358.56 250.92 358.56 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ffffff; stroke: #d3d6da; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 315 331.2 
+C 315.572839 331.2 316.122293 331.427591 316.527351 331.832649 
+C 316.932409 332.237707 317.16 332.787161 317.16 333.36 
+C 317.16 333.932839 316.932409 334.482293 316.527351 334.887351 
+C 316.122293 335.292409 315.572839 335.52 315 335.52 
+C 314.427161 335.52 313.877707 335.292409 313.472649 334.887351 
+C 313.067591 334.482293 312.84 333.932839 312.84 333.36 
+C 312.84 332.787161 313.067591 332.237707 313.472649 331.832649 
+C 313.877707 331.427591 314.427161 331.2 315 331.2 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ffffff; stroke: #23272b; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 315 344.88 
+C 315.572839 344.88 316.122293 345.107591 316.527351 345.512649 
+C 316.932409 345.917707 317.16 346.467161 317.16 347.04 
+C 317.16 347.612839 316.932409 348.162293 316.527351 348.567351 
+C 316.122293 348.972409 315.572839 349.2 315 349.2 
+C 314.427161 349.2 313.877707 348.972409 313.472649 348.567351 
+C 313.067591 348.162293 312.84 347.612839 312.84 347.04 
+C 312.84 346.467161 313.067591 345.917707 313.472649 345.512649 
+C 313.877707 345.107591 314.427161 344.88 315 344.88 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ffffff; stroke: #23272b; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_22">
+    <path d="M 600.48 302.4 
+L 670.32 302.4 
+Q 673.2 302.4 673.2 305.28 
+L 673.2 335.52 
+Q 673.2 338.4 670.32 338.4 
+L 600.48 338.4 
+Q 597.6 338.4 597.6 335.52 
+L 597.6 305.28 
+Q 597.6 302.4 600.48 302.4 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #0e0f11"/>
+   </g>
+   <g id="patch_23">
+    <path d="M 613.08 358.56 
+C 616.326086 358.56 619.439658 359.849684 621.734987 362.145013 
+C 624.030316 364.440342 625.32 367.553914 625.32 370.8 
+C 625.32 374.046086 624.030316 377.159658 621.734987 379.454987 
+C 619.439658 381.750316 616.326086 383.04 613.08 383.04 
+C 609.833914 383.04 606.720342 381.750316 604.425013 379.454987 
+C 602.129684 377.159658 600.84 374.046086 600.84 370.8 
+C 600.84 367.553914 602.129684 364.440342 604.425013 362.145013 
+C 606.720342 359.849684 609.833914 358.56 613.08 358.56 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ffffff; stroke: #d3d6da; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_24">
+    <path d="M 657.72 358.56 
+C 660.966086 358.56 664.079658 359.849684 666.374987 362.145013 
+C 668.670316 364.440342 669.96 367.553914 669.96 370.8 
+C 669.96 374.046086 668.670316 377.159658 666.374987 379.454987 
+C 664.079658 381.750316 660.966086 383.04 657.72 383.04 
+C 654.473914 383.04 651.360342 381.750316 649.065013 379.454987 
+C 646.769684 377.159658 645.48 374.046086 645.48 370.8 
+C 645.48 367.553914 646.769684 364.440342 649.065013 362.145013 
+C 651.360342 359.849684 654.473914 358.56 657.72 358.56 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ffffff; stroke: #d3d6da; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_25">
+    <path d="M 745.56 402.48 
+L 762.84 402.48 
+L 754.2 417.6 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ff6410; stroke: #ff6410; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_16">
+    <path d="M 745.56 418.32 
+L 762.84 418.32 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #23272b; stroke-width: 3.4"/>
+   </g>
+   <g id="patch_26">
+    <path d="M 779.4 401.76 
+L 776.938362 404.861925 
+L 775.441477 401.868155 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ff6410; stroke: #ff6410; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_27">
+    <path d="M 779.4 409.68 
+L 776.938362 412.781925 
+L 775.441477 409.788155 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ff6410; stroke: #ff6410; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 9.72px; font-family: 'DIN Alternate'; text-anchor: start; fill: #23272b" x="59.76" y="37.8" transform="rotate(-0 59.76 37.8)">SLR REMOTE</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 9.72px; font-family: 'DIN Alternate'; text-anchor: start; fill: #868a8f" x="121.252388" y="37.8" transform="rotate(-0 121.252388 37.8)">SUPER LONG RANGE REMOTE</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 28.08px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="31.32" y="73.8" transform="rotate(-0 31.32 73.8)">What plugs into what</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 11.88px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="96.48" transform="rotate(-0 32.4 96.48)">Each unit is one Heltec WiFi LoRa 32 V4 board with a battery and an antenna. The camera unit can also carry a GPS module and a tally</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 11.88px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="112.8744" transform="rotate(-0 32.4 112.8744)">LED (a small light that shows when a shot fires).</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 12.96px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="45.36" y="166.32" transform="rotate(-0 45.36 166.32)">HANDHELD</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="45.36" y="180.72" transform="rotate(-0 45.36 180.72)">battery and antenna, nothing else to wire</text>
+   </g>
+   <g id="patch_28">
+    <path d="M 206.28 362.52 
+C 208.475882 362.52 210.582121 363.392433 212.134844 364.945156 
+C 213.687567 366.497879 214.56 368.604118 214.56 370.8 
+C 214.56 372.995882 213.687567 375.102121 212.134844 376.654844 
+C 210.582121 378.207567 208.475882 379.08 206.28 379.08 
+C 204.084118 379.08 201.977879 378.207567 200.425156 376.654844 
+C 198.872433 375.102121 198 372.995882 198 370.8 
+C 198 368.604118 198.872433 366.497879 200.425156 364.945156 
+C 201.977879 363.392433 204.084118 362.52 206.28 362.52 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_29">
+    <path d="M 250.92 363.24 
+C 252.924935 363.24 254.848024 364.036569 256.265727 365.454273 
+C 257.683431 366.871976 258.48 368.795065 258.48 370.8 
+C 258.48 372.804935 257.683431 374.728024 256.265727 376.145727 
+C 254.848024 377.563431 252.924935 378.36 250.92 378.36 
+C 248.915065 378.36 246.991976 377.563431 245.574273 376.145727 
+C 244.156569 374.728024 243.36 372.804935 243.36 370.8 
+C 243.36 368.795065 244.156569 366.871976 245.574273 365.454273 
+C 246.991976 364.036569 248.915065 363.24 250.92 363.24 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #868a8f"/>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: end; fill: #0e0f11" x="181.08" y="218.16" transform="rotate(-0 181.08 218.16)">868 MHz antenna</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="181.08" y="229.68" transform="rotate(-0 181.08 229.68)">on the case's SMA connector,</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="181.08" y="240.12" transform="rotate(-0 181.08 240.12)">short SMA lead to the board</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="97.2" y="470.88" transform="rotate(-0 97.2 470.88)">to the board's battery</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="97.2" y="481.32" transform="rotate(-0 97.2 481.32)">connector (SH1.25 2-pin)</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: middle; fill: #0e0f11" x="228.6" y="484.56" transform="rotate(-0 228.6 484.56)">USB-C</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="228.6" y="495.72" transform="rotate(-0 228.6 495.72)">firmware and console</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next Medium'; text-anchor: start; fill: #23272b" x="289.8" y="318.24" transform="rotate(-0 289.8 318.24)">GPIO6</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next Medium'; text-anchor: start; fill: #23272b" x="289.8" y="369.36" transform="rotate(-0 289.8 369.36)">GND</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="329.4" y="331.92" transform="rotate(-0 329.4 331.92)">Second button</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="329.4" y="343.44" transform="rotate(-0 329.4 343.44)">optional: a switch from</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="329.4" y="353.88" transform="rotate(-0 329.4 353.88)">GPIO6 to ground</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: end; fill: #0e0f11" x="133.56" y="345.6" transform="rotate(-0 133.56 345.6)">The shoot button</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="133.56" y="356.76" transform="rotate(-0 133.56 356.76)">is the board's own PRG</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="133.56" y="367.2" transform="rotate(-0 133.56 367.2)">button (GPIO0)</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 12.96px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="452.16" y="166.32" transform="rotate(-0 452.16 166.32)">CAMERA UNIT</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="452.16" y="180.72" transform="rotate(-0 452.16 180.72)">nothing plugs into the camera: that hop is Bluetooth</text>
+   </g>
+   <g id="patch_30">
+    <path d="M 613.08 362.52 
+C 615.275882 362.52 617.382121 363.392433 618.934844 364.945156 
+C 620.487567 366.497879 621.36 368.604118 621.36 370.8 
+C 621.36 372.995882 620.487567 375.102121 618.934844 376.654844 
+C 617.382121 378.207567 615.275882 379.08 613.08 379.08 
+C 610.884118 379.08 608.777879 378.207567 607.225156 376.654844 
+C 605.672433 375.102121 604.8 372.995882 604.8 370.8 
+C 604.8 368.604118 605.672433 366.497879 607.225156 364.945156 
+C 608.777879 363.392433 610.884118 362.52 613.08 362.52 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_31">
+    <path d="M 657.72 363.24 
+C 659.724935 363.24 661.648024 364.036569 663.065727 365.454273 
+C 664.483431 366.871976 665.28 368.795065 665.28 370.8 
+C 665.28 372.804935 664.483431 374.728024 663.065727 376.145727 
+C 661.648024 377.563431 659.724935 378.36 657.72 378.36 
+C 655.715065 378.36 653.791976 377.563431 652.374273 376.145727 
+C 650.956569 374.728024 650.16 372.804935 650.16 370.8 
+C 650.16 368.795065 650.956569 366.871976 652.374273 365.454273 
+C 653.791976 364.036569 655.715065 363.24 657.72 363.24 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #868a8f"/>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: end; fill: #0e0f11" x="587.88" y="218.16" transform="rotate(-0 587.88 218.16)">868 MHz antenna</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="587.88" y="229.68" transform="rotate(-0 587.88 229.68)">on the case's SMA connector,</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="587.88" y="240.12" transform="rotate(-0 587.88 240.12)">short SMA lead to the board</text>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="504" y="470.88" transform="rotate(-0 504 470.88)">to the board's battery</text>
+   </g>
+   <g id="text_29">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="504" y="481.32" transform="rotate(-0 504 481.32)">connector (SH1.25 2-pin)</text>
+   </g>
+   <g id="text_30">
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: middle; fill: #0e0f11" x="635.4" y="484.56" transform="rotate(-0 635.4 484.56)">USB-C</text>
+   </g>
+   <g id="text_31">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="635.4" y="495.72" transform="rotate(-0 635.4 495.72)">firmware and console</text>
+   </g>
+   <g id="text_32">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="720" y="347.04" transform="rotate(-0 720 347.04)">plugs into the board's</text>
+   </g>
+   <g id="text_33">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="720" y="357.48" transform="rotate(-0 720 357.48)">GNSS socket (8-pin)</text>
+   </g>
+   <g id="patch_32">
+    <path d="M 708.84 388.08 
+L 727.56 388.08 
+Q 729 388.08 729 389.52 
+L 729 395.28 
+Q 729 396.72 727.56 396.72 
+L 708.84 396.72 
+Q 707.4 396.72 707.4 395.28 
+L 707.4 389.52 
+Q 707.4 388.08 708.84 388.08 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ffffff; stroke: #23272b; stroke-width: 2.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_34">
+    <text style="font-size: 7.56px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="718.2" y="407.52" transform="rotate(-0 718.2 407.52)">220 to 330</text>
+   </g>
+   <g id="text_35">
+    <text style="font-size: 7.56px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="718.2" y="416.52" transform="rotate(-0 718.2 416.52)">ohm resistor</text>
+   </g>
+   <g id="text_36">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next Medium'; text-anchor: start; fill: #23272b" x="696.6" y="384.48" transform="rotate(-0 696.6 384.48)">GPIO3  (+)</text>
+   </g>
+   <g id="text_37">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next Medium'; text-anchor: start; fill: #23272b" x="696.6" y="441.36" transform="rotate(-0 696.6 441.36)">GPIO4  (held at 0 V)</text>
+   </g>
+   <g id="text_38">
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="786.6" y="405.36" transform="rotate(-0 786.6 405.36)">Tally LED</text>
+   </g>
+   <g id="text_39">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="786.6" y="416.88" transform="rotate(-0 786.6 416.88)">optional</text>
+   </g>
+   <g id="text_40">
+    <text style="font-size: 11.16px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="32.4" y="557.28" transform="rotate(-0 32.4 557.28)">Antenna on first</text>
+   </g>
+   <g id="text_41">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="573.84" transform="rotate(-0 32.4 573.84)">Screw the antenna on before you power a board: transmitting</text>
+   </g>
+   <g id="text_42">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="586.26" transform="rotate(-0 32.4 586.26)">without one can kill the amplifier. The firmware helps by</text>
+   </g>
+   <g id="text_43">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="598.68" transform="rotate(-0 32.4 598.68)">staying off the air for 2 seconds after power-on and showing</text>
+   </g>
+   <g id="text_44">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="611.1" transform="rotate(-0 32.4 611.1)">ANTENNA ON?</text>
+   </g>
+   <g id="text_45">
+    <text style="font-size: 11.16px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="304.8" y="557.28" transform="rotate(-0 304.8 557.28)">Tally LED on two pins</text>
+   </g>
+   <g id="text_46">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="304.8" y="573.84" transform="rotate(-0 304.8 573.84)">Positive leg through a 220 to 330 ohm resistor to GPIO3, the</text>
+   </g>
+   <g id="text_47">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="304.8" y="586.26" transform="rotate(-0 304.8 586.26)">other leg to GPIO4, which the firmware holds at 0 V as ground.</text>
+   </g>
+   <g id="text_48">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="304.8" y="598.68" transform="rotate(-0 304.8 598.68)">Pick GPIO3+4 under Tally LED in the setup menu.</text>
+   </g>
+   <g id="text_49">
+    <text style="font-size: 11.16px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="577.2" y="557.28" transform="rotate(-0 577.2 557.28)">Or use one pin</text>
+   </g>
+   <g id="text_50">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="577.2" y="573.84" transform="rotate(-0 577.2 573.84)">The tally LED can also run from GPIO3, GPIO4 or GPIO6</text>
+   </g>
+   <g id="text_51">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="577.2" y="586.26" transform="rotate(-0 577.2 586.26)">alone, with a 220 to 330 ohm resistor to ground. Check the pin</text>
+   </g>
+   <g id="text_52">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="577.2" y="598.68" transform="rotate(-0 577.2 598.68)">labels printed on your board before soldering.</text>
+   </g>
+   <g id="text_53">
+    <text style="font-size: 9px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #23272b" x="32.4" y="643.68" transform="rotate(-0 32.4 643.68)">SLR Remote</text>
+   </g>
+   <g id="text_54">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="88.381406" y="643.68" transform="rotate(-0 88.381406 643.68)">by Aaron Phull</text>
+   </g>
+   <g id="text_55">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="831.6" y="643.68" transform="rotate(-0 831.6 643.68)">The GPS module talks to the board on GPIO38 and GPIO39. The firmware sets all of this up.</text>
+   </g>
+   <g id="text_56">
+    <text style="font-size: 8.28px; font-family: 'DIN Alternate'; text-anchor: middle; fill: #23272b" x="228.6" y="291.6" transform="rotate(-0 228.6 291.6)">HELTEC V4 BOARD</text>
+   </g>
+   <g id="text_57">
+    <text style="font-size: 12.96px; font-family: 'DIN Alternate'; text-anchor: middle; fill: #eceef0" x="228.6" y="325.415039" transform="rotate(-0 228.6 325.415039)">READY</text>
+   </g>
+   <g id="text_58">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next Medium'; text-anchor: middle; fill: #23272b" x="206.28" y="394.2" transform="rotate(-0 206.28 394.2)">PRG</text>
+   </g>
+   <g id="text_59">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next Medium'; text-anchor: middle; fill: #23272b" x="250.92" y="394.2" transform="rotate(-0 250.92 394.2)">RST</text>
+   </g>
+   <g id="patch_33">
+    <path d="M 191.88 269.64 
+L 207.72 269.64 
+L 207.72 277.56 
+L 191.88 277.56 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_34">
+    <path d="M 170.64 420.48 
+L 178.56 420.48 
+L 178.56 443.52 
+L 170.64 443.52 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="text_60">
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: middle; fill: #0e0f11" x="97.2" y="430.56" transform="rotate(-0 97.2 430.56)">LiPo cell</text>
+   </g>
+   <g id="text_61">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="97.2" y="442.8" transform="rotate(-0 97.2 442.8)">LP603449</text>
+   </g>
+   <g id="patch_35">
+    <path d="M 212.04 461.16 
+L 245.16 461.16 
+L 245.16 467.64 
+L 212.04 467.64 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_36">
+    <path d="M 278.64 316.08 
+L 286.56 316.08 
+L 286.56 331.92 
+L 278.64 331.92 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_37">
+    <path d="M 278.64 348.48 
+L 286.56 348.48 
+L 286.56 364.32 
+L 278.64 364.32 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="text_62">
+    <text style="font-size: 8.28px; font-family: 'DIN Alternate'; text-anchor: middle; fill: #23272b" x="635.4" y="291.6" transform="rotate(-0 635.4 291.6)">HELTEC V4 BOARD</text>
+   </g>
+   <g id="text_63">
+    <text style="font-size: 12.96px; font-family: 'DIN Alternate'; text-anchor: middle; fill: #eceef0" x="635.4" y="325.415039" transform="rotate(-0 635.4 325.415039)">READY</text>
+   </g>
+   <g id="text_64">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next Medium'; text-anchor: middle; fill: #23272b" x="613.08" y="394.2" transform="rotate(-0 613.08 394.2)">PRG</text>
+   </g>
+   <g id="text_65">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next Medium'; text-anchor: middle; fill: #23272b" x="657.72" y="394.2" transform="rotate(-0 657.72 394.2)">RST</text>
+   </g>
+   <g id="patch_38">
+    <path d="M 598.68 269.64 
+L 614.52 269.64 
+L 614.52 277.56 
+L 598.68 277.56 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_39">
+    <path d="M 577.44 420.48 
+L 585.36 420.48 
+L 585.36 443.52 
+L 577.44 443.52 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="text_66">
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: middle; fill: #0e0f11" x="504" y="430.56" transform="rotate(-0 504 430.56)">LiPo cell</text>
+   </g>
+   <g id="text_67">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="504" y="442.8" transform="rotate(-0 504 442.8)">LP603449</text>
+   </g>
+   <g id="patch_40">
+    <path d="M 618.84 461.16 
+L 651.96 461.16 
+L 651.96 467.64 
+L 618.84 467.64 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_41">
+    <path d="M 685.44 297 
+L 693.36 297 
+L 693.36 322.2 
+L 685.44 322.2 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="text_68">
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: middle; fill: #0e0f11" x="768.6" y="308.16" transform="rotate(-0 768.6 308.16)">L76K GPS module</text>
+   </g>
+   <g id="text_69">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="768.6" y="320.4" transform="rotate(-0 768.6 320.4)">optional</text>
+   </g>
+   <g id="patch_42">
+    <path d="M 685.44 384.48 
+L 693.36 384.48 
+L 693.36 400.32 
+L 685.44 400.32 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_43">
+    <path d="M 685.44 420.48 
+L 693.36 420.48 
+L 693.36 436.32 
+L 685.44 436.32 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #23272b"/>
+   </g>
+   <g id="line2d_17">
+    <path d="M 206.28 356.4 
+L 206.28 347.4 
+L 138.6 347.4 
+" clip-path="url(#p35c425ba33)" style="fill: none; stroke: #868a8f; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_44">
+    <path d="M 206.28 368.64 
+C 206.852839 368.64 207.402293 368.867591 207.807351 369.272649 
+C 208.212409 369.677707 208.44 370.227161 208.44 370.8 
+C 208.44 371.372839 208.212409 371.922293 207.807351 372.327351 
+C 207.402293 372.732409 206.852839 372.96 206.28 372.96 
+C 205.707161 372.96 205.157707 372.732409 204.752649 372.327351 
+C 204.347591 371.922293 204.12 371.372839 204.12 370.8 
+C 204.12 370.227161 204.347591 369.677707 204.752649 369.272649 
+C 205.157707 368.867591 205.707161 368.64 206.28 368.64 
+z
+" clip-path="url(#p35c425ba33)" style="fill: #ffffff; stroke: #23272b; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p35c425ba33">
+   <rect x="0" y="0" width="864" height="666"/>
+  </clipPath>
+ </defs>
+</svg>

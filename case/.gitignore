@@ -1,0 +1,4 @@
+slicer_check/
+__pycache__/
+validation.json
+reference_views/

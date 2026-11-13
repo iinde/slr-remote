@@ -1,0 +1,4 @@
+Meshtastic Heltec V4 Miniworks case by Chem_Kid on Thingiverse: https://www.thingiverse.com/thing:7367243
+
+Summary:
+A very compact and simple case for the Heltec V4 Build, including battery and gps antenna. Uses 4 M3 Screws.Kit I used with battery: https://muzi.works/products/heltec-v4-kit?_pos=3&amp;_sid=27bc9204e&amp;_ss=rBattery Alone: https://muzi.works/products/h1-batteryGPS Module: https://muzi.works/products/heltec-gps-module-for-mesh-node-t114?_pos=6&amp;_sid=27bc9204e&amp;_ss=rWorks well in FDM Printing, but for extremely transparent parts, SLA is required. (Elegoo Mars 2 Pro, Sirayatech Clear Resin for best strength and transparency (Do not use brittle water-washable resins). After the part has been cleaned and cured, brush on a layer of resin and cure with a UV light or the sun to get the most transparency.)

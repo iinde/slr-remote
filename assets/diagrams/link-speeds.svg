@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="612pt" viewBox="0 0 864 612" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <title>SLR Remote: link-speeds</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>SLR Remote: link-speeds</dc:title>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Aaron Phull</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 612 
+L 864 612 
+L 864 0 
+L 0 0 
+z
+" style="fill: #f6f7f8"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 38.16 180.72 
+L 825.84 180.72 
+Q 831.6 180.72 831.6 186.48 
+L 831.6 308.88 
+Q 831.6 314.64 825.84 314.64 
+L 38.16 314.64 
+Q 32.4 314.64 32.4 308.88 
+L 32.4 186.48 
+Q 32.4 180.72 38.16 180.72 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #ffe9dc; opacity: 0.75"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 38.16 318.96 
+L 825.84 318.96 
+Q 831.6 318.96 831.6 324.72 
+L 831.6 447.12 
+Q 831.6 452.88 825.84 452.88 
+L 38.16 452.88 
+Q 32.4 452.88 32.4 447.12 
+L 32.4 324.72 
+Q 32.4 318.96 38.16 318.96 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #eceef0"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 32.4 33.12 
+L 52.56 33.12 
+L 52.56 36 
+L 32.4 36 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 309.6 151.2 
+L 318.96 151.2 
+L 318.96 158.4 
+L 309.6 158.4 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 388.8 151.2 
+L 398.16 151.2 
+L 398.16 158.4 
+L 388.8 158.4 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #868a8f"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 32.4 478.08 
+L 48.24 478.08 
+L 48.24 480.24 
+L 32.4 480.24 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 304.8 478.08 
+L 320.64 478.08 
+L 320.64 480.24 
+L 304.8 480.24 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 577.2 478.08 
+L 593.04 478.08 
+L 593.04 480.24 
+L 577.2 480.24 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 158.4 190.8 
+L 166.350652 190.8 
+L 166.350652 200.16 
+L 158.4 200.16 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 158.4 203.04 
+L 170.325977 203.04 
+L 170.325977 212.4 
+L 158.4 212.4 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #868a8f"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 547.2 196.92 
+L 556.045443 196.92 
+L 556.045443 206.28 
+L 547.2 206.28 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 158.4 236.88 
+L 173.01894 236.88 
+L 173.01894 246.24 
+L 158.4 246.24 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 158.4 249.12 
+L 180.841355 249.12 
+L 180.841355 258.48 
+L 158.4 258.48 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #868a8f"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 547.2 243 
+L 563.69247 243 
+L 563.69247 252.36 
+L 547.2 252.36 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 158.4 282.96 
+L 184.816681 282.96 
+L 184.816681 292.32 
+L 158.4 292.32 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 158.4 295.2 
+L 198.025022 295.2 
+L 198.025022 304.56 
+L 158.4 304.56 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #868a8f"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 547.2 289.08 
+L 576.589696 289.08 
+L 576.589696 298.44 
+L 547.2 298.44 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 158.4 329.04 
+L 211.233362 329.04 
+L 211.233362 338.4 
+L 158.4 338.4 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 158.4 341.28 
+L 232.264118 341.28 
+L 232.264118 350.64 
+L 158.4 350.64 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #868a8f"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 547.2 335.16 
+L 601.242801 335.16 
+L 601.242801 344.52 
+L 547.2 344.52 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_22">
+    <path d="M 158.4 375.12 
+L 264.066725 375.12 
+L 264.066725 384.48 
+L 158.4 384.48 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_23">
+    <path d="M 158.4 387.36 
+L 316.515378 387.36 
+L 316.515378 396.72 
+L 158.4 396.72 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #868a8f"/>
+   </g>
+   <g id="patch_24">
+    <path d="M 547.2 381.24 
+L 664.587583 381.24 
+L 664.587583 390.6 
+L 547.2 390.6 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #23272b"/>
+   </g>
+   <g id="patch_25">
+    <path d="M 158.4 421.2 
+L 348.574457 421.2 
+L 348.574457 430.56 
+L 158.4 430.56 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #ff6410"/>
+   </g>
+   <g id="patch_26">
+    <path d="M 158.4 433.44 
+L 453.6 433.44 
+L 453.6 442.8 
+L 158.4 442.8 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #868a8f"/>
+   </g>
+   <g id="patch_27">
+    <path d="M 547.2 427.32 
+L 763.2 427.32 
+L 763.2 436.68 
+L 547.2 436.68 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #23272b"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 32.4 573.84 
+L 831.6 573.84 
+" clip-path="url(#pdbcc498367)" style="fill: none; stroke: #d3d6da; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_28">
+    <path d="M 45.36 234 
+L 100.8 234 
+Q 103.68 234 103.68 236.88 
+L 103.68 258.48 
+Q 103.68 261.36 100.8 261.36 
+L 45.36 261.36 
+Q 42.48 261.36 42.48 258.48 
+L 42.48 236.88 
+Q 42.48 234 45.36 234 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #0e0f11"/>
+   </g>
+   <g id="patch_29">
+    <path d="M 45.36 372.24 
+L 100.8 372.24 
+Q 103.68 372.24 103.68 375.12 
+L 103.68 396.72 
+Q 103.68 399.6 100.8 399.6 
+L 45.36 399.6 
+Q 42.48 399.6 42.48 396.72 
+L 42.48 375.12 
+Q 42.48 372.24 45.36 372.24 
+z
+" clip-path="url(#pdbcc498367)" style="fill: #0e0f11"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 158.4 183.6 
+L 158.4 450 
+" clip-path="url(#pdbcc498367)" style="fill: none; stroke: #23272b; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 547.2 183.6 
+L 547.2 450 
+" clip-path="url(#pdbcc498367)" style="fill: none; stroke: #23272b; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 9.72px; font-family: 'DIN Alternate'; text-anchor: start; fill: #23272b" x="59.76" y="37.8" transform="rotate(-0 59.76 37.8)">SLR REMOTE</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 9.72px; font-family: 'DIN Alternate'; text-anchor: start; fill: #868a8f" x="121.252388" y="37.8" transform="rotate(-0 121.252388 37.8)">SUPER LONG RANGE REMOTE</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 28.08px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="31.32" y="73.8" transform="rotate(-0 31.32 73.8)">Fast or far: the six link speeds</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 11.88px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="96.48" transform="rotate(-0 32.4 96.48)">LoRa has six speed settings, called spreading factors (SF7 to SF12). The remote picks one by itself and shows FAST or SLOW on screen.</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 11.88px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="112.8744" transform="rotate(-0 32.4 112.8744)">Slower settings reach further.</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8.28px; font-family: 'DIN Alternate'; text-anchor: start; fill: #868a8f" x="118.8" y="158.4" transform="rotate(-0 118.8 158.4)">SETTING</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 8.28px; font-family: 'DIN Alternate'; text-anchor: start; fill: #868a8f" x="158.4" y="158.4" transform="rotate(-0 158.4 158.4)">TIME ON AIR FOR ONE MESSAGE</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="322.56" y="158.4" transform="rotate(-0 322.56 158.4)">your command</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="401.76" y="158.4" transform="rotate(-0 401.76 158.4)">the reply</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 8.28px; font-family: 'DIN Alternate'; text-anchor: start; fill: #868a8f" x="547.2" y="158.4" transform="rotate(-0 547.2 158.4)">HOW OFTEN THE UNITS CHECK IN</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 14.4px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="118.8" y="206.28" transform="rotate(-0 118.8 206.28)">SF7</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="171.390652" y="198.72" transform="rotate(-0 171.390652 198.72)">62 ms</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9px; font-family: 'Avenir Next Medium'; text-anchor: start; fill: #5b6066" x="175.365977" y="210.96" transform="rotate(-0 175.365977 210.96)">93 ms</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="561.085443" y="205.2" transform="rotate(-0 561.085443 205.2)">every 3.1 s</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 14.4px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="118.8" y="252.36" transform="rotate(-0 118.8 252.36)">SF8</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="178.05894" y="244.8" transform="rotate(-0 178.05894 244.8)">114 ms</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 9px; font-family: 'Avenir Next Medium'; text-anchor: start; fill: #5b6066" x="185.881355" y="257.04" transform="rotate(-0 185.881355 257.04)">175 ms</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="568.73247" y="251.28" transform="rotate(-0 568.73247 251.28)">every 5.8 s</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 14.4px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="118.8" y="298.44" transform="rotate(-0 118.8 298.44)">SF9</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="189.856681" y="290.88" transform="rotate(-0 189.856681 290.88)">206 ms</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 9px; font-family: 'Avenir Next Medium'; text-anchor: start; fill: #5b6066" x="203.065022" y="303.12" transform="rotate(-0 203.065022 303.12)">309 ms</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="581.629696" y="297.36" transform="rotate(-0 581.629696 297.36)">every 10 s</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 14.4px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="118.8" y="344.52" transform="rotate(-0 118.8 344.52)">SF10</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="216.273362" y="336.96" transform="rotate(-0 216.273362 336.96)">412 ms</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 9px; font-family: 'Avenir Next Medium'; text-anchor: start; fill: #5b6066" x="237.304118" y="349.2" transform="rotate(-0 237.304118 349.2)">576 ms</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="606.282801" y="343.44" transform="rotate(-0 606.282801 343.44)">every 19 s</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 14.4px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="118.8" y="390.6" transform="rotate(-0 118.8 390.6)">SF11</text>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="269.106725" y="383.04" transform="rotate(-0 269.106725 383.04)">824 ms</text>
+   </g>
+   <g id="text_29">
+    <text style="font-size: 9px; font-family: 'Avenir Next Medium'; text-anchor: start; fill: #5b6066" x="321.555378" y="395.28" transform="rotate(-0 321.555378 395.28)">1.2 s</text>
+   </g>
+   <g id="text_30">
+    <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="669.627583" y="389.52" transform="rotate(-0 669.627583 389.52)">every 41 s</text>
+   </g>
+   <g id="text_31">
+    <text style="font-size: 14.4px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="118.8" y="436.68" transform="rotate(-0 118.8 436.68)">SF12</text>
+   </g>
+   <g id="text_32">
+    <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="353.614457" y="429.12" transform="rotate(-0 353.614457 429.12)">1.5 s</text>
+   </g>
+   <g id="text_33">
+    <text style="font-size: 9px; font-family: 'Avenir Next Medium'; text-anchor: start; fill: #5b6066" x="458.64" y="441.36" transform="rotate(-0 458.64 441.36)">2.3 s</text>
+   </g>
+   <g id="text_34">
+    <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="768.24" y="435.6" transform="rotate(-0 768.24 435.6)">every 76 s</text>
+   </g>
+   <g id="text_35">
+    <text style="font-size: 11.16px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="32.4" y="497.52" transform="rotate(-0 32.4 497.52)">Slower reaches further</text>
+   </g>
+   <g id="text_36">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="514.08" transform="rotate(-0 32.4 514.08)">Each step up roughly doubles the time on air. In return the</text>
+   </g>
+   <g id="text_37">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="526.5" transform="rotate(-0 32.4 526.5)">receiver can pick out a weaker signal, so the link gets through</text>
+   </g>
+   <g id="text_38">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="538.92" transform="rotate(-0 32.4 538.92)">at longer distances and past more obstacles.</text>
+   </g>
+   <g id="text_39">
+    <text style="font-size: 11.16px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="304.8" y="497.52" transform="rotate(-0 304.8 497.52)">It chooses for you</text>
+   </g>
+   <g id="text_40">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="304.8" y="514.08" transform="rotate(-0 304.8 514.08)">The handheld checks the signal on every check-in and moves</text>
+   </g>
+   <g id="text_41">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="304.8" y="526.5" transform="rotate(-0 304.8 526.5)">up or down a setting by itself. You can also fix one setting in</text>
+   </g>
+   <g id="text_42">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="304.8" y="538.92" transform="rotate(-0 304.8 538.92)">the setup menu.</text>
+   </g>
+   <g id="text_43">
+    <text style="font-size: 11.16px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="577.2" y="497.52" transform="rotate(-0 577.2 497.52)">It stays legal</text>
+   </g>
+   <g id="text_44">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="577.2" y="514.08" transform="rotate(-0 577.2 514.08)">On this band each unit may transmit for 10% of any hour (360</text>
+   </g>
+   <g id="text_45">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="577.2" y="526.5" transform="rotate(-0 577.2 526.5)">seconds). The firmware counts every message, keeps count</text>
+   </g>
+   <g id="text_46">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="577.2" y="538.92" transform="rotate(-0 577.2 538.92)">across restarts, and refuses to go over.</text>
+   </g>
+   <g id="text_47">
+    <text style="font-size: 9px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #23272b" x="32.4" y="589.68" transform="rotate(-0 32.4 589.68)">SLR Remote</text>
+   </g>
+   <g id="text_48">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="88.381406" y="589.68" transform="rotate(-0 88.381406 589.68)">by Aaron Phull</text>
+   </g>
+   <g id="text_49">
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="831.6" y="589.68" transform="rotate(-0 831.6 589.68)">Airtime worked out from the radio settings (869.525 MHz, 125 kHz bandwidth).</text>
+   </g>
+   <g id="text_50">
+    <text style="font-size: 14.4px; font-family: 'DIN Alternate'; text-anchor: middle; fill: #eceef0" x="73.08" y="253.252266" transform="rotate(-0 73.08 253.252266)">FAST</text>
+   </g>
+   <g id="text_51">
+    <text style="font-size: 14.4px; font-family: 'DIN Alternate'; text-anchor: middle; fill: #eceef0" x="73.08" y="391.492266" transform="rotate(-0 73.08 391.492266)">SLOW</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pdbcc498367">
+   <rect x="0" y="0" width="864" height="612"/>
+  </clipPath>
+ </defs>
+</svg>
