@@ -97,7 +97,7 @@ The camera unit shows `NO CAM`, `SCAN`, `FAIL`, or presses fail with `CAM NOT RE
 | Stuck on `SCAN`, started working by itself a little later | After failed attempts the camera unit waits before the next try: 2, 5, 10, then 30 seconds. After about 5 minutes of not seeing the camera it scans less often to save battery. | Send a press from the handheld. Any command puts scanning back to full speed. |
 | `SECURE FAIL` or `HANDSHAKE FAIL` | The secure Bluetooth setup did not complete. | Forget the camera on the board and pair again. |
 | Connects, then drops when the phone app is opened | The camera may prefer one Bluetooth partner at a time. | Close the app and give the camera unit a moment to reconnect. |
-| Your camera is not an X-E5 | The firmware was built and tested on the X-E5. | Other Fujifilm bodies with Bluetooth remote release are worth a try. Tell me how you get on. |
+| Your camera is a different Fujifilm body | The remote uses Fujifilm's standard Bluetooth remote release, the same one the phone app uses, so most modern X and GFX cameras with Bluetooth should work. I built and tested it on the X-E5. | Pair it the same way. The menu names may differ a little from mine. Tell me how you get on. |
 
 Once paired, you should not need to do anything. The camera unit reconnects by itself whenever the camera reappears, and the CAMERA page should read `READY`.
 

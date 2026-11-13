@@ -585,7 +585,7 @@ The GPS receiver is only powered when needed: with `Geotag` on (camera unit), or
 
 - The top word on the screen is `PRESSED`, because that is what the camera confirms. Take a test frame, look at it, then walk away.
 - Bulb and burst run in direct mode in this firmware. Everything else works at full range.
-- Everything here was tested on the Fujifilm X-E5, on the EU and UK 868 MHz band.
+- Everything here was tested on the Fujifilm X-E5, on the EU and UK 868 MHz band. The remote uses Fujifilm's standard Bluetooth remote release, so most modern Fujifilm cameras with Bluetooth should behave the same way.
 
 ## Serial console reference
 

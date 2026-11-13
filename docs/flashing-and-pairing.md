@@ -203,6 +203,8 @@ In the two-board setup, only the **camera unit** pairs with the camera. The rela
 
 ### On the camera
 
+These are the X-E5 menus. Other Fujifilm bodies are very similar.
+
 1. Turn Bluetooth on.
 2. Open **Pairing Registration** in the camera's Bluetooth settings.
 

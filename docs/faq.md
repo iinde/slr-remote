@@ -13,7 +13,7 @@ The questions a photographer will ask first, and then the ones for people who wa
 
 ### What is it?
 
-A camera remote unlike any other camera remote: one that works for miles. A pocket handheld with one button talks by long-range radio to a small unit that sits with the camera, and that unit presses the shutter over Bluetooth using the camera's own remote-release feature. Nothing plugs into the camera and there is no phone in the chain. I built it for my Fujifilm X-E5.
+A camera remote unlike any other camera remote: one that works for miles. A pocket handheld with one button talks by long-range radio to a small unit that sits with the camera, and that unit presses the shutter over Bluetooth using the camera's own remote-release feature. Nothing plugs into the camera and there is no phone in the chain. It is for Fujifilm cameras, and I built and tested it on my X-E5.
 
 ### What does "SLR" stand for?
 
@@ -77,7 +77,7 @@ No. Every press has its own identity, and the camera unit remembers the ones it 
 
 ### Does it work with my camera?
 
-It was built for and tested on the Fujifilm X-E5. The Bluetooth side builds on the open-source Furble project, and the firmware looks for any Fujifilm camera offering Bluetooth remote release, so other recent Fujifilm bodies are well worth a try. I have only had an X-E5 on my bench, so if you get it going on something else, tell me and I will add it to the list.
+If it is a modern Fujifilm with Bluetooth, very likely yes. The remote uses Fujifilm's standard Bluetooth remote release, the same one the camera's phone app uses, and most modern X and GFX bodies share it. The Bluetooth side builds on the open-source Furble project, and the firmware looks for any Fujifilm camera offering that remote release. Mine is an X-E5, and that is the camera I built and tested it on. Give yours a go and tell me how it gets on. I would love to hear.
 
 ### Do I need to modify the camera or plug anything into it?
 

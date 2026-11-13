@@ -62,7 +62,7 @@ Cryptography (the key exchange for pairing the boards and the signature on each 
 | ESP32-S3 | Espressif | The processor and Bluetooth radio on that board |
 | SX1262 | Semtech | The LoRa radio chip on that board |
 | L76K GPS module | Quectel | Optional time and position in the camera unit |
-| X-E5 camera | Fujifilm | The camera the remote was built for and tested with |
+| X-E5 camera | Fujifilm | The camera I built and tested the remote on |
 
 ## Other acknowledgements
 

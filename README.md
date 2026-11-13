@@ -7,7 +7,7 @@
 
 Picture the camera on a tripod at the edge of the lake and you two fields away with one button in your hand. You press it, and the shutter fires.
 
-SLR Remote (SLR stands for Super Long Range) is a pocket shutter release for the Fujifilm X-E5 that reaches far beyond any Bluetooth or infrared remote. There is no cable to the camera, no phone and no app. Half-press holds focus, a tap takes the picture, and the little screen tells you the camera got the message.
+SLR Remote (SLR stands for Super Long Range) is a pocket shutter release for Fujifilm cameras that reaches far beyond any Bluetooth or infrared remote. There is no cable to the camera, no phone and no app. Half-press holds focus, a tap takes the picture, and the little screen tells you the camera got the message.
 
 I built it because I wanted one, and you can build one too. By Aaron Phull ([iinde](https://github.com/iinde)).
 
@@ -17,7 +17,7 @@ I built it because I wanted one, and you can build one too. By Aaron Phull ([iin
 
 Two small units. The handheld lives in your pocket: one shoot button, a small OLED screen, an antenna. The camera unit stays with the camera, on the tripod, in the bag underneath it, or tucked beside it in a hide.
 
-The handheld talks to the camera unit over LoRa, the long range radio used for links of several miles in open country. The camera unit then presses the shutter over Bluetooth, using the X-E5's own built-in remote release. The camera thinks a remote a few inches away is asking it to shoot. It has no idea you are on the far side of the valley.
+The handheld talks to the camera unit over LoRa, the long range radio used for links of several miles in open country. The camera unit then presses the shutter over Bluetooth, using the camera's own built-in remote release, the same one Fujifilm's phone app uses. The camera thinks a remote a few inches away is asking it to shoot. It has no idea you are on the far side of the valley.
 
 Nothing plugs into the camera and nothing needs a signal, a network or an account. Switch both on, and the one button does the rest.
 
@@ -120,7 +120,7 @@ New to all of this? Start at [docs/getting-started.md](docs/getting-started.md).
 
 | | |
 |---|---|
-| Camera | Fujifilm X-E5 |
+| Camera | Fujifilm X and GFX cameras with Bluetooth, through the standard Fujifilm remote release. Built and tested on the X-E5 |
 | Boards | 2 x Heltec WiFi LoRa 32 V4 (ESP32-S3, SX1262 LoRa radio, 0.96 inch OLED) |
 | Long range link | LoRa at 869.525 MHz (UK and EU band), 125 kHz bandwidth, spreading factor 7 to 12, chosen automatically |
 | Radio power | Up to the legal limit for the band (27 dBm ERP), capped from the antenna gain you tell it |

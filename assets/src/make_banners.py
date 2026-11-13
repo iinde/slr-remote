@@ -105,7 +105,7 @@ def banner(path, W, H, k, dark=False, margin=None, hero_w=None, title=150,
     f_by = font("Medium", round(by * k * S))
 
     heads = ("A camera remote unlike any other.", "One that works for miles.")
-    small = "One button. No phone. No app. For the Fujifilm X-E5."
+    small = "One button. No phone. No app. For Fujifilm cameras."
     if text_w:  # the text column must stay clear of the render
         for s_, f_ in ((heads[0], f_head), (small, f_line), ("SLR Remote", f_title)):
             assert d.textlength(s_, font=f_) <= text_w * S, (path, s_, d.textlength(s_, font=f_) / S)

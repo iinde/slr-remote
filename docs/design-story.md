@@ -147,7 +147,7 @@ Alongside that sit 147 automated unit tests that run on a PC and cover the parts
 3. Time the battery, for both units, awake and asleep.
 4. BURST and BULB over the LoRa link. They run in direct mode today.
 5. Work out what the camera's own notifications mean. If one of them turns out to mean "exposed", the screen could go one better than `PRESSED`.
-6. Other cameras and other regions. It is built and tested on the X-E5 and the UK and EU 868 MHz band. Other Fujifilm bodies with the same Bluetooth remote release are the obvious next thing to try.
+6. Other cameras and other regions. It is built and tested on the X-E5 and the UK and EU 868 MHz band. It uses Fujifilm's standard Bluetooth remote release, so most modern Fujifilm bodies with Bluetooth should take to it, and they are the obvious next thing to try.
 7. A neat way for the camera unit to ride on the tripod.
 
 ## Lessons learned

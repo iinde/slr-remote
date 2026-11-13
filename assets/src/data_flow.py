@@ -63,7 +63,7 @@ def build(short):
 
     # ---- CAMERA ------------------------------------------------------------
     KX, KW = 2060, W - M - 2060
-    unit(KX, KW, "CAMERA", "Fujifilm X-E5")
+    unit(KX, KW, "CAMERA", "your Fujifilm")
     kx, ky = KX + KW / 2, 700
     c.rect(kx - 92, ky - 52, 184, 118, LIGHT, GRAPHITE, 2.5, 14, 3)      # body
     c.rect(kx - 70, ky - 68, 44, 18, GRAPHITE, GRAPHITE, 0, 0, 3)        # dial
@@ -163,7 +163,7 @@ def build(short):
                "carried all the way back to your hand.",
                24, W - 2 * M - 1160, GRAPHITE, lead=1.34)
 
-    c.footer("Two Heltec WiFi LoRa 32 V4 boards. Built for the Fujifilm X-E5.")
+    c.footer("Two Heltec WiFi LoRa 32 V4 boards. Built for Fujifilm cameras.")
     c.save("data-flow" if short else "data-flow-full")
 
 

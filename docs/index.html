@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SLR Remote: a camera remote that works for miles</title>
-<meta name="description" content="SLR Remote (Super Long Range Remote) is a camera remote unlike any other: a one-button pocket handheld that fires a Fujifilm X-E5 over LoRa radio, from far beyond Bluetooth range. No phone, no app, no cable to the camera.">
+<meta name="description" content="SLR Remote (Super Long Range Remote) is a camera remote unlike any other: a one-button pocket handheld that fires Fujifilm cameras over LoRa radio, from far beyond Bluetooth range. No phone, no app, no cable to the camera.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="SLR Remote: a camera remote that works for miles">
 <meta property="og:description" content="A one-button pocket remote that fires your camera over long range radio. Tap to shoot, hold to focus.">
@@ -208,7 +208,7 @@ footer ul { margin: 0; padding-left: 18px; }
     <img src="https://raw.githubusercontent.com/iinde/slr-remote/main/assets/renders/hero-1600.png" width="1600" height="1066" alt="The SLR Remote pair: a pocket handheld with one round shoot button and a slightly longer camera unit, each with a small screen and an antenna">
     <p class="eyebrow">Super Long Range Remote</p>
     <h1>A camera remote unlike any other camera remote. <em>One that works for miles.</em></h1>
-    <p class="pitch">One button in your pocket, your Fujifilm X-E5 on a tripod somewhere over there. Tap to shoot, hold to half-press and focus. The press travels by long range radio, so nothing plugs into the camera and your phone stays in your pocket.</p>
+    <p class="pitch">For Fujifilm cameras. One button in your pocket, your camera on a tripod somewhere over there. Tap to shoot, hold to half-press and focus. The press travels by long range radio, so nothing plugs into the camera and your phone stays in your pocket.</p>
     <div class="btns">
       <a class="btn btn-primary" href="https://github.com/iinde/slr-remote">View on GitHub</a>
       <a class="btn btn-ghost" href="https://github.com/iinde/slr-remote/blob/main/docs/getting-started.md">Build one</a>
@@ -249,7 +249,7 @@ footer ul { margin: 0; padding-left: 18px; }
 
     <figure>
       <div class="panel">
-        <img src="https://raw.githubusercontent.com/iinde/slr-remote/main/assets/diagrams/data-flow.png" width="2400" height="1830" alt="Data flow diagram: a thumb press on the handheld, a LoRa radio message to the camera unit, Bluetooth commands from the camera unit to the Fujifilm X-E5, and the confirmation travelling back to the handheld screen" loading="lazy">
+        <img src="https://raw.githubusercontent.com/iinde/slr-remote/main/assets/diagrams/data-flow.png" width="2400" height="1830" alt="Data flow diagram: a thumb press on the handheld, a LoRa radio message to the camera unit, Bluetooth commands from the camera unit to the Fujifilm camera, and the confirmation travelling back to the handheld screen" loading="lazy">
       </div>
       <figcaption>One press, there and back. The full walk-through, with every step laid out in time, is in <a href="https://github.com/iinde/slr-remote/blob/main/docs/data-flow.md">data flow</a>.</figcaption>
     </figure>
@@ -428,7 +428,7 @@ footer ul { margin: 0; padding-left: 18px; }
     <div class="table-wrap">
       <table>
         <tbody>
-          <tr><th scope="row">Camera</th><td>Fujifilm X-E5, through its built-in Bluetooth remote release</td></tr>
+          <tr><th scope="row">Camera</th><td>Fujifilm X and GFX cameras with Bluetooth, through the standard Fujifilm remote release. Built and tested on the X-E5</td></tr>
           <tr><th scope="row">Shooting</th><td>Single shot, half-press focus hold, focus lock, self timer, interval, burst, bulb, video start and stop. Burst and bulb run in direct mode</td></tr>
           <tr><th scope="row">Long range link</th><td>LoRa on 869.525 MHz (the EU 868 MHz band), 125 kHz bandwidth, spreading factor 7 to 12 chosen automatically, at up to the band's legal power limit</td></tr>
           <tr><th scope="row">Reach</th><td>Built to work for miles with a clear view. Shrugs off walls, hedges and car doors</td></tr>
@@ -474,7 +474,7 @@ footer ul { margin: 0; padding-left: 18px; }
       </li>
       <li>
         <h3>Choose roles and pair</h3>
-        <p>Set one board to <code>Handheld</code> with mode <code>Relay</code>, the other to <code>Camera</code>. Choose <code>Pair boards</code> on both, check the six-digit code matches, and hold the button on each to say yes. Then choose <code>Pair camera</code> on the camera unit with the X-E5 in Bluetooth pairing registration. Step by step in <a href="https://github.com/iinde/slr-remote/blob/main/docs/flashing-and-pairing.md">flashing and pairing</a>.</p>
+        <p>Set one board to <code>Handheld</code> with mode <code>Relay</code>, the other to <code>Camera</code>. Choose <code>Pair boards</code> on both, check the six-digit code matches, and hold the button on each to say yes. Then choose <code>Pair camera</code> on the camera unit with the camera in Bluetooth pairing registration (that is the X-E5 menu name; other Fujifilm bodies are very similar). Step by step in <a href="https://github.com/iinde/slr-remote/blob/main/docs/flashing-and-pairing.md">flashing and pairing</a>.</p>
       </li>
       <li>
         <h3>Walk away and shoot</h3>
@@ -507,7 +507,7 @@ footer ul { margin: 0; padding-left: 18px; }
     </details>
     <details>
       <summary>Will it work with my camera?</summary>
-      <p>I built it for the Fujifilm X-E5 and that is the camera I have tested. It drives the camera's own Bluetooth remote release, so other Fujifilm bodies with that feature are worth a try, and I would love to hear how you get on.</p>
+      <p>If it is a modern Fujifilm with Bluetooth, very likely yes. The remote uses Fujifilm's standard Bluetooth remote release, the same one the camera's phone app uses, and most modern X and GFX bodies share it. Mine is an X-E5, and that is the camera I built and tested it on. Give yours a go and tell me how it gets on.</p>
     </details>
     <p class="more">Plenty more in the <a href="https://github.com/iinde/slr-remote/blob/main/docs/faq.md">full FAQ</a>, and help if something misbehaves in <a href="https://github.com/iinde/slr-remote/blob/main/docs/troubleshooting.md">troubleshooting</a>.</p>
   </div>

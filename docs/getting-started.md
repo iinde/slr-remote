@@ -13,7 +13,7 @@ This page is the short path from an empty desk to that first remote frame. Each 
 SLR Remote (Super Long Range Remote) comes in two parts.
 
 - The **handheld** lives in your pocket. One button, a small screen, a wrist lanyard if you like.
-- The **camera unit** stays with the camera, in the bag pocket or on the tripod. It presses the shutter for you over Bluetooth, using the Fujifilm X-E5's own built-in remote release.
+- The **camera unit** stays with the camera, in the bag pocket or on the tripod. It presses the shutter for you over Bluetooth, using the camera's own built-in remote release, the same one Fujifilm's phone app uses.
 
 Between the two is LoRa, a long-range radio system built for sending small messages a very long way on very little power. It is the same technology people use for links of several miles in open country, and it gets through hedges, walls and car doors that stop a Bluetooth or infrared remote dead.
 
@@ -23,7 +23,7 @@ With it you get the whole shutter button at a distance: half-press to hold focus
 
 ## Before you buy
 
-The camera: this is built for, and tested on, the Fujifilm X-E5.
+The camera: this is for Fujifilm cameras. I built and tested it on the X-E5, and it uses Fujifilm's standard Bluetooth remote release, the same one the phone app uses, so it will likely work with most modern Fujifilm X and GFX cameras that have Bluetooth. If you try it on another body, I would love to hear how it goes.
 
 Where you live: the radio is set for the UK and EU licence-free band at 868 MHz, and the firmware keeps itself inside the legal limits without you thinking about it. See [safety-and-legal.md](safety-and-legal.md).
 

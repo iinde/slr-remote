@@ -101,7 +101,7 @@ sequenceDiagram
     actor You
     participant H as Handheld
     participant C as Camera unit
-    participant X as Fujifilm X-E5
+    participant X as Fujifilm camera
 
     You->>H: Tap the button
     Note over H: Build the Shot command and sign it
