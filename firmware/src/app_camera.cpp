@@ -714,6 +714,7 @@ void ui_step(uint32_t now) {
   m.rssi_dn = fresh ? c.rssi_dn : NAN;
   m.snr_dn = fresh ? c.snr_dn : NAN;
   m.sf = c.radio_ok ? radio_sf() : c.s->last_sf;
+  m.bw_khz = (uint16_t)radio_bw_khz();
   if (fresh && !isnan(c.snr_up)) {
     float mg = margin_db(c.snr_up, m.sf);
     if (!isnan(c.snr_dn)) mg = min(mg, margin_db(c.snr_dn, m.sf));
@@ -738,6 +739,8 @@ void ui_step(uint32_t now) {
   if (c.off) {
     m.big1 = "OFF";
     m.big2 = "Release button";
+  } else if (!region_can_tx(radio_region())) {
+    m.toast = "SET REGION IN SETUP";  // before pairing: the boards pair on the region's channel
   } else if (!c.pair.valid) {
     m.toast = "BOARDS NOT PAIRED";
   } else if (!c.radio_ok) {
@@ -847,8 +850,8 @@ void app_camera_request_menu(uint8_t what) {
 
 void app_camera_print_stat() {
   const uint32_t now = millis();
-  Serial.printf("camera: paired=%d radio=%d sf=%u rescued=%d tx_set=%d tx_out=%d dBm\n",
-                c.pair.valid, c.radio_ok, c.radio_ok ? radio_sf() : 0, c.rescued,
+  Serial.printf("camera: region=%s paired=%d radio=%d sf=%u rescued=%d tx_set=%d tx_out=%d dBm\n",
+                region_key(radio_region()), c.pair.valid, c.radio_ok, c.radio_ok ? radio_sf() : 0, c.rescued,
                 c.radio_ok ? radio_tx_dbm() : 0, c.radio_ok ? radio_tx_out_dbm() : 0);
   Serial.printf("link: last_rx=%ldms ago up rssi=%.0f snr=%.1f  hh heard rssi=%.0f snr=%.1f\n",
                 c.last_rx ? (long)(now - c.last_rx) : -1L, c.rssi_up, c.snr_up, c.rssi_dn,

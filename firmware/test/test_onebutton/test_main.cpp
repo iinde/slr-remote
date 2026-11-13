@@ -2026,6 +2026,66 @@ static void test_lost_up_never_leaves_af_held() {
   TEST_ASSERT_EQUAL(0, l.count(ObAct::Release));
 }
 
+// US region: 500 kHz, and an hourly budget of the whole hour (no legal duty limit).
+static void test_plan_defaults_are_eu() {
+  for (uint8_t sf = 7; sf <= 12; sf++) {
+    TEST_ASSERT_EQUAL_UINT32(plan_shot_cost_ms(sf, false), plan_shot_cost_ms(sf, false, 125.0f));
+    TEST_ASSERT_EQUAL_UINT32(plan_shot_cost_ms(sf, true), plan_shot_cost_ms(sf, true, 125.0f));
+  }
+  PlanIn in;
+  TEST_ASSERT_EQUAL_FLOAT(125.0f, in.bw_khz);
+  TEST_ASSERT_EQUAL_UINT32(360000, in.budget_ms);
+  ObEnv e;
+  TEST_ASSERT_EQUAL_FLOAT(125.0f, e.bw_khz);
+  TEST_ASSERT_EQUAL_UINT32(360000, e.budget_ms);
+  TEST_ASSERT_EQUAL(plan_shot_fits(12, 980, 980), plan_shot_fits(12, 980, 980, 125.0f, 360000));
+}
+
+static void test_plan_shot_costs_at_500khz() {
+  // 25-byte Shot: 16 ms at SF7, 371 ms at SF12. Ack + Result (2 x 47 bytes): 48 ms, 988 ms.
+  TEST_ASSERT_EQUAL_UINT32(16, plan_shot_cost_ms(7, false, 500.0f));
+  TEST_ASSERT_EQUAL_UINT32(48, plan_shot_cost_ms(7, true, 500.0f));
+  TEST_ASSERT_EQUAL_UINT32(371, plan_shot_cost_ms(12, false, 500.0f));
+  TEST_ASSERT_EQUAL_UINT32(988, plan_shot_cost_ms(12, true, 500.0f));
+}
+
+static void test_plan_us_region_never_near_the_limit() {
+  PlanIn in;
+  in.bw_khz = 500.0f;
+  in.budget_ms = 3600000;
+  in.sf = 7;
+  in.every_s = 10;
+  in.count = 120;
+  PlanOut o = plan_interval(in);
+  TEST_ASSERT_TRUE(o.fits);
+  TEST_ASSERT_TRUE(o.need_permille < 10);  // under 1 % of the hour
+  TEST_ASSERT_EQUAL(1000, o.have_permille);
+  // The run the EU refuses outright (SF12, every 2 s, until stopped) fits here: a round trip
+  // is 1.36 s, and even this uses about three quarters of the hour.
+  in.sf = 12;
+  in.every_s = 2;
+  in.count = 0;
+  o = plan_interval(in);
+  TEST_ASSERT_TRUE(o.fits);
+  TEST_ASSERT_TRUE(o.need_permille > 600 && o.need_permille < 900);
+  // Same run with the EU figures: refused, as before.
+  PlanIn eu = in;
+  eu.bw_khz = 125.0f;
+  eu.budget_ms = 360000;
+  TEST_ASSERT_FALSE(plan_interval(eu).fits);
+  // Still never faster than one round trip.
+  in.every_s = 1;
+  TEST_ASSERT_FALSE(plan_interval(in).fits);
+}
+
+static void test_plan_shot_fits_us_budget() {
+  // 0.1 % of the US hour is 3.6 s: room for an SF12 shot. Of the EU hour it is 0.36 s: none.
+  TEST_ASSERT_TRUE(plan_shot_fits(12, 999, 999, 500.0f, 3600000));
+  TEST_ASSERT_FALSE(plan_shot_fits(12, 999, 999));
+  TEST_ASSERT_FALSE(plan_shot_fits(12, 1000, 0, 500.0f, 3600000));
+  TEST_ASSERT_FALSE(plan_shot_fits(7, 0, 1000, 500.0f, 3600000));
+}
+
 int main() {
   UNITY_BEGIN();
   RUN_TEST(test_zones_a_shutter_boundaries);
@@ -2088,6 +2148,10 @@ int main() {
   RUN_TEST(test_plan_fits_at_sf7_refused_at_sf12);
   RUN_TEST(test_plan_counts_used_airtime_and_suggests_count);
   RUN_TEST(test_plan_shot_fits_edges);
+  RUN_TEST(test_plan_defaults_are_eu);
+  RUN_TEST(test_plan_shot_costs_at_500khz);
+  RUN_TEST(test_plan_us_region_never_near_the_limit);
+  RUN_TEST(test_plan_shot_fits_us_budget);
   RUN_TEST(test_rstgest_single_then_double);
   RUN_TEST(test_rstgest_window_and_non_taps);
   RUN_TEST(test_rstgest_sequence_double_after_window_is_two_singles);

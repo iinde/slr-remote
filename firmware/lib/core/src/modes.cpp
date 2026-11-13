@@ -895,6 +895,8 @@ PlanOut ModeEngine::plan(const ObEnv& e) const {
   in.cam_permille = e.cam_permille;
   in.every_s = s_.iv_every_s;
   in.count = s_.iv_count;
+  in.bw_khz = e.bw_khz;
+  in.budget_ms = e.budget_ms;
   return plan_interval(in);
 }
 
@@ -949,8 +951,8 @@ uint32_t ModeEngine::lastOutcomeWaitMs(const ObEnv& e) const {
   // answering SF is adopted, so the rest of the exchange is then at SF12 too. The run still
   // ends the moment the outcome arrives, so the longer bound costs nothing on a fast SF.
   const uint8_t sf = 12;
-  const uint32_t shot = plan_shot_cost_ms(sf, false);  // one Shot frame
-  const uint32_t acks2 = plan_shot_cost_ms(sf, true);  // two Ack-sized frames
+  const uint32_t shot = plan_shot_cost_ms(sf, false, e.bw_khz);  // one Shot frame
+  const uint32_t acks2 = plan_shot_cost_ms(sf, true, e.bw_khz);  // two Ack-sized frames
   const uint32_t w = 4 * (shot + acks2 / 2 + 150) + (6200 + s_.focus_ms + acks2) + 2000 + (acks2 + 500);
   return w > floor_ms ? w : floor_ms;
 }
@@ -966,7 +968,7 @@ void ModeEngine::ivTick(const ObEnv& e) {
     return;
   }
   if (!due(now, iv_next_)) return;
-  if (e.relay && !plan_shot_fits(e.sf, e.hh_permille, e.cam_permille)) {
+  if (e.relay && !plan_shot_fits(e.sf, e.hh_permille, e.cam_permille, e.bw_khz, e.budget_ms)) {
     iv_skip_++;
     if (++iv_streak_skip_ >= OB_FAIL_STREAK) {
       iv_k_++;

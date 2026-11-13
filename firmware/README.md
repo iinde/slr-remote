@@ -1,6 +1,6 @@
 # SLR Remote firmware
 
-A camera remote unlike any other camera remote. One that works for miles. This folder is the brains of it: the firmware for both halves of SLR Remote, currently at version **0.3.0**.
+A camera remote unlike any other camera remote. One that works for miles. This folder is the brains of it: the firmware for both halves of SLR Remote, currently at version **0.4.0**.
 
 It takes a press of the button in your pocket, carries it over LoRa (a long-range, low-speed radio) to the camera unit, and has the camera unit press the shutter over Bluetooth LE (BLE, the low-power Bluetooth built into the camera). Single shots, half-press focus, timer, interval and video start and stop all run from one button over the long range link, with burst and bulb added in direct mode (one board talking Bluetooth straight to the camera).
 
@@ -37,7 +37,7 @@ All commands run from this `firmware/` folder.
 
 Notes:
 
-- **Fit the antenna before powering a board.** Click the antenna lead onto the board's small LoRa socket, then screw the 868 MHz antenna onto the lead's SMA end. Transmitting with no antenna can damage the radio's amplifier.
+- **Fit the antenna before powering a board.** Click the antenna lead onto the board's small LoRa socket, then screw the antenna for your band onto the lead's SMA end (868 MHz for `EU 868`, 915 MHz for `US 915`). Transmitting with no antenna can damage the radio's amplifier.
 - **If the upload cannot find the board:** hold `PRG`, tap `RST`, release `PRG`. That forces the bootloader. Run the upload again.
 - **Black screen after that?** The board is still in download mode. Tap `RST` once more.
 - **Flash both boards from the same build.** A mixed pair will not talk to each other.
@@ -59,13 +59,17 @@ Platform: `espressif32@6.9.0`, Arduino framework, C++17, 16 MB flash, LittleFS f
 
 ## First boot
 
-A freshly flashed board has no role, so it boots straight into the setup menu (`SETUP 0.3.0`).
+A freshly flashed board has no role and no region, so it boots straight into the setup menu (`SETUP 0.4.0`).
 
 - `PRG` click: next item.
 - `PRG` hold 1 s: select or change.
-- Set `Role` to `Handheld` or `Camera`, then `Exit` to save and restart.
+- Set `Role` to `Handheld` or `Camera`.
+- Set `Region` to `EU 868` (UK and EU) or `US 915` (United States). It shows `Choose` until you do, and the radio will not transmit while it is unset. Both boards need the same region.
+- `Exit` to save and restart.
 
-Or from the console: `role h` or `role c`.
+Or from the console: `role h` or `role c`, then `region eu` or `region us`.
+
+A board that already had a role under an earlier firmware loads as `EU 868`, so an existing pair carries on unchanged after an update.
 
 To get back into the menu later: tap `RST` twice (the screen prompts `RST AGAIN NOW = SETUP` after the first tap), pick `SETUP` from the handheld's mode card, or send `setup` on the console.
 
@@ -85,7 +89,7 @@ Pairing the two boards with each other, and the camera unit with the camera, is 
 | `apperr.h` | Error codes for things that fail on the boards themselves (as opposed to at the camera) |
 | `cam_exec.h` | Runs a timed press sequence against the camera and reports only what the camera acknowledged. Used by both roles |
 | `fuji.cpp`, `fuji.h` | Bluetooth LE to the camera: find it, pair, reconnect, press, release, optional geotag. Derived from Furble |
-| `radio.cpp`, `radio.h` | The SX1262 through RadioLib: always listening, the legal power cap, the 2 s hold-off after power-on |
+| `radio.cpp`, `radio.h` | The SX1262 through RadioLib: always listening, the frequency and bandwidth for the active region, the legal power cap, the 2 s hold-off after power-on |
 | `duty.cpp`, `duty.h` | Keeps the airtime count across sleep, restarts and power cuts |
 | `pairing.cpp`, `pairing.h` | Pairing the two boards over LoRa: key exchange, the 6 digit check code, and proof both ends hold the key before anything is saved |
 | `store.cpp`, `store.h` | Saved settings, the board pairing record, message counters, and the range log file |
@@ -106,6 +110,7 @@ Pairing the two boards with each other, and the camera unit with the camera, is 
 | `linkmgr.h`, `linkmgr.cpp` | Link quality maths, the rules for stepping the spreading factor up and down, the rescue search, check-in and silence timings |
 | `airtime.h`, `airtime.cpp` | How long a LoRa message of a given size is on air at each setting |
 | `dutycycle.h`, `dutycycle.cpp` | The rolling one-hour airtime budget, kept in one-minute buckets |
+| `region.h`, `region.cpp` | The region table: frequency, bandwidth, power rule and airtime limit for `EU 868` and `US 915` |
 | `seqplan.h`, `seqplan.cpp` | Works out whether an interval run fits in the airtime budget before it starts |
 | `shotseq.h`, `shotseq.cpp` | Turns "take a photo" into timed steps: focus, wait, shutter, release |
 | `press.h`, `press.cpp` | Turns raw button samples into tap, hold and let-go events for each press style |
@@ -125,7 +130,27 @@ Pairing the two boards with each other, and the camera unit with the camera, is 
 
 | File | What it does |
 |---|---|
-| `config.h` | Pin map, radio settings, power and duty limits, timing constants, the role and mode names |
+| `config.h` | Pin map, the radio settings shared by both regions, timing constants, the role and mode names |
+
+## Regions
+
+The long-range radio has two settings, picked with `Region` in the setup menu or `region eu` / `region us` on the console.
+
+| | `EU 868` | `US 915` |
+|---|---|---|
+| Frequency | 869.525 MHz | 918.0 MHz |
+| Bandwidth | 125 kHz | 500 kHz |
+| Spreading factor | 7 to 12 | 7 to 12 |
+| Coding rate, sync word, preamble | 4/5, private, 8 symbols | The same |
+| Power cap | 27 dBm ERP, worked out from the antenna gain | 25 dBm into the antenna, less one dB for each dB of antenna gain over 6 dBi. The rule allows 30 dBm, the firmware holds 5 dB back to stay inside the power density limit, and 25 dBm is also the board's own ceiling |
+| Airtime limit | 10% of a rolling hour | None. Airtime is still counted |
+
+- A board with no region never transmits. The radio will not start, board pairing refuses with `Set Region first`, and the running app shows `SET REGION` (handheld, with `SET REGION IN SETUP` on a press) or `SET REGION IN SETUP` (camera unit).
+- Both boards must be on the same region. Pairing happens on the active region's channel.
+- RadioLib looks after the chip side of the move to 500 kHz and 915 MHz itself, including low data rate optimisation, which is decided from the symbol time and so is off at every spreading factor at 500 kHz. The airtime maths in `lib/core` uses the same rule.
+- `US 915` is built to the US rules (47 CFR 15.247, digital modulation) and has not been tested on air or measured in a lab. Reports from US builders are very welcome.
+
+The rules behind each column are in [docs/safety-and-legal.md](../docs/safety-and-legal.md).
 
 ## Settings
 
@@ -136,6 +161,7 @@ Defaults for a new board:
 | Setting | Default |
 |---|---|
 | Role | Not set (the board asks) |
+| Region | Not set (shows `Choose`, and the radio stays silent until it is set) |
 | Link mode (handheld) | Direct |
 | Press style | A |
 | Focus wait | 500 ms |
@@ -171,6 +197,7 @@ Connect at 115200 baud. One command per line. Replies are `ok`, `ok (reboot to a
 | `help` | List commands |
 | `stat` | Version, role, mode, uptime, battery, settings, link, Bluetooth, shot and GPS figures |
 | `role h` / `role c` | Handheld or camera unit (restart to apply) |
+| `region eu` / `region us` | Radio region, `EU 868` or `US 915`. Must match on both boards (restart to apply). `get region` prints `region eu`, `region us` or `region unset` |
 | `mode direct` / `mode relay` | Handheld link mode (restart to apply) |
 | `sf auto` / `sf 7` to `sf 12` | Adaptive or fixed spreading factor. A fixed value needs a restart and must be set on both boards |
 | `focus <0..5000>` | Focus wait for a one-press shot, in ms |
@@ -224,12 +251,12 @@ The logic in `lib/core` is written with no hardware calls in it, so it can be co
 pio test -e native
 ```
 
-There are 147 tests in two suites, using the Unity test framework:
+There are 163 tests in two suites, using the Unity test framework:
 
 | Suite | Tests | Covers |
 |---|---|---|
-| `test/test_core` | 60 | Protocol and replay checks, link management, airtime and duty cycle maths, shot timing and other core logic |
-| `test/test_onebutton` | 87 | The press classifier and the one-button mode engine |
+| `test/test_core` | 72 | Protocol and replay checks, link management, the region table and power caps, airtime and duty cycle maths at both bandwidths, shot timing and other core logic |
+| `test/test_onebutton` | 91 | The press classifier and the one-button mode engine |
 
 The radio, Bluetooth and screen drivers were proved the other way: on the bench, with real boards and the camera.
 
@@ -238,9 +265,11 @@ The test build takes its cryptography from macOS CommonCrypto (`crypto_port_nati
 ## Versioning
 
 - The version is set in one place: the `XE5_FW_VERSION` build flag in `platformio.ini`.
-- It shows on the splash screen (`v0.3.0`), in the setup menu title, on the `About` screen and in `stat`.
+- It shows on the splash screen (`v0.4.0`), in the setup menu title, on the `About` screen and in `stat`.
 - Changes are listed in [CHANGELOG.md](../CHANGELOG.md).
 - Both boards should always run the same version.
+
+**0.4.0** added the `Region` setting, with `EU 868` and `US 915`. The radio settings, power cap and airtime limit are now looked up for the active region at run time. `EU 868` behaves exactly as before. `US 915` is built to the US rules and has not been tested on air.
 
 **0.3.0** followed a line-by-line review of the whole firmware, about 13,000 lines. It found 39 issues, none in the security or legal airtime code. All were fixed except three minor ones left open on purpose.
 

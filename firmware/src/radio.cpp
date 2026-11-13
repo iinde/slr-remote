@@ -1,4 +1,4 @@
-// SX1262 on the Heltec V4 via RadioLib, continuous RX, legal power cap, boot TX hold-off.
+// SX1262 on the Heltec V4 via RadioLib, continuous RX, region power cap, boot TX hold-off.
 #include "radio.h"
 
 #include <Arduino.h>
@@ -16,6 +16,7 @@ SPIClass g_spi(FSPI);
 SX1262 g_radio(new Module(pins::LORA_CS, pins::LORA_DIO1, pins::LORA_RST, pins::LORA_BUSY,
                           g_spi));
 
+Region g_region = Region::Unset;
 volatile bool g_irq = false;
 bool g_ready = false;
 uint8_t g_sf = 7;
@@ -98,7 +99,9 @@ void fem_ctx_tx(bool tx) { digitalWrite(pins::FEM_CTX_V43, tx ? HIGH : LOW); }
 // Puts an SX1262 that RadioLib may not own (never begun, or begin failed) into cold sleep.
 void force_chip_sleep() {
   g_spi.begin(pins::LORA_SCK, pins::LORA_MISO, pins::LORA_MOSI, pins::LORA_CS);
-  if (g_radio.begin(radiocfg::FREQ_MHZ, radiocfg::BW_KHZ, radiocfg::SF_MIN, radiocfg::CR_DENOM,
+  // Receive side only, nothing goes on air (with no region set this tunes to the EU figures).
+  const RegionCfg& rc = region_cfg(g_region);
+  if (g_radio.begin(rc.freq_mhz, rc.bw_khz, radiocfg::SF_MIN, radiocfg::CR_DENOM,
                     radiocfg::SYNC_WORD, kSxMinDbm, radiocfg::PREAMBLE,
                     radiocfg::TCXO_V) == RADIOLIB_ERR_NONE) {
     g_radio.sleep(false);
@@ -116,15 +119,24 @@ bool begin_failed(const char* what, int16_t st) {
 
 }  // namespace
 
+void radio_set_region(Region r) { g_region = r; }
+
+Region radio_region() { return g_region; }
+
+float radio_bw_khz() { return region_cfg(g_region).bw_khz; }
+
 int8_t radio_legal_sx_dbm(int8_t ant_gain_dbi) {
-  float limit = radiocfg::ERP_LIMIT_DBM + 2.15f - ant_gain_dbi - radiocfg::FEM_GAIN_DB;
-  int lim = static_cast<int>(floorf(limit));
-  if (lim > radiocfg::SX_MAX_DBM) lim = radiocfg::SX_MAX_DBM;
-  if (lim < kSxMinDbm) lim = kSxMinDbm;
-  return static_cast<int8_t>(lim);
+  return region_legal_sx_dbm(g_region, ant_gain_dbi, radiocfg::FEM_GAIN_DB, radiocfg::SX_MAX_DBM,
+                             kSxMinDbm);
 }
 
 bool radio_begin(uint8_t sf, int8_t ant_gain_dbi) {
+  // No region chosen: the radio stays down, so nothing can go out on the wrong band.
+  if (!region_can_tx(g_region)) {
+    Serial.println("[radio] no region set: radio stays off");
+    return false;
+  }
+  const RegionCfg& rc = region_cfg(g_region);
   if (sf < radiocfg::SF_MIN || sf > radiocfg::SF_MAX) sf = radiocfg::SF_MIN;
   g_ant_gain = ant_gain_dbi;
   g_tx_dbm = radio_legal_sx_dbm(ant_gain_dbi);
@@ -132,7 +144,7 @@ bool radio_begin(uint8_t sf, int8_t ant_gain_dbi) {
   hw_fem(true);
   g_spi.begin(pins::LORA_SCK, pins::LORA_MISO, pins::LORA_MOSI, pins::LORA_CS);
 
-  int16_t st = g_radio.begin(radiocfg::FREQ_MHZ, radiocfg::BW_KHZ, sf, radiocfg::CR_DENOM,
+  int16_t st = g_radio.begin(rc.freq_mhz, rc.bw_khz, sf, radiocfg::CR_DENOM,
                              radiocfg::SYNC_WORD, g_tx_dbm, radiocfg::PREAMBLE,
                              radiocfg::TCXO_V);
   if (st != RADIOLIB_ERR_NONE) return begin_failed("begin", st);
@@ -183,6 +195,7 @@ int8_t radio_tx_out_dbm() { return g_tx_dbm + radiocfg::FEM_GAIN_DB; }
 
 RadioTx radio_send(const uint8_t* data, uint8_t len) {
   if (!g_ready || data == nullptr || len == 0) return RadioTx::NotStarted;
+  if (!region_can_tx(g_region)) return RadioTx::NotStarted;
   if (tx_hold_off_active()) return RadioTx::NotStarted;
 
   stash_pending();  // S5: the transmit overwrites the chip's buffer, so read it out first
@@ -244,7 +257,7 @@ bool radio_rx_fault() { return g_ready && g_rx_fails >= kRxFaultFails; }
 bool radio_rx_pending() { return g_ready && (g_stash_valid || g_irq); }
 
 uint32_t radio_airtime_ms(uint8_t len) {
-  return lora_airtime_ms(g_sf, radiocfg::BW_KHZ, radiocfg::CR_DENOM, radiocfg::PREAMBLE, len);
+  return lora_airtime_ms(g_sf, radio_bw_khz(), radiocfg::CR_DENOM, radiocfg::PREAMBLE, len);
 }
 
 void radio_sleep() {

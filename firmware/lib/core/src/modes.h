@@ -61,6 +61,8 @@ struct ObEnv {
   uint8_t sf = 7;
   uint16_t hh_permille = 0;   // handheld airtime used (relay)
   uint16_t cam_permille = 0;  // camera board airtime used, from its last Ack (relay)
+  float bw_khz = 125.0f;      // relay: the region's bandwidth (EU unless the app says otherwise)
+  uint32_t budget_ms = 360000;  // relay: the region's hourly airtime budget
   uint8_t batt = 255;         // handheld %, 255 = unknown (USB)
   uint32_t lead_ms = 0;       // relay: a timed Shot leaves this much before zero
   uint8_t n_views = 1;        // MAIN + views

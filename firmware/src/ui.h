@@ -56,6 +56,7 @@ struct UiModel {
   uint8_t bars = 0;            // 0..4
   float margin_db = 0, rssi_up = 0, snr_up = 0, rssi_dn = 0, snr_dn = 0;
   uint8_t sf = 7;
+  uint16_t bw_khz = 125;       // the active region's bandwidth
   int8_t tx_out_dbm = 0;
   float success_pct = 0;
   uint16_t rtt_ms = 0;

@@ -144,5 +144,5 @@ c.para(M + 30, fy + 80,
        "On the slow link settings every radio step takes longer; the Bluetooth steps stay the same.",
        24, W - 2 * M - 60, GRAPHITE)
 
-c.footer("Firmware 0.3.0, relay mode, single shot.")
+c.footer("Firmware 0.4.0, EU 868, relay mode, single shot.")
 c.save("shot-sequence")

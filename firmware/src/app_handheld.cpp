@@ -343,7 +343,7 @@ uint32_t ping_interval() {
 }
 
 uint32_t airtime_at(uint8_t sf, uint8_t len) {
-  return lora_airtime_ms(sf, radiocfg::BW_KHZ, radiocfg::CR_DENOM, radiocfg::PREAMBLE, len);
+  return lora_airtime_ms(sf, radio_bw_khz(), radiocfg::CR_DENOM, radiocfg::PREAMBLE, len);
 }
 
 // The camera board refuses non-priority Acks (pings) above 80 % of its hour. While it last
@@ -1554,6 +1554,10 @@ void command(MsgType type, uint32_t now, uint16_t focus_ms = FOCUS_DEFAULT, uint
     return;
   }
   if (g.relay) {
+    if (!region_can_tx(radio_region())) {  // no region chosen: the radio is silent by design
+      show_toast("SET REGION IN SETUP", now);
+      return;
+    }
     if (!g.paired) {
       show_toast("NOT PAIRED", now);
       return;
@@ -2079,6 +2083,8 @@ ObEnv ob_env(uint32_t now) {
   e.sf = g.relay && g.radio_ok ? radio_sf() : g.s->last_sf;
   e.hh_permille = g.relay ? duty_permille() : 0;
   e.cam_permille = g.relay ? g.cam_duty : 0;
+  e.bw_khz = radio_bw_khz();
+  e.budget_ms = duty_budget_ms();
   e.batt = g.batt;
   if (g.relay) {
     // A timed Shot leaves this early: its own airtime and the Ack, or the last round trip.
@@ -2436,6 +2442,7 @@ void fill_link(UiModel& m, uint32_t now) {
     m.rssi_dn = fresh ? g.rssi_dn : NAN;
     m.snr_dn = fresh ? g.snr_dn : NAN;
     m.sf = g.radio_ok ? radio_sf() : g.s->last_sf;
+    m.bw_khz = (uint16_t)radio_bw_khz();
     m.tx_out_dbm = g.radio_ok ? radio_tx_out_dbm() : 0;
     m.success_pct = g.link.successPct();
     m.rtt_ms = fresh ? g.rtt : 0;  // "RTT --" once the link is gone, not a stale figure
@@ -2517,6 +2524,10 @@ void ui_step(uint32_t now) {
     // S7: say why OFF is waiting while a direct Release is still being retried.
     m.big2 = g.qn ? "Telling camera..."
              : !g.relay && g.exec.releasePending() ? "Releasing camera" : "Release button";
+  } else if (g.relay && !region_can_tx(radio_region())) {
+    // Before pairing: the boards pair on the region's channel.
+    m.big1 = "SET REGION";
+    m.big2 = setup_how;
   } else if (g.relay && !g.paired) {
     m.big1 = "PAIR BOARDS";
     m.big2 = setup_how;
@@ -2600,7 +2611,8 @@ void app_handheld_setup(Settings& s) {
     g.link.setAdaptive(s.adaptive_sf);
     if (rtc_link_valid) g.link.restore(rtc_link);  // ignored unless still on that SF
     if (g.paired) g.radio_ok = radio_begin(sf, s.ant_gain_dbi);
-    if (g.paired && !g.radio_ok) show_toast("RADIO FAILED", now);
+    if (g.paired && !g.radio_ok)
+      show_toast(region_can_tx(radio_region()) ? "RADIO FAILED" : "SET REGION IN SETUP", now);
     // L5: a wake always transmits: store this boot's counter block now (one NVS write, at times
     // a slow page clean-up), not inside the first press. Costs one unused counter.
     if (g.radio_ok && hw_woke_from_sleep()) store_skip_ctr(0);
@@ -2684,8 +2696,8 @@ void app_handheld_loop() {
 
 void app_handheld_print_stat() {
   const uint32_t now = millis();
-  Serial.printf("handheld: mode=%s paired=%d radio=%d\n", g.relay ? "relay" : "direct", g.paired,
-                g.radio_ok);
+  Serial.printf("handheld: mode=%s paired=%d radio=%d region=%s\n", g.relay ? "relay" : "direct",
+                g.paired, g.radio_ok, region_key(radio_region()));
   if (g.relay) {
     Serial.printf("lora: sf=%u link_sf=%u req_sf=%u rescue=%d tx_set=%d tx_out=%d dBm adaptive=%d\n",
                   g.radio_ok ? radio_sf() : 0, g.link.sf(), g.link.requestedSf(), g.rescue,
@@ -2764,6 +2776,7 @@ void app_handheld_print_json_status() {
            (unsigned)g.t.stage, g.t.err, g.t.rtt);
   b.printf("\"batt\":%u,", g.batt);
   if (g.relay) {
+    b.jstr("region", region_key(radio_region()));
     b.printf("\"paired\":%s,\"radio\":%s,\"link_ok\":%s,\"sf\":%u,\"duty_permille\":%u,"
              "\"cam_duty_permille\":%u,\"cam_batt\":%u,",
              g.paired ? "true" : "false", g.radio_ok ? "true" : "false",

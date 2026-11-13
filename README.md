@@ -93,7 +93,7 @@ One button drives everything. A tap shoots, a hold is a half-press, and a longer
 
 The link looks after itself. Close in, it runs fast. As you walk away it shifts to a slower, longer reaching setting and the screen changes from `FAST` to `SLOW`. Walk back and it speeds up again. If the two units lose each other, they find each other again without you touching anything.
 
-It keeps itself legal on the air too, so you never have to think about it.
+It keeps itself legal on the air too. Tell it once where you are, `EU 868` for the UK and EU or `US 915` for the United States, and it uses the right band and keeps to that band's rules from then on.
 
 A few more things I am pleased with:
 
@@ -109,12 +109,14 @@ Every gesture and every screen word is explained in [docs/user-guide.md](docs/us
 
 ## Build one
 
-1. Gather the parts: two Heltec WiFi LoRa 32 V4 boards, two LiPo cells, two 868 MHz antennas and eight screws. The list is in [docs/shopping-list.md](docs/shopping-list.md).
+1. Gather the parts: two Heltec WiFi LoRa 32 V4 boards, two LiPo cells, two antennas for your band (868 MHz in the UK and EU, 915 MHz in the US) and eight screws. The list is in [docs/shopping-list.md](docs/shopping-list.md).
 2. Print the cases and put the units together. Every part prints with no supports, and there is very little wiring. See [docs/build-guide.md](docs/build-guide.md).
-3. Flash the same firmware onto both boards, choose which is the handheld, and pair them with each other and the camera. See [docs/flashing-and-pairing.md](docs/flashing-and-pairing.md).
+3. Flash the same firmware onto both boards, choose which is the handheld, set your region, and pair them with each other and the camera. See [docs/flashing-and-pairing.md](docs/flashing-and-pairing.md).
 4. Go and shoot. Keep [docs/user-guide.md](docs/user-guide.md) open the first time out.
 
 New to all of this? Start at [docs/getting-started.md](docs/getting-started.md). If something will not behave, try [docs/troubleshooting.md](docs/troubleshooting.md) and the [FAQ](docs/faq.md). Read [docs/safety-and-legal.md](docs/safety-and-legal.md) before you transmit, and always fit the antenna before you switch on.
+
+Building in the United States? It is the same board and the same firmware. Buy 915 MHz antennas and set `Region` to `US 915` on both boards. The `US 915` setting is built to the US rules but has not been tested on air yet: I am in the UK and cannot legally transmit on 915 MHz here. If you build one in the States, tell me how it goes.
 
 ## Specs
 
@@ -122,8 +124,9 @@ New to all of this? Start at [docs/getting-started.md](docs/getting-started.md).
 |---|---|
 | Camera | Fujifilm X and GFX cameras with Bluetooth, through the standard Fujifilm remote release. Built and tested on the X-E5 |
 | Boards | 2 x Heltec WiFi LoRa 32 V4 (ESP32-S3, SX1262 LoRa radio, 0.96 inch OLED) |
-| Long range link | LoRa at 869.525 MHz (UK and EU band), 125 kHz bandwidth, spreading factor 7 to 12, chosen automatically |
-| Radio power | Up to the legal limit for the band (27 dBm ERP), capped from the antenna gain you tell it |
+| Long range link | LoRa, spreading factor 7 to 12, chosen automatically. Set `Region` to match where you are |
+| Region `EU 868` (UK and EU) | 869.525 MHz, 125 kHz bandwidth, up to the legal limit of 27 dBm ERP, capped from the antenna gain you tell it, 10% airtime limit kept for you |
+| Region `US 915` (United States) | 918.0 MHz, 500 kHz bandwidth, about 25 dBm into the antenna, no airtime limit. Built to the US rules, not yet tested on air |
 | Response | On the bench, at the fast link setting: about 180 to 225 ms from the handheld sending to the camera unit accepting the press, then about 140 ms for each Bluetooth command to the camera |
 | Camera link | Bluetooth LE (the low energy kind of Bluetooth), using the camera's built-in remote release |
 | Pairing | 6-digit code checked on both screens, every message signed |
@@ -132,7 +135,7 @@ New to all of this? Start at [docs/getting-started.md](docs/getting-started.md).
 | Handheld | 61 x 45.7 x 21.6 mm, without antenna |
 | Camera unit | 81.3 x 45.7 x 21.6 mm, without antenna |
 | Case | 8 printed pieces, no supports, 4 x M2 x 16 mm screws per unit |
-| Firmware | 0.3.0, open source, built with PlatformIO |
+| Firmware | 0.4.0, open source, built with PlatformIO |
 
 How speed trades against reach at each link setting is in [docs/range.md](docs/range.md). What changed in each version is in the [changelog](CHANGELOG.md). How the project got here, including the shoot button that jammed and the one that replaced it, is in [docs/design-story.md](docs/design-story.md).
 

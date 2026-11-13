@@ -2,6 +2,7 @@
 #pragma once
 #include <stdint.h>
 // Low data-rate optimisation is enabled automatically when symbol time >= 16 ms
-// (SF11/SF12 at 125 kHz).
+// (SF11/SF12 at 125 kHz; never at 500 kHz, where the SF12 symbol is 8.2 ms). The SX1262
+// driver decides it the same way, so the two always agree.
 uint32_t lora_airtime_ms(uint8_t sf, float bw_khz, uint8_t cr_denom, uint16_t preamble,
                          uint8_t payload_len);

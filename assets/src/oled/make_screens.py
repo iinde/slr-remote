@@ -99,6 +99,6 @@ if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     singles()
     # the short sheet for the README, then every screen for the screens README
-    sheet("screens-sheet.png", [s for s in SCREENS if s[3]], "What you see on the handheld, firmware 0.3.0")
-    sheet("screens-all.png", SCREENS, "Screens on the 128 x 64 OLED, firmware 0.3.0")
+    sheet("screens-sheet.png", [s for s in SCREENS if s[3]], "What you see on the handheld, firmware 0.4.0")
+    sheet("screens-all.png", SCREENS, "Screens on the 128 x 64 OLED, firmware 0.4.0")
     print("wrote", len(SCREENS) + 2, "images to", OUT)

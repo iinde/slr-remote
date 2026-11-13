@@ -33,6 +33,7 @@ void help() {
       "commands: help stat dump clear notify forget-cam forget-pair\n"
       "  role <h|c>  mode <direct|relay>  sf <auto|7..12>  focus <ms>\n"
       "  gain <dBi> [force]  geotag <on|off>  reset  reboot\n"
+      "  region <eu|us>           radio band: set the same on both boards\n"
       "one button (handheld):\n"
       "  cfg                      every setting, one pasteable line each\n"
       "  press classic|a|b|c      press style (reboot to apply)\n"
@@ -80,12 +81,13 @@ bool print_kv(const Settings& s, const char* k) {
   else if (!strcmp(k, "role")) Serial.printf("role %s\n", s.role == Role::Camera ? "c" : "h");
   else if (!strcmp(k, "geotag")) Serial.printf("geotag %s\n", s.geotag ? "on" : "off");
   else if (!strcmp(k, "gain")) Serial.printf("gain %d\n", (int)s.ant_gain_dbi);
+  else if (!strcmp(k, "region")) Serial.printf("region %s\n", region_key(s.region));
   else return false;
   return true;
 }
 
-// The profile: shooting and one-button settings only. Role, link mode, SF, antenna and
-// geotag belong to one board and are never part of a profile.
+// The profile: shooting and one-button settings only. Role, region, link mode, SF, antenna
+// and geotag belong to one board and are never part of a profile.
 const char* const kProfileKeys[] = {"press", "modes", "afmax", "aflock", "timer", "iv", "burst",
                                     "bulb", "holdcap", "wake", "rstgest", "aux", "led", "focus"};
 
@@ -105,12 +107,12 @@ void print_json(const Settings& s) {
   b.printf("],\"afmax\":%u,\"aflock\":%u,\"timer\":%u,\"iv_every\":%u,\"iv_count\":%u,"
            "\"burst\":%u,\"bulb\":%u,\"holdcap\":%u,\"wake\":\"%s\",\"rstgest\":%s,"
            "\"aux\":%u,\"led\":%s,\"focus\":%u,\"sf\":\"%s\",\"fixed_sf\":%u,"
-           "\"geotag\":%s,\"gps\":%s,\"two_stage\":%s,\"gain\":%d}",
+           "\"geotag\":%s,\"gps\":%s,\"two_stage\":%s,\"gain\":%d,\"region\":\"%s\"}",
            s.af_limit_s, s.aflock_s, s.timer_s, s.iv_every_s, s.iv_count, s.burst_ms, s.bulb_s,
            s.hold_cap_s, s.wake_act ? "act" : "wake", s.rst_gest ? "true" : "false", s.aux_pin,
            s.led_cues ? "true" : "false", s.focus_ms, s.adaptive_sf ? "auto" : "fixed",
            s.fixed_sf, s.geotag ? "true" : "false", s.hh_gps ? "true" : "false",
-           s.two_stage ? "true" : "false", (int)s.ant_gain_dbi);
+           s.two_stage ? "true" : "false", (int)s.ant_gain_dbi, region_key(s.region));
   b.send();
 }
 
@@ -143,10 +145,11 @@ void print_stat(const Settings& s) {
                 s.role == Role::Camera ? "camera" : "handheld",
                 s.mode == Mode::Relay ? "relay" : "direct", (unsigned long)(millis() / 1000),
                 (unsigned)hw_batt_pct(), hw_vbat());
-  Serial.printf("settings: two_stage=%d focus=%u sf=%s%u last_sf=%u gain=%d geotag=%d hh_gps=%d\n",
+  Serial.printf("settings: two_stage=%d focus=%u sf=%s%u last_sf=%u gain=%d geotag=%d hh_gps=%d "
+                "region=%s\n",
                 s.two_stage, (unsigned)s.focus_ms, s.adaptive_sf ? "auto/" : "fixed/",
                 (unsigned)s.fixed_sf, (unsigned)s.last_sf, (int)s.ant_gain_dbi, s.geotag,
-                s.hh_gps);
+                s.hh_gps, region_key(s.region));
   if (g_in_menu) Serial.println(F("in setup menu (no role running)"));
   else if (s.role == Role::Camera) app_camera_print_stat();
   else app_handheld_print_stat();
@@ -319,12 +322,13 @@ bool handle_ob(Settings& s, const char* line, char* arg) {
     } else { refuse("tally off|3|4|6|34 (34 = LED across GPIO3 and GPIO4)"); return true; }
     saved(s, true);
   } else if (!strcmp(line, "get")) {
-    if (!print_kv(s, arg)) refuse("unknown key (press modes afmax aflock timer iv burst bulb holdcap wake rstgest aux led tally rlog focus sf mode role geotag gain)");
+    if (!print_kv(s, arg)) refuse("unknown key (press modes afmax aflock timer iv burst bulb holdcap wake rstgest aux led tally rlog focus sf mode role geotag gain region)");
   } else if (!strcmp(line, "json")) {
     print_json(s);
   } else if (!strcmp(line, "jstat")) {
-    if (g_in_menu) Serial.println(F("{\"in_menu\":true}"));
-    else if (s.role == Role::Camera) Serial.println(F("{\"role\":\"camera\"}"));
+    if (g_in_menu) Serial.printf("{\"in_menu\":true,\"region\":\"%s\"}\n", region_key(s.region));
+    else if (s.role == Role::Camera)
+      Serial.printf("{\"role\":\"camera\",\"region\":\"%s\"}\n", region_key(radio_region()));
     else app_handheld_print_json_status();
   } else if (!strcmp(line, "setup")) {
     if (g_in_menu) { Serial.println(F("ok (already in the setup menu)")); return true; }
@@ -381,7 +385,7 @@ void handle(Settings& s, char* line) {
       line = arg;
       arg = v;
     } else {
-      refuse("set: unknown or console-only key (role, mode and gain have their own commands)");
+      refuse("set: unknown or console-only key (role, region, mode and gain have their own commands)");
       return;
     }
   }
@@ -457,6 +461,13 @@ void handle(Settings& s, char* line) {
     }
     s.ant_gain_dbi = (int8_t)v;
     saved(s, true);
+  } else if (!strcmp(line, "region")) {
+    // Both boards need the same region. The running radio keeps its band until the reboot;
+    // the setup menu applies it at once, so there it is a plain ok.
+    Region r;
+    if (!region_from_key(arg, r)) { Serial.println(F("usage: region <eu|us>")); return; }
+    s.region = r;
+    saved(s, !g_in_menu);
   } else if (!strcmp(line, "geotag")) {
     bool on;
     if (!parse_onoff(arg, on)) { Serial.println(F("usage: geotag <on|off>")); return; }

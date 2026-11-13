@@ -6,7 +6,7 @@ The OLED on each board is 128 x 64 pixels, white on black. To get the mock-ups r
 
 What that means in practice:
 
-- Layout, fonts and wording are what firmware 0.3.0 draws.
+- Layout, fonts and wording are what firmware 0.4.0 draws.
 - The numbers (battery levels, signal, shot counts) are example values I chose.
 - A real OLED looks different in the hand: it glows, and the pixels have small gaps between them.
 
@@ -48,7 +48,7 @@ Most are handheld screens in relay mode (handheld to camera unit over LoRa, came
 - **Signal bars**: how much margin the LoRa link has. LoRa is a slow, long-range radio system.
 - **FAST or SLOW**: the link speed. LoRa trades speed for range with a setting called the spreading factor. The firmware picks it by itself: 7 to 9 shows as FAST, 10 to 12 as SLOW.
 - **H and C**: handheld and camera unit batteries.
-- **AIR n%**: how much of this hour's legal transmit time is left. In the EU band used here a device may transmit for at most 10% of any hour (the duty cycle).
+- **AIR n%**: how much of this hour's legal transmit time is left. On the `EU 868` region shown here a device may transmit for at most 10% of any hour (the duty cycle). The `US 915` region has no such limit.
 - **Bottom bar**: what a tap or a hold of the one button does right now.
 
 ## The four progress dots

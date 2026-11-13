@@ -5,15 +5,16 @@
 
 namespace {
 
-uint32_t air(uint8_t sf, uint8_t len) { return lora_airtime_ms(sf, 125.0f, 5, 8, len); }
+uint32_t air(uint8_t sf, float bw_khz, uint8_t len) { return lora_airtime_ms(sf, bw_khz, 5, 8, len); }
 
 uint32_t count_eff(uint16_t every_s, uint16_t count) {
   if (count) return count;
   return PLAN_MAX_RUN_S / (every_s ? every_s : 1) + 1;
 }
 
-uint32_t permille_up(uint64_t ms) {
-  const uint64_t p = (ms * 1000 + PLAN_BUDGET_MS - 1) / PLAN_BUDGET_MS;
+uint32_t permille_up(uint64_t ms, uint32_t budget_ms) {
+  if (!budget_ms) return 65535;
+  const uint64_t p = (ms * 1000 + budget_ms - 1) / budget_ms;
   return p > 65535 ? 65535 : (uint32_t)p;
 }
 
@@ -21,26 +22,28 @@ struct Need {
   uint32_t hh, cam;  // per mille
 };
 
-Need need_for(uint8_t sf, uint16_t every_s, uint32_t shots_total) {
+Need need_for(const PlanIn& in, uint16_t every_s, uint32_t shots_total) {
+  const uint8_t sf = in.sf;
+  const float bw = in.bw_khz;
   const uint32_t dur_s = shots_total ? (shots_total - 1) * (uint32_t)every_s : 0;
   const uint32_t window_ms = (dur_s < 3600 ? dur_s : 3600) * 1000;
   uint32_t per_hour = 3600 / (every_s ? every_s : 1) + 1;
   const uint32_t shots = shots_total < per_hour ? shots_total : per_hour;
-  const uint32_t ping = air(sf, PLAN_PING_FRAME), ack = air(sf, PLAN_ACK_FRAME);
+  const uint32_t ping = air(sf, bw, PLAN_PING_FRAME), ack = air(sf, bw, PLAN_ACK_FRAME);
   const uint32_t iv = ping_interval_ms(ping, ack, 2000);
   const uint32_t pings = iv ? window_ms / iv : 0;
   // x1.5 retry margin on the shots (integer: *3/2).
-  const uint64_t hh = (uint64_t)shots * plan_shot_cost_ms(sf, false) * 3 / 2 + (uint64_t)pings * ping;
-  const uint64_t cam = (uint64_t)shots * plan_shot_cost_ms(sf, true) * 3 / 2 + (uint64_t)pings * ack;
-  return Need{permille_up(hh), permille_up(cam)};
+  const uint64_t hh = (uint64_t)shots * plan_shot_cost_ms(sf, false, bw) * 3 / 2 + (uint64_t)pings * ping;
+  const uint64_t cam = (uint64_t)shots * plan_shot_cost_ms(sf, true, bw) * 3 / 2 + (uint64_t)pings * ack;
+  return Need{permille_up(hh, in.budget_ms), permille_up(cam, in.budget_ms)};
 }
 
 bool fits(const PlanIn& in, uint16_t every_s, uint32_t shots, uint16_t* need, uint16_t* have) {
-  const Need n = need_for(in.sf, every_s, shots);
+  const Need n = need_for(in, every_s, shots);
   const uint32_t have_hh = in.hh_permille >= 1000 ? 0 : 1000 - in.hh_permille;
   const uint32_t have_cam = in.cam_permille >= 1000 ? 0 : 1000 - in.cam_permille;
   // Too fast to finish one round trip between shots: never fits.
-  const uint32_t trip = plan_shot_cost_ms(in.sf, false) + plan_shot_cost_ms(in.sf, true);
+  const uint32_t trip = plan_shot_cost_ms(in.sf, false, in.bw_khz) + plan_shot_cost_ms(in.sf, true, in.bw_khz);
   const bool fast_ok = (uint32_t)every_s * 1000 > trip + 500;
   const bool ok = fast_ok && n.hh <= have_hh && n.cam <= have_cam;
   if (need && have) {
@@ -56,8 +59,8 @@ bool fits(const PlanIn& in, uint16_t every_s, uint32_t shots, uint16_t* need, ui
 
 }  // namespace
 
-uint32_t plan_shot_cost_ms(uint8_t sf, bool camera_side) {
-  return camera_side ? 2 * air(sf, PLAN_ACK_FRAME) : air(sf, PLAN_SHOT_FRAME);
+uint32_t plan_shot_cost_ms(uint8_t sf, bool camera_side, float bw_khz) {
+  return camera_side ? 2 * air(sf, bw_khz, PLAN_ACK_FRAME) : air(sf, bw_khz, PLAN_SHOT_FRAME);
 }
 
 PlanOut plan_interval(const PlanIn& in) {
@@ -90,8 +93,9 @@ PlanOut plan_interval(const PlanIn& in) {
   return o;
 }
 
-bool plan_shot_fits(uint8_t sf, uint16_t hh_permille, uint16_t cam_permille) {
-  const uint64_t hh_left = hh_permille >= 1000 ? 0 : (uint64_t)PLAN_BUDGET_MS * (1000 - hh_permille) / 1000;
-  const uint64_t cam_left = cam_permille >= 1000 ? 0 : (uint64_t)PLAN_BUDGET_MS * (1000 - cam_permille) / 1000;
-  return hh_left >= plan_shot_cost_ms(sf, false) && cam_left >= plan_shot_cost_ms(sf, true);
+bool plan_shot_fits(uint8_t sf, uint16_t hh_permille, uint16_t cam_permille, float bw_khz,
+                    uint32_t budget_ms) {
+  const uint64_t hh_left = hh_permille >= 1000 ? 0 : (uint64_t)budget_ms * (1000 - hh_permille) / 1000;
+  const uint64_t cam_left = cam_permille >= 1000 ? 0 : (uint64_t)budget_ms * (1000 - cam_permille) / 1000;
+  return hh_left >= plan_shot_cost_ms(sf, false, bw_khz) && cam_left >= plan_shot_cost_ms(sf, true, bw_khz);
 }

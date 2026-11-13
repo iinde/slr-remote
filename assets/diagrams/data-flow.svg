@@ -860,7 +860,7 @@ z
     <text style="font-size: 9.72px; font-family: 'DIN Alternate'; text-anchor: middle; fill: #ff6410" x="387" y="165.6" transform="rotate(-0 387 165.6)">LoRa RADIO LINK</text>
    </g>
    <g id="text_25">
-    <text style="font-size: 9.36px; font-family: 'Avenir Next Medium'; text-anchor: middle; fill: #23272b" x="387" y="180" transform="rotate(-0 387 180)">869.525 MHz, built for distance</text>
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Medium'; text-anchor: middle; fill: #23272b" x="387" y="180" transform="rotate(-0 387 180)">868 or 915 MHz, built for distance</text>
    </g>
    <g id="text_26">
     <text style="font-size: 9px; font-family: 'Avenir Next Medium'; text-anchor: middle; fill: #23272b" x="387" y="231.12" transform="rotate(-0 387 231.12)">the command, signed</text>

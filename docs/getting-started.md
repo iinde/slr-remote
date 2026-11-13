@@ -25,7 +25,9 @@ With it you get the whole shutter button at a distance: half-press to hold focus
 
 The camera: this is for Fujifilm cameras. I built and tested it on the X-E5, and it uses Fujifilm's standard Bluetooth remote release, the same one the phone app uses, so it will likely work with most modern Fujifilm X and GFX cameras that have Bluetooth. If you try it on another body, I would love to hear how it goes.
 
-Where you live: the radio is set for the UK and EU licence-free band at 868 MHz, and the firmware keeps itself inside the legal limits without you thinking about it. See [safety-and-legal.md](safety-and-legal.md).
+Where you live: the remote has a `Region` setting with two choices. `EU 868` is the UK and EU licence-free band, and `US 915` is the United States one. You pick it once in the setup menu, and from then on the firmware keeps itself inside the limits for that band without you thinking about it. The boards are the same for both, and only the antennas differ. See [safety-and-legal.md](safety-and-legal.md), which also covers what I know about other countries.
+
+The `US 915` setting is built to the US rules but has not been tested on air yet: I am in the UK and cannot legally transmit on 915 MHz here. If you build one in the States, tell me how it goes.
 
 What you need to be able to do:
 
@@ -40,19 +42,19 @@ If you have ever fitted a battery grip and updated a lens's firmware, you can bu
 
 ## The checklist
 
-1. Order the parts. Two Heltec WiFi LoRa 32 V4 boards (the 868 MHz version, which some sellers list as EU868 or 863 to 928 MHz), two LiPo cells, two 868 MHz antennas, eight M2 x 16 mm screws and some filament.
+1. Order the parts. Two Heltec WiFi LoRa 32 V4 boards (the 863 to 928 MHz version, which sellers may also list as 868 MHz or 915 MHz), two LiPo cells, two antennas for your band (868 MHz in the UK and EU, 915 MHz in the US), eight M2 x 16 mm screws and some filament.
    Detail: [shopping-list.md](shopping-list.md)
 
 2. Print the case. Three plates, supports off. The slicer estimate is about 46 minutes for the handheld, 54 for the camera unit and 6 for the buttons, so around 1 hour 45 minutes of printing.
    Detail: [build-guide.md](build-guide.md#printing)
 
-3. Fit an antenna to each board. Click the antenna lead onto the board's small LoRa socket, then screw the 868 MHz antenna onto the lead's SMA end. Do this before a board is ever powered: a radio transmitting with no antenna can damage itself.
+3. Fit an antenna to each board. Click the antenna lead onto the board's small LoRa socket, then screw the antenna onto the lead's SMA end. Do this before a board is ever powered: a radio transmitting with no antenna can damage itself.
 
 4. Flash both boards. One firmware goes on both. Do it with the bare boards on the desk, where you can reach the buttons and see the screens.
    Detail: [flashing-and-pairing.md](flashing-and-pairing.md#2-build-and-flash)
 
-5. Choose each board's role. One becomes the handheld (in relay mode), the other the camera unit.
-   Detail: [flashing-and-pairing.md](flashing-and-pairing.md#3-choose-each-boards-role)
+5. Choose each board's role and region. One becomes the handheld (in relay mode), the other the camera unit. Then set `Region` on both to `EU 868` or `US 915`, the same on each. The radio stays silent until you have.
+   Detail: [flashing-and-pairing.md](flashing-and-pairing.md#3-choose-each-boards-role-and-region)
 
 6. Pair the two boards. Both screens show a six-digit code. If they match, hold the button on each. You have 2 minutes.
    Detail: [flashing-and-pairing.md](flashing-and-pairing.md#4-pair-the-two-boards)

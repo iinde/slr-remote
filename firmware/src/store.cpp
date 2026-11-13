@@ -18,6 +18,7 @@ bool g_prefs_open = false;
 
 // NVS keys (max 15 chars).
 constexpr const char* kRole = "role";
+constexpr const char* kRegion = "region";
 constexpr const char* kMode = "mode";
 constexpr const char* kTwoStage = "two";
 constexpr const char* kFocus = "focus";
@@ -149,6 +150,10 @@ void store_begin() {
 namespace {
 Settings g_saved;
 bool g_saved_valid = false;
+// The region key is in NVS. Until it is, every save writes it: a region that was only worked
+// out from the role (region_on_load) must not change when the role does, and a fresh board
+// that is given a role before a region must stay Unset, not load as EU next boot.
+bool g_region_stored = false;
 }  // namespace
 // (Declared above store_load so a load can seed it: C5.)
 
@@ -157,6 +162,9 @@ void store_load(Settings& s) {
   if (!ensure_prefs()) return;
   uint8_t role = g_prefs.getUChar(kRole, static_cast<uint8_t>(Role::Unset));
   if (role <= static_cast<uint8_t>(Role::Camera)) s.role = static_cast<Role>(role);
+  const bool has_region = g_prefs.isKey(kRegion);
+  s.region = region_on_load(has_region, has_region ? g_prefs.getUChar(kRegion, 0) : 0,
+                            s.role != Role::Unset);
   uint8_t mode = g_prefs.getUChar(kMode, static_cast<uint8_t>(Mode::Direct));
   if (mode <= static_cast<uint8_t>(Mode::Relay)) s.mode = static_cast<Mode>(mode);
   s.two_stage = g_prefs.getBool(kTwoStage, s.two_stage);
@@ -210,6 +218,7 @@ void store_load(Settings& s) {
   // setting follows the default of whatever firmware is running (the first save used to pin it).
   g_saved = s;
   g_saved.tally_pin = tally_stored;  // a tally cleared above is written back by the next save
+  g_region_stored = has_region;
   g_saved_valid = true;
 }
 
@@ -232,7 +241,17 @@ bool store_save(const Settings& s) {
   const bool all = !g_saved_valid;
   const Settings& o = g_saved;
 #define CH(f) (all || s.f != o.f)
-  if (CH(role)) ok &= g_prefs.putUChar(kRole, static_cast<uint8_t>(s.role)) != 0;
+  // Region goes to flash before role. A role with no region key reads as a board from before
+  // regions (EU 868) on the next boot, so a save cut short or failed between the two must
+  // never leave that pair behind: the role is written only once the region key is in place.
+  if (region_must_write(CH(region), g_region_stored)) {
+    g_region_stored = g_prefs.putUChar(kRegion, static_cast<uint8_t>(s.region)) != 0;
+    ok &= g_region_stored;
+  }
+  if (CH(role)) {
+    if (region_role_may_write(g_region_stored)) ok &= g_prefs.putUChar(kRole, static_cast<uint8_t>(s.role)) != 0;
+    else ok = false;
+  }
   if (CH(mode)) ok &= g_prefs.putUChar(kMode, static_cast<uint8_t>(s.mode)) != 0;
   if (CH(two_stage)) ok &= g_prefs.putBool(kTwoStage, s.two_stage) != 0;
   if (CH(focus_ms)) ok &= g_prefs.putUShort(kFocus, s.focus_ms) != 0;
@@ -442,6 +461,7 @@ bool store_erase(const char* key) {
 void store_factory_reset() {
   if (ensure_prefs()) g_prefs.clear();
   g_saved_valid = false;
+  g_region_stored = false;
   // Pairing is gone too, so restarting the own counter is safe.
   g_ctr_loaded = false;
   g_peer_saved = 0;

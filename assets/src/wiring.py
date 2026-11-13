@@ -37,7 +37,7 @@ def panel(px, title, role):
     c.line([(ax, BT - 11), (ax, 705)], GRAPHITE, WIRE, z=2, cap="butt")
     c.rect(ax - 17, 678, 34, 30, GREY, GREY, 0, 0, 3)
     c.rect(ax - 24, 548, 48, 132, GRAPHITE, GRAPHITE, 0, 22, 3)
-    c.text(ax - 52, 606, "868 MHz antenna", 26, BLACK, BOLD, ha="right")
+    c.text(ax - 52, 606, "868 or 915 MHz antenna", 26, BLACK, BOLD, ha="right")
     c.text(ax - 52, 638, "on the case's SMA connector,", 23, SOFT, ha="right")
     c.text(ax - 52, 667, "short SMA lead to the board", 23, SOFT, ha="right")
     # battery

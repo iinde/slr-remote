@@ -7,7 +7,7 @@ Two tools help with almost everything:
 - **The LINK page** on either unit shows signal, speed, success rate (handheld only) and airtime used. On the handheld: mode card, `VIEWS`. On the camera unit: click PRG with the screen on.
 - **The serial console.** Plug the board into a computer by USB-C, open a terminal at 115200 baud (`pio device monitor`) and type `stat`. See the [User guide](user-guide.md#serial-console-reference).
 
-Some terms used below: **LoRa** is the long-range radio between the two units. **BLE** is Bluetooth Low Energy, the short link from the camera unit to the camera. **Spreading factor (SF)** is LoRa's speed setting, 7 (fast) to 12 (slow, long range). **Duty cycle** is the legal cap on airtime: 10% of any rolling hour per board.
+Some terms used below: **LoRa** is the long-range radio between the two units. **BLE** is Bluetooth Low Energy, the short link from the camera unit to the camera. **Spreading factor (SF)** is LoRa's speed setting, 7 (fast) to 12 (slow, long range). **Duty cycle** is the legal cap on airtime on the UK and EU band: 10% of any rolling hour per board. **Region** is the setting that picks the band, `EU 868` or `US 915`.
 
 ## Contents
 
@@ -27,22 +27,25 @@ Some terms used below: **LoRa** is the long-range radio between the two units. *
 
 ## Boards will not link
 
-The handheld shows `NO LINK`, `NOT CHECKED`, `PAIR BOARDS` or `NOT PAIRED`, or the camera unit shows `BOARDS NOT PAIRED`.
+The handheld shows `NO LINK`, `NOT CHECKED`, `SET REGION`, `PAIR BOARDS` or `NOT PAIRED`, or the camera unit shows `SET REGION IN SETUP` or `BOARDS NOT PAIRED`.
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
 | Handheld shows `NOT CHECKED`, `press any button to connect` | Normal after a power-on. The handheld sends nothing until you touch the button, so a missing antenna gets noticed first. | Press the button once. |
+| `SET REGION` on the handheld (`SET REGION IN SETUP` when you press), `SET REGION IN SETUP` on the camera unit, or `Set Region first` when you start `Pair boards` | `Region` still reads `Choose`. The radio stays silent until a region is picked, so nothing is sent and nothing is heard. | Tap RST twice for the setup menu, set `Region` to `EU 868` or `US 915` on this board, check the other board shows the same, then `Exit`. |
 | `PAIR BOARDS`, `Tap RST twice` on the handheld | The boards have never been paired. | Tap RST twice for the setup menu and run `Pair boards` on both. See [Flashing and pairing](flashing-and-pairing.md). |
 | `NOT PAIRED` on the handheld when you press, `BOARDS NOT PAIRED` on the camera unit | The boards have never been paired, or one was factory reset. | Run `Pair boards` on both. See [Flashing and pairing](flashing-and-pairing.md). |
 | Handheld has no `Pair boards` item and no `FAST`/`SLOW` word | The handheld is in Direct mode. | Setup menu, `Mode`, set `Relay`, then `Exit`. |
 | Pairing shows `Pair timed out` | `Pair boards` was not started on both boards within 120 seconds, or they are too far apart. Pairing uses the lowest power setting on purpose. | Put the boards next to each other and start `Pair boards` on both at about the same time. |
+| Pairing shows `Pair timed out` with the boards side by side | The two boards are set to different regions. One is on 869.525 MHz and the other on 918.0 MHz, so they cannot hear each other. | Check `Region` in the setup menu on both. Set them the same, then pair again. |
 | `PAIR ABORTED`, `Other pairing nearby?` | Another board was pairing at the same moment, or a stray pairing message was heard. | Wait a moment and start again on both. |
 | `UNSURE: PAIR AGAIN` or `PAIR UNSURE` | The last step did not complete. One board may hold the new key and the other the old one. | Pair again on both. |
 | `DUTY LIMIT`, `Pairing waits for airtime` | The board has used its airtime for the hour. | Wait and retry. See [Duty limit reached](#duty-limit-reached). |
 | Paired, but `NO LINK` every time | The camera unit is off. It does not turn itself on. | Click PRG on the camera unit. Its screen should light. |
 | Paired, but `NO LINK` every time | The two boards are running different firmware builds. A mixed pair will not talk. | Flash both boards from the same build. |
+| Paired, but `NO LINK` every time | `Region` was changed on one board and not the other. They are now on different frequencies. | Set `Region` the same on both (console: `get region` shows it, `region eu` or `region us` sets it). The pairing itself is kept. |
 | Paired, but `NO LINK` every time | A fixed spreading factor is set on one board and not the other. | Set `SF` to `Auto` on the handheld, or type `sf auto` on both and reboot both. |
-| Worked on the bench, fails a few metres apart | Antenna loose or missing, or the wrong kind. | Check both antennas are screwed on firmly and are 868 MHz antennas. Never power a board without one. |
+| Worked on the bench, fails a few metres apart | Antenna loose or missing, or the wrong kind. | Check both antennas are screwed on firmly and are made for your band: 868 MHz for `EU 868`, 915 MHz for `US 915`. Never power a board without one. |
 | `RADIO FAILED`, `Presses not sent` | The radio chip did not start. | Restart the board. If it persists, reflash. If it still persists, suspect the board. |
 
 After a link is lost the two boards find each other again by themselves: the handheld shows `RESCUE SF12`, then `LINK FOUND`. At the slowest setting this can take a while, because each search message is long.
@@ -135,7 +138,9 @@ Set the camera to AF-S (single autofocus) for your first tests. Take one test fr
 
 You see `NOT SENT: DUTY`, `DUTY: PINGS PAUSED`, `CAM DUTY: PINGS HELD`, `AIR LIMIT`, or the `AIR n%` figure is near zero.
 
-Each board may transmit for at most 10% of any rolling hour (360 seconds). This is a legal limit for the band and the firmware enforces it. It is the price of using a band that reaches this far, and the firmware handles it for you.
+This section is about the `EU 868` region. There, each board may transmit for at most 10% of any rolling hour (360 seconds). This is a legal limit for the band and the firmware enforces it. It is the price of using a band that reaches this far, and the firmware handles it for you.
+
+On `US 915` there is no hourly airtime limit, so you should not meet these messages on a shoot. If you do, I would like to know.
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
@@ -211,7 +216,7 @@ The round knurled button is the fix for all of this. More on the case is in [cas
 |---|---|---|
 | Menu opens after you tap RST twice in quick succession | That is the shortcut: two RST taps within 3 seconds. | Tap RST once only for a plain restart. Or turn the shortcut off: setup menu, `Reset taps`, `Off` (console: `rstgest off`). |
 | Menu opens on every power-on | PRG is held down at power-on, usually by a sticking case button. | Free the button. See [Button sticks in the printed case](#button-sticks-in-the-printed-case). |
-| Menu opens on every start and `Role` shows `--` | The board has no role, either because it is new or because it was factory reset. | Set `Role`, then `Exit`. With no role, `Exit` refuses with `Pick a role first`. |
+| Menu opens on every start and `Role` shows `--` | The board has no role, either because it is new or because it was factory reset. | Set `Role` and `Region`, then `Exit`. With no role, `Exit` refuses with `Pick a role first`. |
 | Menu appears, then leaves after 30 seconds with `NO INPUT` | It was opened by RST taps and never touched. | Nothing to fix. It exits by itself and starts normally. |
 | Handheld restarts into the menu after a mode card pick | `SETUP` was chosen on the mode card and confirmed with a hold. | Choose `Exit` to go back. A tap at the `SETUP?` question answers no. |
 

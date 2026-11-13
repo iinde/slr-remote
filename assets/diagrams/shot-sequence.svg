@@ -1209,7 +1209,7 @@ z
     <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="88.381406" y="834.48" transform="rotate(-0 88.381406 834.48)">by Aaron Phull</text>
    </g>
    <g id="text_52">
-    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="831.6" y="834.48" transform="rotate(-0 831.6 834.48)">Firmware 0.3.0, relay mode, single shot.</text>
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="831.6" y="834.48" transform="rotate(-0 831.6 834.48)">Firmware 0.4.0, EU 868, relay mode, single shot.</text>
    </g>
    <g id="text_53">
     <text style="font-size: 9.72px; font-family: 'Avenir Next Demi Bold'; text-anchor: middle; fill: #ffffff" x="90" y="161.1" transform="rotate(-0 90 161.1)">YOU</text>

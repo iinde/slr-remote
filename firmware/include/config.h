@@ -41,9 +41,8 @@ constexpr int GPS_PPS = 41;
 }  // namespace pins
 
 namespace radiocfg {
-// UK/EU band 869.40-869.65 MHz: 500 mW ERP (27 dBm), 10 % duty cycle.
-constexpr float FREQ_MHZ = 869.525f;
-constexpr float BW_KHZ = 125.0f;
+// Frequency, bandwidth, power limit and duty limit depend on the region: lib/core region.h.
+// What follows is the same everywhere.
 constexpr uint8_t CR_DENOM = 5;           // coding rate 4/5
 constexpr uint8_t SYNC_WORD = 0x12;       // private network
 constexpr uint16_t PREAMBLE = 8;
@@ -52,11 +51,9 @@ constexpr uint8_t SF_MIN = 7, SF_MAX = 12;
 // Front end adds ~+11 dB at SX1262 inputs <= 15 dBm (Meshtastic measurements).
 constexpr int8_t FEM_GAIN_DB = 11;
 constexpr int8_t SX_MAX_DBM = 14;         // hard ceiling on the SX1262 setting (~25 dBm out)
-constexpr int8_t ERP_LIMIT_DBM = 27;
 constexpr int8_t DEFAULT_ANT_GAIN_DBI = 3;
 constexpr int8_t PAIR_SX_DBM = -9;        // board pairing: deliberately tiny range
 constexpr uint32_t BOOT_TX_HOLDOFF_MS = 2000;  // never TX in first 2 s after boot
-constexpr float DUTY_LIMIT = 0.10f;       // fraction of a rolling hour
 }  // namespace radiocfg
 
 namespace timing {

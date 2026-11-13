@@ -2,7 +2,7 @@
 
 A camera remote unlike any other camera remote. One that works for miles.
 
-Infrared remotes need you in front of the lens. Bluetooth remotes give up a few metres away and want a phone in your hand. SLR Remote carries your shutter press on LoRa, the long-range radio people use for links of several miles across open country, and it runs that radio at the legal power limit. Leave the camera where the picture is and stand where you want to be.
+Infrared remotes need you in front of the lens. Bluetooth remotes give up a few metres away and want a phone in your hand. SLR Remote carries your shutter press on LoRa, the long-range radio people use for links of several miles across open country, and it runs that radio at full strength for its band. Leave the camera where the picture is and stand where you want to be.
 
 This page covers my own test so far, what shapes range on a real shoot, how the link looks after itself, and how to squeeze out more.
 
@@ -22,21 +22,21 @@ Bluetooth LE (BLE, the low-power Bluetooth built into cameras and phones) covers
 
 LoRa goes far for three reasons:
 
-- It works at 868 MHz, a much lower frequency than Bluetooth's 2.4 GHz. Lower frequencies lose less over distance and get round hedges, walls and bodies far better.
-- The firmware transmits at the legal power limit for its band, many times what a camera's Bluetooth radio puts out.
+- It works at 868 MHz in the UK and EU, or 915 MHz in the United States, both far lower frequencies than Bluetooth's 2.4 GHz. Lower frequencies lose less over distance and get round hedges, walls and bodies far better.
+- The firmware transmits at the legal power limit on the UK and EU band, and at the most the board can give on the US band, which is inside the limit there. Either way it is many times what a camera's Bluetooth radio puts out.
 - LoRa spreads each piece of data over a long, slow chirp, so the receiver can pull a message out of a signal that is weaker than the background noise.
 
 That last one is adjustable, and the remote adjusts it for you. When the signal gets thin it drops to its slowest, longest-reaching setting by itself and keeps the camera within reach. More on that below.
 
-Give it height, a clear view and a pair of proper 868 MHz antennas and you are using LoRa the way the several-mile links use it. The open-country walk is the next test on my list, and the figure will go on this page when I have it. If you get there first, I would love to see your log: see [Help measure it](#help-measure-it).
+Give it height, a clear view and a pair of proper antennas for your band and you are using LoRa the way the several-mile links use it. The open-country walk is the next test on my list, and the figure will go on this page when I have it. If you get there first, I would love to see your log: see [Help measure it](#help-measure-it).
 
 ## What shapes range on a shoot
 
 ### Antennas
 
-The biggest single thing. The stock antennas are tiny, and they still managed my car test. A proper antenna tuned for 868 MHz on each unit is the best upgrade you can make, and the case has an SMA connector mount ready for one.
+The biggest single thing. The stock antennas are tiny, and they still managed my car test. A proper antenna tuned for your band on each unit (868 MHz for `EU 868`, 915 MHz for `US 915`) is the best upgrade you can make, and the case has an SMA connector mount ready for one.
 
-Tell the remote which antenna you fitted: setup menu item `Antenna`, with 2, 3 or 5 dBi to choose from. The firmware uses that figure to sit right at the legal power limit (see [safety-and-legal.md](safety-and-legal.md)).
+Tell the remote which antenna you fitted: setup menu item `Antenna`, with 2, 3 or 5 dBi to choose from. On `EU 868` the firmware uses that figure to sit right at the legal power limit (see [safety-and-legal.md](safety-and-legal.md)).
 
 ### Height
 
@@ -69,7 +69,34 @@ The top of the handheld's screen shows `FAST` on SF7 to SF9 and `SLOW` on SF10 t
 
 Each step up the table lets the receiver work with a signal 2.5 dB weaker than the step before. From SF7 to SF12 that adds up to 12.5 dB of extra reach.
 
-These airtimes come straight from the firmware's radio settings (125 kHz bandwidth, coding rate 4/5). On the bench at the fast setting I measured about 180 to 225 ms from the handheld sending to the camera unit accepting the press, with each Bluetooth command to the camera taking about 140 ms. Up close, it is quick.
+These airtimes come straight from the firmware's radio settings on `EU 868` (125 kHz bandwidth, coding rate 4/5). The `US 915` figures are in [the next section](#eu-868-and-us-915-compared). On the bench at the fast setting I measured about 180 to 225 ms from the handheld sending to the camera unit accepting the press, with each Bluetooth command to the camera taking about 140 ms. Up close, it is quick.
+
+### EU 868 and US 915 compared
+
+The two regions do not behave quite the same, and it helps to know how before you plan a shoot.
+
+The US rules ask for a wider radio channel: 500 kHz, against 125 kHz on the UK and EU band. Think of it as a faster shutter speed for the radio. Every message gets through about four times quicker, and in exchange the receiver gathers less of the signal, so each setting reaches a little less far than the same setting in Europe.
+
+The link settings on `US 915`, worked out from the same firmware formula:
+
+| Setting | On screen | Your press on air | Each reply on air | Check-in every |
+|---|---|---|---|---|
+| SF7 | `FAST` | 16 ms | 24 ms | 2.0 s |
+| SF8 | `FAST` | 29 ms | 44 ms | 2.0 s |
+| SF9 | `FAST` | 52 ms | 78 ms | 2.6 s |
+| SF10 | `SLOW` | 103 ms | 144 ms | 4.7 s |
+| SF11 | `SLOW` | 186 ms | 268 ms | 9.1 s |
+| SF12 | `SLOW` | 371 ms | 494 ms | 16.5 s |
+
+What that means on a shoot:
+
+- **`FAST` is quicker in the US.** A press is on the air for a few hundredths of a second, so the radio part of the delay all but disappears.
+- **`SLOW` is quicker too, and reaches less far than the European `SLOW`.** Going by the radio chip's published figures, the wider channel costs about 6 to 8 dB at each setting, which is roughly two steps of the table. The slowest US setting should reach about as far as SF10 does in Europe, and it takes about as long on the air.
+- **Power is about the same.** Both regions run the board's amplifier at much the same level, around a third of a watt, so the difference in reach comes from the channel width and not from the transmitter.
+- **No airtime budget in the US.** The 10% rule is a UK and EU one. On `US 915` a long interval run on `SLOW` is not rationed.
+- **Your surroundings matter more than any of this.** Height, a clear view and good antennas will change your range far more than the difference between the two regions.
+
+The honest part: all of the US figures are calculated. The `US 915` setting is built to the US rules but has not been tested on air, because I am in the UK and cannot legally transmit on 915 MHz here. Nobody has measured US range yet. If you do, please send me your log: see [Help measure it](#help-measure-it).
 
 ### How the remote chooses
 
@@ -79,21 +106,21 @@ A fresh pairing starts on SF7, the quickest. From there the handheld watches eve
 - After five in a row with more than 12 dB in hand it steps faster again, always keeping at least 8 dB spare. A really strong signal gets it there sooner.
 - If three check-ins or commands in a row go unanswered, the handheld shows `RESCUE SF12` and goes looking. It calls on the slowest, longest-reaching setting and sweeps the others until the camera unit answers, then shows `LINK FOUND` and carries on.
 
-Transmit power never drops. It stays at the legal cap and only the speed changes.
+Transmit power never drops. It stays at the cap for your region and only the speed changes.
 
 You can pin a setting if you prefer (setup menu item `SF`, or `sf 7` to `sf 12` on the console). Set the same value on both boards.
 
 ### Speed at distance
 
-Out at the far end of the range a press takes about a second and a half to transmit, and the replies come back a couple of seconds apart. For a self-portrait on a hilltop or a camera watching a nest, a few seconds between pressing and seeing `PRESSED` is nothing. For fast action, stay where the screen says `FAST`.
+Out at the far end of the range on `EU 868`, a press takes about a second and a half to transmit, and the replies come back a couple of seconds apart. On `US 915` the slowest setting is about four times quicker than that. For a self-portrait on a hilltop or a camera watching a nest, a few seconds between pressing and seeing `PRESSED` is nothing. For fast action, stay where the screen says `FAST`.
 
-Slow settings also use more airtime, and each board is allowed 10% airtime in any rolling hour (the duty cycle rule for this band, explained in [safety-and-legal.md](safety-and-legal.md)). The handheld shows what is left as `AIR n%`, and INTERVAL checks the budget for you before a run starts.
+Slow settings also use more airtime. On `EU 868` each board is allowed 10% airtime in any rolling hour (the duty cycle rule for that band, explained in [safety-and-legal.md](safety-and-legal.md)). The handheld shows what is left as `AIR n%`, and INTERVAL checks the budget for you before a run starts.
 
 ## How to get more range
 
 Start at the top. Each step is less effort than it sounds.
 
-1. Fit proper 868 MHz antennas to both units and set `Antenna` to match.
+1. Fit proper antennas for your band to both units and set `Antenna` to match.
 2. Get the camera unit up high and in the open: on the tripod, on a post, on the roof of the car and not inside it.
 3. Keep the handheld's antenna clear of your hand and body, roughly upright like the one at the other end.
 4. Go for line of sight where you can.
@@ -140,7 +167,7 @@ The `DIST` figure and the position columns fill in when both units have a GPS fi
 ### What to send
 
 - The CSV
-- Which antennas you used and the `Antenna` setting on each board
+- Which `Region` you were on, which antennas you used and the `Antenna` setting on each board
 - Where each unit was: height, indoors or out, in a vehicle or not
 - The ground in between: open field, street, town, woods
 - Whether you could see the camera

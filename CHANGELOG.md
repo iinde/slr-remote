@@ -4,6 +4,29 @@ What changed in each version of the SLR Remote firmware, newest first. Each entr
 
 For what the remote does, see the [README](README.md). For how the link works, see [docs/how-it-works.md](docs/how-it-works.md).
 
+## 0.4.0 (November 2026)
+
+The one that crosses the Atlantic. The remote now has a `Region` setting, so a builder in the United States can use it on the US licence-free band.
+
+### Region
+
+- A new `Region` item in the setup menu, straight after `Role`, with two choices: `EU 868` for the UK and EU, and `US 915` for the United States. Same boards, same firmware. Only the antennas differ.
+- `EU 868` is exactly the remote as it was: 869.525 MHz, 125 kHz bandwidth, the 27 dBm ERP power cap and the 10% airtime limit.
+- `US 915` uses one fixed channel at 918.0 MHz with a 500 kHz bandwidth, under the FCC's digital modulation rule. Messages are about four times shorter than on the EU band, and there is no hourly airtime limit. Airtime is still counted, so the tally is right if a board is ever switched back.
+- Honest note: `US 915` is built to the US rules but has not been tested on air. I am in the UK and cannot legally transmit on 915 MHz here. If you try it, please tell me how it goes.
+
+### Safety
+
+- A new board stays silent until it knows where it is. `Region` shows `Choose`, the radio will not transmit, and `Pair boards` asks you to set the region first.
+- Nothing changes for a pair that is already set up. Boards that had a role under an earlier version carry on as `EU 868`.
+- Both boards need the same region. Two boards on different regions cannot hear each other.
+
+### Smaller changes
+
+- The console gains `region eu` and `region us`, and `get region`.
+- Everything that depends on the radio settings now follows the active region: airtime sums, link timing, the interval planner and the figures on screen.
+- More automated unit tests, covering the region table, the power cap for each region and airtime on the wider US channel.
+
 ## 0.3.0 (November 2026)
 
 The trustworthy one. I went through all of the firmware line by line, about 13,000 lines, and fixed what I found: 39 issues, none of them in security or in the legal airtime limit. Three minor ones are left open on purpose. The fixes marked "bench checked" were then confirmed on the real boards.

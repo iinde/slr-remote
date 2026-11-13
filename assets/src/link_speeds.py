@@ -1,7 +1,9 @@
 """link-speeds: the six LoRa settings, time on air and check-in interval.
 
-Figures are calculated from the radio settings the firmware uses
-(125 kHz bandwidth, coding rate 4/5, 8 symbol preamble, explicit header, CRC on).
+Figures are calculated from the radio settings the firmware uses on the EU 868
+setting (125 kHz bandwidth, coding rate 4/5, 8 symbol preamble, explicit header,
+CRC on). The US 915 setting uses a 500 kHz channel, which makes every airtime
+about a quarter of these.
 """
 from slr import *
 
@@ -13,7 +15,7 @@ PING = [3.10, 5.78, 10.30, 18.94, 41.14, 75.70]  # s between check-ins
 c = Canvas(1700)
 c.header("Fast or far: the six link speeds",
          "LoRa has six speed settings, called spreading factors (SF7 to SF12). The remote picks one by itself "
-         "and shows FAST or SLOW on screen. Slower settings reach further.")
+         "and shows FAST or SLOW on screen. Slower settings reach further. The times here are for the EU 868 setting.")
 
 R0, RP = 560, 128              # first row centre, row pitch
 LX = M                         # label column
@@ -75,8 +77,8 @@ notes = [
      "The handheld checks the signal on every check-in and moves up or down a setting by itself. "
      "You can also fix one setting in the setup menu."),
     ("It stays legal",
-     "On this band each unit may transmit for 10% of any hour (360 seconds). The firmware counts "
-     "every message, keeps count across restarts, and refuses to go over."),
+     "On EU 868 each unit may transmit for 10% of any hour (360 seconds). The firmware counts "
+     "every message, keeps count across restarts, and refuses to go over. US 915 has no hourly limit."),
 ]
 for i, (h, b) in enumerate(notes):
     x = M + i * (colw + 50)
@@ -84,5 +86,5 @@ for i, (h, b) in enumerate(notes):
     c.text(x, ny + 48, h, 31, BLACK, BOLD)
     c.para(x, ny + 94, b, 25, colw, SOFT)
 
-c.footer("Airtime worked out from the radio settings (869.525 MHz, 125 kHz bandwidth).")
+c.footer("EU 868 setting: 869.525 MHz, 125 kHz bandwidth. On US 915 each message is about four times shorter.")
 c.save("link-speeds")

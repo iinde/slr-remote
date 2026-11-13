@@ -4,7 +4,7 @@ The camera is on its tripod, framed and focused, and you are a long walk away wi
 
 That is most of what you need to know. The rest of this page is the detail: what the little screen is telling you, self-timer, focus lock, intervals for time-lapse, bulb for long exposures, burst, video, and the setup menu for when you want it to behave differently.
 
-It assumes both units are flashed, paired with each other and paired with the camera. If yours are not there yet, start with [Getting started](getting-started.md) and [Flashing and pairing](flashing-and-pairing.md). Everything here describes firmware 0.3.0.
+It assumes both units are flashed, paired with each other and paired with the camera. If yours are not there yet, start with [Getting started](getting-started.md) and [Flashing and pairing](flashing-and-pairing.md). Everything here describes firmware 0.4.0.
 
 ## Contents
 
@@ -41,10 +41,11 @@ The handheld can work in two link modes, chosen in the setup menu.
 
 Some jargon, once:
 
-- **LoRa** is a slow, long-reaching radio system. Here it runs on 869.525 MHz, in the EU and UK 868 MHz licence-free band.
+- **LoRa** is a slow, long-reaching radio system. It runs on a licence-free band: 869.525 MHz in the UK and EU, or 918.0 MHz in the United States.
+- **Region** is the setting that picks between those two, `EU 868` or `US 915`. Both boards must be set the same, and a new board will not transmit until you have chosen. See [Setup menu](#setup-menu).
 - **BLE** is Bluetooth Low Energy, the short-range radio the camera already has for its own remote-release feature.
 - **Spreading factor (SF)** is LoRa's speed setting, from 7 to 12. A low number is fast and shorter in reach. A high number is slow and reaches further. The firmware picks it for you.
-- **Duty cycle** is the legal limit on how much of each hour a transmitter may be on air. In this band it is 10%, which is 360 seconds in any rolling hour for each board.
+- **Duty cycle** is the legal limit on how much of each hour a transmitter may be on air. On `EU 868` it is 10%, which is 360 seconds in any rolling hour for each board. On `US 915` there is no such limit.
 
 For the full picture of what talks to what, see [Data flow](data-flow.md) and [How it works](how-it-works.md).
 
@@ -88,7 +89,7 @@ Under it, the status row shows:
 
 - `#N`: how many presses have actually gone to the camera this session.
 - The time the last press took, in seconds.
-- `AIR n%` (relay only): the airtime left this hour on whichever board has used more.
+- `AIR n%` (relay only): the airtime left this hour on whichever board has used more. It matters on `EU 868`, where airtime is rationed. On `US 915` nothing is rationed and the figure hardly moves.
 - On the right, how long ago the last press was (`Ns ago`, or `>10m`).
 
 When the camera accepts a shot, a small iris on the screen snaps shut and opens again.
@@ -105,6 +106,7 @@ When the camera accepts a shot, a small iris on the screen snaps shut and opens 
 | `NOT CHECKED` | Relay, just powered on, nothing sent yet. The line under it says `press any button to connect`. The handheld stays silent after a power-on until you touch a button, so you have time to notice a missing antenna. |
 | `CHECKING` | The handheld is asking the camera unit (`asking cam board`). |
 | `NO LINK` | No reply from the camera unit. |
+| `SET REGION` | Relay, and this board has no region yet. The radio stays silent until you choose `EU 868` or `US 915` in the setup menu. Press now and the toast says `SET REGION IN SETUP`. |
 
 ### Progress of a press
 
@@ -365,7 +367,7 @@ During a long run the screen dims after 15 seconds and goes dark after 60. Any p
 
 Tap and the shutter is held down for the burst time, so a camera in continuous drive keeps shooting. Any press stops it early. In style A, a hold focuses first and letting go starts the burst.
 
-Burst runs in direct mode in firmware 0.3.0. In relay the mode card marks BURST and BULB `DIRECT`. Pick one and the screen says `NOT IN RELAY`, `BURST`, `is direct only for now`. If BURST is already the mode, a tap says `NOT IN RELAY`, `BURST is direct only`, `nothing fired`.
+Burst runs in direct mode in firmware 0.4.0. In relay the mode card marks BURST and BULB `DIRECT`. Pick one and the screen says `NOT IN RELAY`, `BURST`, `is direct only for now`. If BURST is already the mode, a tap says `NOT IN RELAY`, `BURST is direct only`, `nothing fired`.
 
 ### BULB (direct mode)
 
@@ -403,7 +405,7 @@ Pick `VIEWS` on the mode card, then hold 1 s to move to the next. A tap on a vie
 |---|---|
 | LINK (relay) | Signal each way (`UP`, `DN`), spare signal (`MARGIN`) with `ADAPT` or `FIXED`, the spreading factor and transmit power, success rate over the last 20 pings (`OK`), round-trip time (`RTT`), Bluetooth signal at the camera end, and `DUTY`, this board's share of its airtime used. |
 | LINK (direct) | `MODE DIRECT BLE`, camera state, Bluetooth signal, camera name, last press. |
-| HUNT (relay) | A big live signal reading with a bar and a "best so far" marker. Walk or turn and watch it. Useful for finding a good spot for the camera unit or pointing an antenna. It pings often, and slows down once either board has used 70% of its airtime (`HUNT SLOWED: DUTY`). |
+| HUNT (relay) | A big live signal reading with a bar and a "best so far" marker. Walk or turn and watch it. Useful for finding a good spot for the camera unit or pointing an antenna. It pings often, and on `EU 868` it slows down once either board has used 70% of its airtime (`HUNT SLOWED: DUTY`). |
 | GPS | GPS state and satellite count. In relay, if both units have a fix: distance and compass direction to the camera unit, with an arrow. |
 | RANGE | The range log: on or off, rows recorded, success rate, and distance in relay. The log runs while this page is showing. |
 
@@ -485,7 +487,7 @@ A board with no role set opens the menu by itself.
 
 A PRG click moves to the next item. Holding PRG for 1 s selects or changes it.
 
-The title shows `SETUP 0.3.0` and your position in the list. Choose `Exit` to save and restart. Left alone, the menu saves and restarts after 5 minutes. If it was opened by RST taps and never touched, it leaves after 30 seconds (`NO INPUT`).
+The title shows `SETUP 0.4.0` and your position in the list. Choose `Exit` to save and restart. Left alone, the menu saves and restarts after 5 minutes. If it was opened by RST taps and never touched, it leaves after 30 seconds (`NO INPUT`).
 
 ### Items
 
@@ -494,6 +496,7 @@ Not every item appears on every unit. "HH" is the handheld, "CU" the camera unit
 | Item | Values | Where | What it does |
 |---|---|---|---|
 | `Role` | `Handheld`, `Camera` | Both | Which unit this board is. |
+| `Region` | `EU 868`, `US 915` (`Choose` until set) | Both | Which licence-free band the long-range radio uses: `EU 868` for the UK and EU, `US 915` for the United States. Each hold switches between the two. Set the same on both boards, before you pair them. While it reads `Choose` the radio does not transmit. |
 | `Mode` | `Direct`, `Relay` | HH | Bluetooth straight to the camera, or LoRa via the camera unit. |
 | `Pair camera` | `Saved` or `--` | CU, direct HH | Pairs with the camera. The camera must be in Bluetooth pairing registration. |
 | `Pair boards` | `Paired` or `--` | CU, relay HH | Pairs the two boards. Start it on both, check both show the same 6-digit code, hold PRG on each. |
@@ -504,17 +507,29 @@ Not every item appears on every unit. "HH" is the handheld, "CU" the camera unit
 | `Modes shown` | `Basic`, `All`, `Custom` | HH | `Basic` is SHOT, AF LOCK, TIMER, INTERVAL. `All` adds BURST, BULB, VIDEO. `Custom` appears when the list was set from the console. |
 | `Wake press` | `Act`, `Wake` | HH | Whether the press that wakes the handheld also takes the photo. |
 | `SF` | `Auto`, `SF7` to `SF12` | Relay HH | Link speed. Leave on `Auto`. A fixed value must be set the same on both boards. |
-| `Antenna` | 2, 3, 5 dBi | CU, relay HH | The gain of the antenna you fitted. The firmware lowers transmit power to keep the radiated power legal, so set this honestly. |
+| `Antenna` | 2, 3, 5 dBi | CU, relay HH | The gain of the antenna you fitted. On `EU 868` the firmware lowers transmit power to keep the radiated power legal, so set this honestly. On `US 915` all three run at full power. |
 | `Geotag` | `On`, `Off` | CU | Sends GPS position and time to the camera. Needs the GPS module. |
 | `GPS` | `On`, `Off` | HH | Keeps a handheld GPS module on all the time. Only relevant if you fitted one. |
 | `Reset taps` | `On`, `Off` | Both | Whether tapping RST twice opens this menu. |
 | `Aux button` | `Off`, `GPIO6` | HH | Enables a second button, if fitted. |
 | `LED` | `Off`, `Dim`, `Bright` | Both | The onboard LED. |
 | `Tally LED` | `Off`, `GPIO3+4`, `GPIO6`, `GPIO4`, `GPIO3` | Both | Where an external tally LED is wired. |
-| `About` | `SLR 0.3.0` | Both | Version, unit id, build date and case credit. |
+| `About` | `SLR 0.4.0` | Both | Version, unit id, build date and case credit. |
 | `Forget camera` | | CU, direct HH | Deletes the saved camera. Asks first: hold for yes, click for no. |
 | `Factory reset` | | Both | Wipes settings, both pairings and the range log. Asks first. |
 | `Exit` | | Both | Saves and restarts. |
+
+### Region
+
+A new board asks for two things before it will do anything on the air: its `Role` and its `Region`. Until `Region` is set the radio stays silent. `Pair boards` answers `Set Region first`, the handheld shows `SET REGION`, and the camera unit shows `SET REGION IN SETUP`.
+
+- Choose `EU 868` in the UK and EU, and `US 915` in the United States.
+- Set it on both boards. Two boards on different regions are on different frequencies and cannot hear each other.
+- Fit antennas for the band you chose: 868 MHz or 915 MHz.
+- A change applies straight away in the menu, so you can pair next, and is saved when you `Exit`. If you change one board, change the other.
+- Boards set up on firmware before 0.4.0 carry on as `EU 868` with nothing to do.
+
+The `US 915` setting is built to the US rules but has not been tested on air yet, because I am in the UK and cannot legally transmit on 915 MHz here. If you use it, please tell me how it behaves. What each region means for power and airtime is in [Safety and legal](safety-and-legal.md#radio-rules), and what it means for reach is in [Range](range.md#eu-868-and-us-915-compared).
 
 Some options share pins, so turning one on can turn another off. The menu tells you when it does, for example `Aux off: GPIO6` when you enable the two-stage switch.
 
@@ -585,7 +600,7 @@ The GPS receiver is only powered when needed: with `Geotag` on (camera unit), or
 
 - The top word on the screen is `PRESSED`, because that is what the camera confirms. Take a test frame, look at it, then walk away.
 - Bulb and burst run in direct mode in this firmware. Everything else works at full range.
-- Everything here was tested on the Fujifilm X-E5, on the EU and UK 868 MHz band. The remote uses Fujifilm's standard Bluetooth remote release, so most modern Fujifilm cameras with Bluetooth should behave the same way.
+- Everything here was tested on the Fujifilm X-E5, on the `EU 868` region. The `US 915` region is built to the US rules and not yet tested on air. The remote uses Fujifilm's standard Bluetooth remote release, so most modern Fujifilm cameras with Bluetooth should behave the same way.
 
 ## Serial console reference
 
@@ -606,6 +621,7 @@ Plug a board into a computer by USB-C and open a serial terminal at **115200 bau
 | `clear` | Empties the range log. |
 | `notify` | Shows the recent Bluetooth notifications from the camera. |
 | `role h` or `role c` | Sets handheld or camera unit. Reboot to apply. |
+| `region eu` or `region us` | Sets the region: `EU 868` or `US 915`. Set the same on both boards. Reboot to apply. `get region` prints `region eu`, `region us` or `region unset`. |
 | `mode direct` or `mode relay` | Sets the handheld's link mode. Reboot to apply. |
 | `sf auto` or `sf 7` to `sf 12` | Adaptive or fixed spreading factor. A fixed value needs a reboot and must be set on both boards. |
 | `focus <0 to 5000>` | Focus wait for a tap, in ms. |
@@ -645,8 +661,8 @@ Value changes apply at once. Press style, aux button and two-stage switch change
 
 | Command | What it does |
 |---|---|
-| `get <key>` | Prints one setting. Keys: `press modes afmax aflock timer iv burst bulb holdcap wake rstgest aux led tally rlog focus sf mode role geotag gain`. |
-| `set <key> <value>` | The same as typing `<key> <value>`, for `press modes afmax aflock timer iv burst bulb holdcap wake rstgest aux led focus sf geotag`. Use the plain commands for `role`, `mode`, `gain` and `tally`. |
+| `get <key>` | Prints one setting. Keys: `press modes afmax aflock timer iv burst bulb holdcap wake rstgest aux led tally rlog focus sf mode role region geotag gain`. |
+| `set <key> <value>` | The same as typing `<key> <value>`, for `press modes afmax aflock timer iv burst bulb holdcap wake rstgest aux led focus sf geotag`. Use the plain commands for `role`, `region`, `mode`, `gain` and `tally`. |
 | `json` | All settings as one JSON object. |
 | `jstat` | Live handheld state as JSON: mode, view, screen text, bar, shots, battery, link. |
 

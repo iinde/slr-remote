@@ -16,6 +16,7 @@
 #include "press.h"
 #include "proto.h"
 #include "rangelog_fmt.h"
+#include "region.h"
 #include "shotseq.h"
 
 void setUp() {}
@@ -1194,6 +1195,291 @@ static void test_aflock_timeout_under_a_press_does_not_relock() {
   TEST_ASSERT_FALSE(s.eng.held());
 }
 
+// ---------------------------------------------------------------- regions
+
+static void test_airtime_500khz() {
+  // US channel: 500 kHz, CR 4/5, preamble 8. Exact Semtech figures, rounded up.
+  TEST_ASSERT_EQUAL_UINT32(15, lora_airtime_ms(7, 500, 5, 8, 20));
+  TEST_ASSERT_EQUAL_UINT32(21, lora_airtime_ms(7, 500, 5, 8, 40));
+  TEST_ASSERT_EQUAL_UINT32(26, lora_airtime_ms(8, 500, 5, 8, 20));
+  TEST_ASSERT_EQUAL_UINT32(72, lora_airtime_ms(9, 500, 5, 8, 40));
+  TEST_ASSERT_EQUAL_UINT32(93, lora_airtime_ms(10, 500, 5, 8, 20));
+  TEST_ASSERT_EQUAL_UINT32(330, lora_airtime_ms(12, 500, 5, 8, 20));
+}
+
+static void test_airtime_ldro_follows_symbol_time_not_sf() {
+  // At 500 kHz the SF11 and SF12 symbols are 4.1 and 8.2 ms, under the 16 ms line, so low
+  // data-rate optimisation is off. Decided from SF alone these would read 186, 268 and 494.
+  TEST_ASSERT_EQUAL_UINT32(165, lora_airtime_ms(11, 500, 5, 8, 20));
+  TEST_ASSERT_EQUAL_UINT32(247, lora_airtime_ms(11, 500, 5, 8, 40));
+  TEST_ASSERT_EQUAL_UINT32(453, lora_airtime_ms(12, 500, 5, 8, 40));
+  // 125 kHz keeps it on at SF11 and SF12 (EU, unchanged) and off at SF10.
+  assert_within_2pct(823.3, lora_airtime_ms(11, 125, 5, 8, 25));
+  assert_within_2pct(411.6, lora_airtime_ms(10, 125, 5, 8, 25));
+  // 250 kHz: on at SF12 only (16.4 ms symbol), which SF alone would also get wrong at SF11.
+  TEST_ASSERT_EQUAL_UINT32(330, lora_airtime_ms(11, 250, 5, 8, 20));
+}
+
+static void test_region_table() {
+  const RegionCfg& eu = region_cfg(Region::EU868);
+  TEST_ASSERT_EQUAL_FLOAT(869.525f, eu.freq_mhz);
+  TEST_ASSERT_EQUAL_FLOAT(125.0f, eu.bw_khz);
+  TEST_ASSERT_EQUAL_FLOAT(0.10f, eu.duty_limit);
+  TEST_ASSERT_EQUAL(PowerRule::Erp, eu.rule);
+  TEST_ASSERT_EQUAL(27, eu.limit_dbm);
+  const RegionCfg& us = region_cfg(Region::US915);
+  TEST_ASSERT_EQUAL_FLOAT(918.0f, us.freq_mhz);
+  TEST_ASSERT_EQUAL_FLOAT(500.0f, us.bw_khz);
+  TEST_ASSERT_EQUAL_FLOAT(1.0f, us.duty_limit);
+  TEST_ASSERT_EQUAL(PowerRule::Conducted, us.rule);
+  TEST_ASSERT_EQUAL(25, us.limit_dbm);
+  TEST_ASSERT_EQUAL(6, us.full_gain_dbi);
+  // The whole US channel sits inside 902 to 928 MHz, the EU one inside 869.40 to 869.65.
+  TEST_ASSERT_TRUE(us.freq_mhz - us.bw_khz / 2000 >= 902.0f && us.freq_mhz + us.bw_khz / 2000 <= 928.0f);
+  TEST_ASSERT_TRUE(eu.freq_mhz - eu.bw_khz / 2000 >= 869.40f && eu.freq_mhz + eu.bw_khz / 2000 <= 869.65f);
+  // Unset: the strictest figures for the maths, and never allowed on air.
+  const RegionCfg& un = region_cfg(Region::Unset);
+  TEST_ASSERT_EQUAL_FLOAT(125.0f, un.bw_khz);
+  TEST_ASSERT_EQUAL_FLOAT(0.10f, un.duty_limit);
+  TEST_ASSERT_FALSE(region_can_tx(Region::Unset));
+  TEST_ASSERT_TRUE(region_can_tx(Region::EU868));
+  TEST_ASSERT_TRUE(region_can_tx(Region::US915));
+  TEST_ASSERT_FALSE(region_can_tx((Region)3));
+}
+
+static void test_region_names_and_menu_step() {
+  TEST_ASSERT_EQUAL_STRING("Choose", region_label(Region::Unset));
+  TEST_ASSERT_EQUAL_STRING("EU 868", region_label(Region::EU868));
+  TEST_ASSERT_EQUAL_STRING("US 915", region_label(Region::US915));
+  TEST_ASSERT_EQUAL_STRING("unset", region_key(Region::Unset));
+  TEST_ASSERT_EQUAL_STRING("eu", region_key(Region::EU868));
+  TEST_ASSERT_EQUAL_STRING("us", region_key(Region::US915));
+  Region r = Region::Unset;
+  TEST_ASSERT_TRUE(region_from_key("us", r));
+  TEST_ASSERT_EQUAL(Region::US915, r);
+  TEST_ASSERT_TRUE(region_from_key("eu", r));
+  TEST_ASSERT_EQUAL(Region::EU868, r);
+  // The console can never put a board back to "not chosen", and junk changes nothing.
+  TEST_ASSERT_FALSE(region_from_key("unset", r));
+  TEST_ASSERT_FALSE(region_from_key("", r));
+  TEST_ASSERT_FALSE(region_from_key("EU", r));
+  TEST_ASSERT_FALSE(region_from_key(nullptr, r));
+  TEST_ASSERT_EQUAL(Region::EU868, r);
+  // Menu: Choose -> EU 868 -> US 915 -> EU 868, never back to Choose.
+  TEST_ASSERT_EQUAL(Region::EU868, region_next(Region::Unset));
+  TEST_ASSERT_EQUAL(Region::US915, region_next(Region::EU868));
+  TEST_ASSERT_EQUAL(Region::EU868, region_next(Region::US915));
+}
+
+static void test_region_on_load_migration() {
+  // A board set up before regions existed (role stored, no region key) was EU: it stays EU.
+  TEST_ASSERT_EQUAL(Region::EU868, region_on_load(false, 0, true));
+  // A fresh or factory-reset board has no role: not chosen, radio silent.
+  TEST_ASSERT_EQUAL(Region::Unset, region_on_load(false, 0, false));
+  // A stored key always wins, whatever the role.
+  TEST_ASSERT_EQUAL(Region::US915, region_on_load(true, 2, true));
+  TEST_ASSERT_EQUAL(Region::US915, region_on_load(true, 2, false));
+  TEST_ASSERT_EQUAL(Region::EU868, region_on_load(true, 1, false));
+  // Stored as not chosen (a role picked before a region): stays not chosen, never EU by default.
+  TEST_ASSERT_EQUAL(Region::Unset, region_on_load(true, 0, true));
+  // A value this build does not know is treated as not chosen (silent), not as some band.
+  TEST_ASSERT_EQUAL(Region::Unset, region_on_load(true, 3, true));
+  TEST_ASSERT_EQUAL(Region::Unset, region_on_load(true, 255, true));
+  TEST_ASSERT_TRUE(region_valid(0) && region_valid(1) && region_valid(2));
+  TEST_ASSERT_FALSE(region_valid(3));
+}
+
+// The board's fixed figures (config.h): +11 dB front end, SX1262 setting held to -9..14.
+// A two-key model of the settings store, saved the way store_save does it: region first,
+// role only once the region key is in flash. fail_region / stop_after_first model a failed
+// write and a reset between the two writes.
+struct FakeNvs {
+  bool has_role = false, has_region = false;
+  uint8_t role = 0, region = 0;
+};
+struct FakeStore {
+  FakeNvs nvs;
+  uint8_t role = 0;         // 0 = no role
+  Region region = Region::Unset;
+  bool region_stored = false;
+  void load() {
+    role = nvs.has_role ? nvs.role : 0;
+    region = region_on_load(nvs.has_region, nvs.region, role != 0);
+    region_stored = nvs.has_region;
+  }
+  bool save(uint8_t new_role, Region new_region, bool fail_region = false, bool stop_after_first = false) {
+    bool ok = true;
+    if (region_must_write(new_region != region, region_stored)) {
+      if (!fail_region) { nvs.has_region = true; nvs.region = (uint8_t)new_region; }
+      region_stored = !fail_region;
+      ok &= region_stored;
+      if (stop_after_first) return false;
+    }
+    if (new_role != role) {
+      if (region_role_may_write(region_stored)) { nvs.has_role = true; nvs.role = new_role; }
+      else ok = false;
+    }
+    return ok;
+  }
+};
+
+static void test_region_save_pins_key_before_role() {
+  TEST_ASSERT_TRUE(region_must_write(true, true));
+  TEST_ASSERT_TRUE(region_must_write(true, false));
+  TEST_ASSERT_TRUE(region_must_write(false, false));
+  TEST_ASSERT_FALSE(region_must_write(false, true));
+  TEST_ASSERT_TRUE(region_role_may_write(true));
+  TEST_ASSERT_FALSE(region_role_may_write(false));
+
+  // Fresh board, role chosen before any region: it must come back Unset, never EU.
+  FakeStore a;
+  a.load();
+  TEST_ASSERT_EQUAL(Region::Unset, a.region);
+  TEST_ASSERT_TRUE(a.save(1, Region::Unset));
+  TEST_ASSERT_TRUE(a.nvs.has_region);
+  a.load();
+  TEST_ASSERT_EQUAL(1, a.role);
+  TEST_ASSERT_EQUAL(Region::Unset, a.region);
+
+  // Fresh board, role and US saved together, reset after the first write: no role reaches
+  // flash without its region, so the reload is US with no role, not EU.
+  FakeStore b;
+  b.load();
+  TEST_ASSERT_FALSE(b.save(1, Region::US915, false, true));
+  TEST_ASSERT_FALSE(b.nvs.has_role);
+  b.load();
+  TEST_ASSERT_EQUAL(0, b.role);
+  TEST_ASSERT_EQUAL(Region::US915, b.region);
+
+  // Fresh board, the region write fails: the role is held back and the save reports failure.
+  FakeStore c;
+  c.load();
+  TEST_ASSERT_FALSE(c.save(2, Region::Unset, true));
+  TEST_ASSERT_FALSE(c.nvs.has_role);
+  c.load();
+  TEST_ASSERT_EQUAL(Region::Unset, c.region);
+  // The next save tries the region key again and then lets the role through.
+  TEST_ASSERT_TRUE(c.save(2, Region::Unset));
+  c.load();
+  TEST_ASSERT_EQUAL(2, c.role);
+  TEST_ASSERT_EQUAL(Region::Unset, c.region);
+
+  // A board from before regions (role, no key) loads EU, and its first save pins EU even
+  // though the region did not change, so a later role change cannot move it.
+  FakeStore d;
+  d.nvs.has_role = true;
+  d.nvs.role = 1;
+  d.load();
+  TEST_ASSERT_EQUAL(Region::EU868, d.region);
+  TEST_ASSERT_TRUE(d.save(2, Region::EU868));
+  TEST_ASSERT_TRUE(d.nvs.has_region);
+  d.load();
+  TEST_ASSERT_EQUAL(2, d.role);
+  TEST_ASSERT_EQUAL(Region::EU868, d.region);
+  // Once pinned, an unchanged region is not written again.
+  TEST_ASSERT_FALSE(region_must_write(false, d.region_stored));
+}
+
+static void test_region_about_fits_the_screen() {
+  // About line: "Heltec V4  LoRa " (16) plus the channel, in a 6 px font on a 128 px screen.
+  const Region all[] = {Region::Unset, Region::EU868, Region::US915};
+  for (Region r : all) TEST_ASSERT_TRUE(16 + strlen(region_cfg(r).about) <= 21);
+}
+
+static int8_t legal(Region r, int8_t gain) { return region_legal_sx_dbm(r, gain, 11, 14, -9); }
+
+static void test_region_legal_power_eu() {
+  // 27 dBm ERP: 27 + 2.15 - gain - 11, floored, never above the hardware's 14.
+  TEST_ASSERT_EQUAL(14, legal(Region::EU868, 0));
+  TEST_ASSERT_EQUAL(14, legal(Region::EU868, 2));
+  TEST_ASSERT_EQUAL(14, legal(Region::EU868, 3));
+  TEST_ASSERT_EQUAL(13, legal(Region::EU868, 5));
+  TEST_ASSERT_EQUAL(10, legal(Region::EU868, 8));
+  TEST_ASSERT_EQUAL(3, legal(Region::EU868, 15));
+  TEST_ASSERT_EQUAL(-9, legal(Region::EU868, 40));
+  // ERP never passes 27 dBm at any whole gain the console accepts.
+  for (int g = 0; g <= 15; g++)
+    TEST_ASSERT_TRUE(legal(Region::EU868, (int8_t)g) + 11 + g - 2.15f <= 27.0f);
+}
+
+static void test_region_legal_power_us() {
+  // 25 dBm conducted with antennas up to 6 dBi: the hardware ceiling (14 + 11) is the cap.
+  TEST_ASSERT_EQUAL(14, legal(Region::US915, 0));
+  TEST_ASSERT_EQUAL(14, legal(Region::US915, 2));
+  TEST_ASSERT_EQUAL(14, legal(Region::US915, 3));
+  TEST_ASSERT_EQUAL(14, legal(Region::US915, 5));
+  TEST_ASSERT_EQUAL(14, legal(Region::US915, 6));
+  // Above 6 dBi it comes down dB for dB.
+  TEST_ASSERT_EQUAL(13, legal(Region::US915, 7));
+  TEST_ASSERT_EQUAL(11, legal(Region::US915, 9));
+  TEST_ASSERT_EQUAL(5, legal(Region::US915, 15));
+  TEST_ASSERT_EQUAL(-9, legal(Region::US915, 40));
+  // Conducted power never passes 25 dBm, and radiated power (EIRP) never passes 31 dBm,
+  // well inside the rule's 30 dBm conducted and 36 dBm EIRP.
+  for (int g = 0; g <= 15; g++) {
+    const int cond = legal(Region::US915, (int8_t)g) + 11;
+    TEST_ASSERT_TRUE(cond <= 25);
+    TEST_ASSERT_TRUE(cond + g <= 31);
+  }
+  // A stronger front end or chip setting would still be held to the region's 25 dBm.
+  TEST_ASSERT_EQUAL(14, region_legal_sx_dbm(Region::US915, 3, 11, 22, -9));
+  TEST_ASSERT_EQUAL(10, region_legal_sx_dbm(Region::US915, 3, 15, 22, -9));
+  // Not chosen: the EU cap, the lower of the two (and nothing is sent anyway).
+  TEST_ASSERT_EQUAL(legal(Region::EU868, 5), legal(Region::Unset, 5));
+}
+
+static void test_region_duty_limit() {
+  TEST_ASSERT_EQUAL_UINT32(360000, region_budget_ms(Region::EU868));
+  TEST_ASSERT_EQUAL_UINT32(3600000, region_budget_ms(Region::US915));
+  TEST_ASSERT_EQUAL_UINT32(360000, region_budget_ms(Region::Unset));
+  DutyCycle eu(region_cfg(Region::EU868).duty_limit), us(region_cfg(Region::US915).duty_limit);
+  TEST_ASSERT_EQUAL_UINT32(region_budget_ms(Region::EU868), eu.budgetMs());
+  TEST_ASSERT_EQUAL_UINT32(region_budget_ms(Region::US915), us.budgetMs());
+  // 400 s on air in one hour: far past the EU's 360 s, about a ninth of the US hour.
+  const uint32_t t = 1000;
+  us.record(400000, t);
+  TEST_ASSERT_TRUE(us.canSend(2000, t, false));
+  TEST_ASSERT_TRUE(us.canSend(2000, t, true));
+  TEST_ASSERT_EQUAL_UINT16(111, us.usedPermille(t));
+  // A whole hour of back to back SF12 pings (worst case) still leaves room.
+  us.record(2400000, t);
+  TEST_ASSERT_TRUE(us.canSend(2000, t, false));
+}
+
+static void test_region_switch_keeps_airtime() {
+  // US airtime is recorded in full, so a board switched back to EU starts out knowing it.
+  DutyCycle us(region_cfg(Region::US915).duty_limit);
+  const uint32_t t = 5000;
+  us.record(400000, t);
+  DutySnapshot snap;
+  us.save(snap);
+  DutyCycle eu(region_cfg(Region::EU868).duty_limit);
+  eu.restore(snap);
+  TEST_ASSERT_EQUAL_UINT32(400000, eu.usedMs(t));
+  TEST_ASSERT_EQUAL_UINT16(1000, eu.usedPermille(t));
+  TEST_ASSERT_FALSE(eu.canSend(62, t, true));
+  // It rolls off like any other airtime: an hour and a bit later the EU board may send.
+  TEST_ASSERT_TRUE(eu.canSend(62, t + 62 * 60000UL, true));
+}
+
+static void test_link_timing_at_500khz() {
+  // Fast SFs: the round trip is so short that the fixed 2 s floor sets the ping pace.
+  uint32_t ping = lora_airtime_ms(7, 500, 5, 8, 23), ack = lora_airtime_ms(7, 500, 5, 8, 47);
+  TEST_ASSERT_EQUAL_UINT32(2000, ping_interval_ms(ping, ack, 2000));
+  TEST_ASSERT_EQUAL_UINT32(8000, rescue_silence_ms(2000, ping, 8000));
+  ping = lora_airtime_ms(8, 500, 5, 8, 23), ack = lora_airtime_ms(8, 500, 5, 8, 47);
+  TEST_ASSERT_EQUAL_UINT32(2000, ping_interval_ms(ping, ack, 2000));
+  // SF12: 20 round trips, about a quarter of the 125 kHz pace.
+  ping = lora_airtime_ms(12, 500, 5, 8, 23), ack = lora_airtime_ms(12, 500, 5, 8, 47);
+  TEST_ASSERT_EQUAL_UINT32(330, ping);
+  TEST_ASSERT_EQUAL_UINT32(494, ack);
+  const uint32_t iv = ping_interval_ms(ping, ack, 2000);
+  TEST_ASSERT_EQUAL_UINT32(16480, iv);
+  const uint32_t iv125 = ping_interval_ms(lora_airtime_ms(12, 125, 5, 8, 23), lora_airtime_ms(12, 125, 5, 8, 47), 2000);
+  TEST_ASSERT_TRUE(iv * 3 < iv125);
+  TEST_ASSERT_EQUAL_UINT32(3 * iv + ping, rescue_silence_ms(iv, ping, 8000));
+}
+
 int main(int, char**) {
   for (int i = 0; i < 32; i++) {
     KEY[i] = (uint8_t)(i * 7 + 1);
@@ -1261,5 +1547,17 @@ int main(int, char**) {
   RUN_TEST(test_interval_done_waits_for_sf12_outcome);
   RUN_TEST(test_interval_done_wait_is_bounded);
   RUN_TEST(test_aflock_timeout_under_a_press_does_not_relock);
+  RUN_TEST(test_airtime_500khz);
+  RUN_TEST(test_airtime_ldro_follows_symbol_time_not_sf);
+  RUN_TEST(test_region_table);
+  RUN_TEST(test_region_names_and_menu_step);
+  RUN_TEST(test_region_on_load_migration);
+  RUN_TEST(test_region_save_pins_key_before_role);
+  RUN_TEST(test_region_about_fits_the_screen);
+  RUN_TEST(test_region_legal_power_eu);
+  RUN_TEST(test_region_legal_power_us);
+  RUN_TEST(test_region_duty_limit);
+  RUN_TEST(test_region_switch_keeps_airtime);
+  RUN_TEST(test_link_timing_at_500khz);
   return UNITY_END();
 }

@@ -655,10 +655,10 @@ z
     <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="223.128" y="217.8" transform="rotate(-0 223.128 217.8)">four per unit</text>
    </g>
    <g id="text_25">
-    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: middle; fill: #0e0f11" x="320.256" y="206.64" transform="rotate(-0 320.256 206.64)">868 MHz antenna</text>
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: middle; fill: #0e0f11" x="320.256" y="206.64" transform="rotate(-0 320.256 206.64)">LoRa antenna</text>
    </g>
    <g id="text_26">
-    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="320.256" y="217.8" transform="rotate(-0 320.256 217.8)">on an SMA connector</text>
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="320.256" y="217.8" transform="rotate(-0 320.256 217.8)">868 or 915 MHz, on SMA</text>
    </g>
    <g id="text_27">
     <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: middle; fill: #0e0f11" x="86.8896" y="397.44" transform="rotate(-0 86.8896 397.44)">Lanyard hole</text>
@@ -752,10 +752,10 @@ z
     <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="629.928" y="217.8" transform="rotate(-0 629.928 217.8)">four per unit</text>
    </g>
    <g id="text_44">
-    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: middle; fill: #0e0f11" x="727.056" y="206.64" transform="rotate(-0 727.056 206.64)">868 MHz antenna</text>
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: middle; fill: #0e0f11" x="727.056" y="206.64" transform="rotate(-0 727.056 206.64)">LoRa antenna</text>
    </g>
    <g id="text_45">
-    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="727.056" y="217.8" transform="rotate(-0 727.056 217.8)">on an SMA connector</text>
+    <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: middle; fill: #5b6066" x="727.056" y="217.8" transform="rotate(-0 727.056 217.8)">868 or 915 MHz, on SMA</text>
    </g>
    <g id="text_46">
     <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: middle; fill: #0e0f11" x="513.648" y="397.44" transform="rotate(-0 513.648 397.44)">Reset button</text>

@@ -4,7 +4,7 @@ A camera remote unlike any other camera remote. One that works for miles.
 
 This page is the look under the lid, written for makers and for photographers who like to know what their kit is doing. If you want the picture of one press travelling from thumb to shutter first, start with [Data flow](data-flow.md) and come back.
 
-Everything here describes firmware 0.3.0 on two Heltec WiFi LoRa 32 V4 boards with a Fujifilm X-E5, on the UK and EU 868 MHz band.
+Everything here describes firmware 0.4.0 on two Heltec WiFi LoRa 32 V4 boards with a Fujifilm X-E5. The remote has two region settings: `EU 868` for the UK and EU, which is the one I use and have tested, and `US 915` for the United States, which is built to the US rules but has not been tested on air yet, because I cannot legally transmit on that band from the UK. Where a figure differs between the two, this page says so.
 
 ## Contents
 
@@ -31,7 +31,7 @@ Both units are the same board running the same firmware. You pick the role, `Han
 | 0.96 inch OLED | 128 x 64 pixel screen | Status, the mode card and the setup menu. |
 | PRG button | The board's own button | The one button. It also wakes the board from sleep. |
 | LiPo cell | One per unit (an LP603449 fits the case) | Power. The board reads the cell voltage to show a battery level. |
-| 868 MHz antenna | On an SMA connector | The LoRa antenna. Fit it before you power on. |
+| LoRa antenna | On an SMA connector | Tuned for your band: 868 MHz in the UK and EU, 915 MHz in the US. Fit it before you power on. |
 | L76K GPS module | Optional, camera unit | The clock, position and optional geotagging. |
 | Tally LED | Optional | Lights while the shutter is down and for a moment after each accepted shot, like the lamp on a studio camera. |
 
@@ -49,16 +49,16 @@ The camera speaks Bluetooth LE, and only Bluetooth LE. Its built-in remote relea
 
 So each radio does the job it is good at.
 
-| | Bluetooth LE | LoRa (868 MHz) |
+| | Bluetooth LE | LoRa (868 or 915 MHz) |
 |---|---|---|
 | Carries | Camera unit to camera | Handheld to camera unit |
 | Has to cover | The gap between the unit and the camera | As far as you want to stand from the tripod |
-| Speed | About 140 ms per command on my bench | 62 ms to 2.3 s per message, depending on the link setting |
+| Speed | About 140 ms per command on my bench | 62 ms to 2.3 s per message on `EU 868`, 16 ms to half a second on `US 915`, depending on the link setting |
 | Chosen by | Fujifilm: it is the remote release the camera offers | Me |
 
-The trade is range against speed. A LoRa message on the longest-reach setting spends about 24 times as long on the air as on the fastest one. Standing ten metres from a group shot, you want it snappy. Sitting in a hide with the camera on the far bank, you want it to get through. The firmware moves between the two by itself, and that is the next section.
+The trade is range against speed. A LoRa message on the longest-reach setting spends more than 20 times as long on the air as on the fastest one. Standing ten metres from a group shot, you want it snappy. Sitting in a hide with the camera on the far bank, you want it to get through. The firmware moves between the two by itself, and that is the next section.
 
-How far does it go? LoRa at the legal power limit is built for miles with a clear view. My walk test, and how to get the most reach from yours, are in [Range](range.md).
+How far does it go? LoRa at full strength for its band is built for miles with a clear view. My walk test, and how to get the most reach from yours, are in [Range](range.md).
 
 ## Adaptive link speed: FAST and SLOW
 
@@ -66,7 +66,17 @@ How far does it go? LoRa at the legal power limit is built for miles with a clea
 
 LoRa has a setting called the **spreading factor** (SF), numbered 7 to 12. Each step up roughly doubles the time a message spends on the air, and in return the receiver can hear a signal about 2.5 dB weaker. SF7 is the quick one. SF12 is the one that gets through.
 
-The rest of the radio stays put: 869.525 MHz, 125 kHz bandwidth, coding rate 4/5.
+The rest of the radio is fixed by the `Region` you set in the setup menu:
+
+| | `EU 868` | `US 915` |
+|---|---|---|
+| Frequency | 869.525 MHz | 918.0 MHz |
+| Bandwidth | 125 kHz | 500 kHz |
+| Coding rate | 4/5 | 4/5 |
+
+The wider US channel is there because the US rule this remote works under asks for a signal at least 500 kHz wide. It makes every message about four times shorter, and costs some reach at each setting. [Range](range.md#eu-868-and-us-915-compared) puts that in shooting terms.
+
+Both boards have to be on the same region, or they are on different frequencies and cannot hear each other. A new board has no region, shows `Choose` in the menu, and does not transmit until you pick one.
 
 ### What the screen shows
 
@@ -78,7 +88,7 @@ The rest of the radio stays put: 869.525 MHz, 125 kHz bandwidth, coding rate 4/5
 
 ### What each setting costs
 
-These come from the firmware's own LoRa airtime formula.
+These come from the firmware's own LoRa airtime formula, for `EU 868`.
 
 | Setting | Screen | Shot message on air | Ack or Result on air | Ping every | A held press is let go after |
 |---|---|---|---|---|---|
@@ -91,6 +101,19 @@ These come from the firmware's own LoRa airtime formula.
 
 Pings are spaced further apart on the slower settings on purpose, so idle pinging uses the same small slice of the hour's airtime whatever the setting.
 
+On `US 915` the same formula gives much shorter figures, because the channel is four times wider:
+
+| Setting | Screen | Shot message on air | Ack or Result on air | Ping every |
+|---|---|---|---|---|
+| SF7 | `FAST` | 16 ms | 24 ms | 2.0 s |
+| SF8 | `FAST` | 29 ms | 44 ms | 2.0 s |
+| SF9 | `FAST` | 52 ms | 78 ms | 2.6 s |
+| SF10 | `SLOW` | 103 ms | 144 ms | 4.7 s |
+| SF11 | `SLOW` | 186 ms | 268 ms | 9.1 s |
+| SF12 | `SLOW` | 371 ms | 494 ms | 16.5 s |
+
+Pings never come closer together than 2 seconds, which is why the two fastest settings share a figure. A held press is let go sooner on these settings too, in step with the shorter ping interval. These are calculated figures, not yet timed on real boards.
+
 ### How it decides
 
 Between presses the handheld sends a **ping** and the camera unit answers. Each end measures how far the signal sat above the weakest it could have decoded. That spare signal is the **margin**, and the remote goes by the worse of the two directions.
@@ -101,7 +124,7 @@ Between presses the handheld sends a **ping** and the camera unit answers. Each 
 
 The change itself is done carefully. The handheld asks on the old setting, the camera unit answers on the old setting and only then switches, and the handheld switches when it hears that answer. A change never starts in the middle of a press, and a press always jumps the queue ahead of one.
 
-Transmit power is left alone at the legal cap. Only the speed moves.
+Transmit power is left alone at the cap for your region. Only the speed moves.
 
 If you would rather choose for yourself, the setup menu has `SF`: `Auto`, or a fixed `SF7` to `SF12`.
 
@@ -111,19 +134,23 @@ If three pings or commands in a row go unanswered, the handheld shows `RESCUE SF
 
 ## The airtime rule
 
-The slice of spectrum this remote uses (869.40 to 869.65 MHz) is licence-free in the UK and EU on two conditions. One is a power limit of 500 mW ERP (effective radiated power, meaning what actually leaves the antenna). The other is a **duty cycle** of 10%. Duty cycle is the share of time a device spends transmitting, so 10% means each unit may be on the air for at most six minutes in any hour.
+This rule belongs to the `EU 868` region. The US band has no airtime limit for the kind of signal this remote sends, so on `US 915` the firmware keeps counting airtime in the background and holds nothing back.
+
+The slice of spectrum the remote uses on `EU 868` (869.40 to 869.65 MHz) is licence-free in the UK and EU on two conditions. One is a power limit of 500 mW ERP (effective radiated power, meaning what actually leaves the antenna). The other is a **duty cycle** of 10%. Duty cycle is the share of time a device spends transmitting, so 10% means each unit may be on the air for at most six minutes in any hour.
 
 The firmware treats that as a hard rule and keeps the books for each unit separately.
 
 ### How it budgets
 
-- Each unit has 360 seconds of airtime per rolling hour.
+- On `EU 868`, each unit has 360 seconds of airtime per rolling hour.
 - Every transmission that starts is counted, in one-minute buckets, with the time rounded up so it can never be under-counted.
 - Routine traffic (pings and speed changes) stops at 80% of the budget. The handheld shows `DUTY: PINGS PAUSED`.
 - Presses can use the full 100%. Shots, focus, release and their replies all count as presses, so idle chatter can never eat the airtime a real photo needs.
 - At 100% a press is refused before it is sent, and the screen says `NOT SENT: DUTY`.
 
 A single shot costs a fraction of a second of airtime, so on an ordinary shoot you will never see any of this. It earns its keep on long interval runs at the slow settings.
+
+The count is kept on `US 915` as well, even though nothing there is rationed. If a board is ever switched to `EU 868`, its tally for the past hour is already true.
 
 ### It remembers across restarts
 
@@ -137,7 +164,11 @@ Switching a unit off and on does not wipe the tally. The count lives in memory t
 
 ### Transmit power
 
-The power limit gets the same treatment. Tell the firmware your antenna's gain in the setup menu (`Antenna`: 2, 3 or 5 dBi) and it works out the highest radio setting that keeps the radiated power inside 27 dBm ERP. Anything above that is clamped. The figure it uses for the board's amplifier gain comes from published Meshtastic measurements.
+The power limit gets the same treatment. Tell the firmware your antenna's gain in the setup menu (`Antenna`: 2, 3 or 5 dBi). On `EU 868` it works out the highest radio setting that keeps the radiated power inside 27 dBm ERP. Anything above that is clamped.
+
+On `US 915` the rule is written differently: up to 30 dBm fed into the antenna, as long as the antenna is 6 dBi or less, and one dB less for every dB of gain above that. The firmware holds itself to 25 dBm, which keeps it inside the rule's power density limit and is also all the board can give, and it takes one dB off that 25 for every dB of antenna gain above 6 dBi. With any of the menu antennas the US setting simply runs at the board's ceiling.
+
+The figure the firmware uses for the board's amplifier gain comes from published Meshtastic measurements. Those are not split by band, so the US output is a calculated figure and has not been measured.
 
 Legal notes for your own build are in [Safety and legal](safety-and-legal.md).
 
@@ -269,7 +300,7 @@ Each unit runs from a single LiPo cell. Here is what the firmware does to make t
 
 The firmware is a PlatformIO project in [firmware/](../firmware/README.md), in two halves.
 
-- `firmware/lib/core` is the logic with no hardware in it. It builds and runs on a PC, which is how the 147 automated unit tests run.
+- `firmware/lib/core` is the logic with no hardware in it. It builds and runs on a PC, which is how the automated unit tests run.
 - `firmware/src` is everything that touches the board.
 
 ### `firmware/lib/core/src` (hardware-free logic)
@@ -280,6 +311,7 @@ The firmware is a PlatformIO project in [firmware/](../firmware/README.md), in t
 | `linkmgr` | Link quality, the adaptive speed rules, ping timing, rescue |
 | `airtime` | How long a message spends on the air at each setting |
 | `dutycycle` | The rolling-hour airtime tally |
+| `region` | The two regions: the frequency, bandwidth, power rule and airtime rule for each |
 | `seqplan` | Whether an interval run fits the airtime budget |
 | `shotseq` | The timing of focus, shutter and release inside one shot |
 | `press`, `buttons` | Turning button presses into taps, holds and gestures |

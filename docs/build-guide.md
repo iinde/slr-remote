@@ -128,7 +128,7 @@ The easy way is to build the stack up inside the top half while it lies face dow
 
 8. **Four screws.** Turn the unit over, check both buttons click, and fit four M2 x 16 mm screws from the screen side. They cut their own thread the first time, so go gently and stop when the head seats.
 
-9. **Antenna on.** Screw the antenna onto the SMA socket.
+9. **Antenna on.** Screw the antenna onto the SMA socket. Use the one for your band: 868 MHz in the UK and EU, 915 MHz in the United States.
 
 10. **Lanyard.** Thread a thin cord through the passage in the corner at the USB end. It goes in on the end face and comes out on the side.
 
@@ -171,7 +171,7 @@ Anywhere near the camera. It talks to the camera by Bluetooth, so a pocket of th
 Run through this for each unit.
 
 - [ ] Antenna lead clicked onto the board's LoRa socket
-- [ ] SMA nut tight and the **antenna screwed on**
+- [ ] SMA nut tight and the **antenna screwed on**, the right one for your band (868 or 915 MHz)
 - [ ] Battery polarity checked against the board's `+` mark
 - [ ] No wire across a screw position or caught in the seam
 - [ ] Both buttons click and spring back

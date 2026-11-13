@@ -83,7 +83,7 @@ def build(short):
     LX1, LX2 = HX + HW, UX
     lm = (LX1 + LX2) / 2
     c.text(lm, TOP + 30, "LoRa RADIO LINK", 27, ORANGE, DIN, ha="center")
-    c.text(lm, TOP + 70, "869.525 MHz, built for distance", 26, GRAPHITE, MED, ha="center")
+    c.text(lm, TOP + 70, "868 or 915 MHz, built for distance", 26, GRAPHITE, MED, ha="center")
     c.wave(LX1 + 10, LX2 - 10, FWD, ORANGE, 3.2)
     c.badge(lm, FWD - 56, 2)
     c.text(lm, FWD + 52, "the command, signed", 25, GRAPHITE, MED, ha="center")
@@ -153,8 +153,8 @@ def build(short):
         c.rect(M, fy, 1070, 132, WHITE, LINE, 1.5, 14)
         c.text(M + 30, fy + 44, "THE RADIO LINK LOOKS AFTER ITSELF", 23, ORANGE, DIN)
         c.para(M + 30, fy + 82,
-               "It picks its own speed (the screen shows FAST or SLOW), and it never uses more than "
-               "10% of any hour on air, the legal limit on this band. Every command is signed.",
+               "It picks its own speed (the screen shows FAST or SLOW), and it keeps inside the "
+               "airtime rules for the region you set. Every command is signed.",
                24, 1010, GRAPHITE, lead=1.34)
         c.rect(M + 1100, fy, W - 2 * M - 1100, 132, WHITE, LINE, 1.5, 14)
         c.text(M + 1130, fy + 44, "PRESSED MEANS THE CAMERA TOOK THE PRESS", 23, ORANGE, DIN)

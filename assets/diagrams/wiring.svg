@@ -452,7 +452,7 @@ z
 " clip-path="url(#p35c425ba33)" style="fill: #868a8f"/>
    </g>
    <g id="text_8">
-    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: end; fill: #0e0f11" x="181.08" y="218.16" transform="rotate(-0 181.08 218.16)">868 MHz antenna</text>
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: end; fill: #0e0f11" x="181.08" y="218.16" transform="rotate(-0 181.08 218.16)">868 or 915 MHz antenna</text>
    </g>
    <g id="text_9">
     <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="181.08" y="229.68" transform="rotate(-0 181.08 229.68)">on the case's SMA connector,</text>
@@ -529,7 +529,7 @@ z
 " clip-path="url(#p35c425ba33)" style="fill: #868a8f"/>
    </g>
    <g id="text_25">
-    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: end; fill: #0e0f11" x="587.88" y="218.16" transform="rotate(-0 587.88 218.16)">868 MHz antenna</text>
+    <text style="font-size: 9.36px; font-family: 'Avenir Next Demi Bold'; text-anchor: end; fill: #0e0f11" x="587.88" y="218.16" transform="rotate(-0 587.88 218.16)">868 or 915 MHz antenna</text>
    </g>
    <g id="text_26">
     <text style="font-size: 8.28px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="587.88" y="229.68" transform="rotate(-0 587.88 229.68)">on the case's SMA connector,</text>

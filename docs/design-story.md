@@ -138,7 +138,7 @@ The review turned up 39 issues. None were in the security code or in the legal a
 
 Everything was fixed bar three minor points that I left open on purpose, and the result is firmware 0.3.0. Then I went back to the bench and checked what the fixes touched: the screens start, a wake press takes the shot with no warm-up wait, a held focus drops about 10 seconds after the handheld loses power, and the tally LED works after an off and on.
 
-Alongside that sit 147 automated unit tests that run on a PC and cover the parts that need no hardware: the message format, the airtime tally, the link speed rules and the one-button logic.
+Alongside that sits a suite of automated unit tests that run on a PC and cover the parts that need no hardware: the message format, the airtime tally, the link speed rules and the one-button logic.
 
 ## What I would do next
 
@@ -147,7 +147,7 @@ Alongside that sit 147 automated unit tests that run on a PC and cover the parts
 3. Time the battery, for both units, awake and asleep.
 4. BURST and BULB over the LoRa link. They run in direct mode today.
 5. Work out what the camera's own notifications mean. If one of them turns out to mean "exposed", the screen could go one better than `PRESSED`.
-6. Other cameras and other regions. It is built and tested on the X-E5 and the UK and EU 868 MHz band. It uses Fujifilm's standard Bluetooth remote release, so most modern Fujifilm bodies with Bluetooth should take to it, and they are the obvious next thing to try.
+6. Other cameras and other regions. It is built and tested on the X-E5 and the UK and EU 868 MHz band. It uses Fujifilm's standard Bluetooth remote release, so most modern Fujifilm bodies with Bluetooth should take to it, and they are the obvious next thing to try. Firmware 0.4.0 added a `Region` setting with a `US 915` choice for builders in the United States. It is built to the US rules and waiting for its first test on air, which has to come from someone over there, because I cannot legally transmit on that band from the UK.
 7. A neat way for the camera unit to ride on the tripod.
 
 ## Lessons learned

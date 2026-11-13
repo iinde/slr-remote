@@ -6,7 +6,12 @@
 #pragma once
 #include <stdint.h>
 
-void duty_begin();                          // once per boot, before any TX
+// Once per boot, before any TX. limit: the region's share of a rolling hour (0.10 in the
+// EU, 1.0 where there is no legal limit; airtime is recorded either way).
+void duty_begin(float limit);
+// The region changed (setup menu): same recorded airtime, judged against the new limit.
+void duty_set_limit(float limit);
+uint32_t duty_budget_ms();                  // the full hourly budget under the current limit
 uint32_t duty_now_ms();                     // ms clock that keeps counting through deep sleep
 bool duty_can_send(uint32_t airtime_ms, bool priority);  // call right before a transmit
 bool duty_allows(uint32_t airtime_ms, bool priority);    // same answer, no side effects

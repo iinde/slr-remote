@@ -3,7 +3,7 @@
 #pragma once
 #include <stdint.h>
 
-// Demodulation floor (dB SNR) per SF at 125 kHz: 7:-7.5 8:-10 9:-12.5 10:-15 11:-17.5 12:-20
+// Demodulation floor (dB SNR) per SF, the same at any bandwidth: 7:-7.5 8:-10 9:-12.5 10:-15 11:-17.5 12:-20
 float sf_floor_db(uint8_t sf);
 // margin = snr - floor(sf)
 float margin_db(float snr, uint8_t sf);

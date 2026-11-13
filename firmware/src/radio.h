@@ -1,7 +1,9 @@
 // SX1262 via RadioLib, behind the V4 front end. Always returns to continuous RX
-// after a transmit. Enforces the legal power cap and the 2 s boot TX hold-off.
+// after a transmit. Enforces the region's power cap and the 2 s boot TX hold-off.
 #pragma once
 #include <stdint.h>
+
+#include "region.h"
 
 struct RxPacket {
   uint8_t data[64];
@@ -11,11 +13,19 @@ struct RxPacket {
   uint32_t at_ms;  // millis() when it was read out of the chip (before a transmit, if kept over one)
 };
 
-bool radio_begin(uint8_t sf, int8_t ant_gain_dbi);  // init, FEM on, RX started. false on failure
+// The region every radio_* call works in (channel, bandwidth, power cap). Set once at boot
+// from the stored setting, before radio_begin(). A change while the radio is up needs
+// radio_sleep() first and radio_begin() after.
+void radio_set_region(Region r);
+Region radio_region();
+float radio_bw_khz();                   // the active region's bandwidth
+// init, FEM on, RX started. false on failure, and always while the region is Unset: a board
+// that has not been told where it is never starts the radio, so it can never transmit.
+bool radio_begin(uint8_t sf, int8_t ant_gain_dbi);
 bool radio_set_sf(uint8_t sf);          // 7..12, restarts RX. false if the SF was not set
 uint8_t radio_sf();
-// Highest SX1262 setting that keeps ERP <= 27 dBm for the given antenna gain:
-// min(SX_MAX_DBM, ERP_LIMIT + 2.15 - gain - FEM_GAIN), floored.
+// Highest SX1262 setting the active region allows for the given antenna gain, never above
+// SX_MAX_DBM (region_legal_sx_dbm). EU: ERP <= 27 dBm. US: 25 dBm conducted up to 6 dBi.
 int8_t radio_legal_sx_dbm(int8_t ant_gain_dbi);
 bool radio_set_tx_dbm(int8_t sx_dbm);   // clamped to radio_legal_sx_dbm(); returns false if clamped
 int8_t radio_tx_dbm();                  // current SX1262 setting
@@ -35,7 +45,7 @@ bool radio_rx_fault();
 // A packet is waiting for radio_poll(). A packet that had arrived when radio_send(),
 // radio_set_sf() or radio_set_tx_dbm() was called is kept (one slot) and polled afterwards.
 bool radio_rx_pending();
-uint32_t radio_airtime_ms(uint8_t len); // for the current SF
+uint32_t radio_airtime_ms(uint8_t len); // for the current SF and the region's bandwidth
 // SX1262 sleep + FEM off (before deep sleep or a software restart). Works even if
 // radio_begin() never ran or failed: it then brings the chip up just far enough to sleep it.
 void radio_sleep();

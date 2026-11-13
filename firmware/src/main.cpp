@@ -7,6 +7,7 @@
 #include "config.h"
 #include "duty.h"
 #include "hw.h"
+#include "radio.h"
 #include "store.h"
 #include "ui.h"
 
@@ -21,11 +22,13 @@ void setup() {
   hw_init();
   store_begin();
   store_load(g_settings);
+  radio_set_region(g_settings.region);  // before anything that can start or sleep the radio
   // A timer wake is a stuck-PRG sleep (hw_deep_sleep): straight back to sleep, nothing else.
   hw_stuck_wake_check(app_wake_extra(g_settings));
   // R1 reset taps and "menu next boot", before the screen lights (the cue for a second tap).
   const MenuNext next = bootgest_begin(g_settings);
-  duty_begin();  // before anything can transmit (board pairing in the menu included)
+  // Before anything can transmit (board pairing in the menu included).
+  duty_begin(region_cfg(g_settings.region).duty_limit);
   ui_begin();
   rlog_begin();
 

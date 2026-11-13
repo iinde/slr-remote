@@ -225,7 +225,7 @@ footer ul { margin: 0; padding-left: 18px; }
       <div class="reason">
         <h3>It keeps working long after Bluetooth has given up</h3>
         <p>Leave the camera on its tripod at the water's edge and walk round to the far bank. The shutter is still under your thumb.</p>
-        <p>The radio is LoRa, the one people use for links of several miles across open country, and the remote runs it at the legal power limit.</p>
+        <p>The radio is LoRa, the one people use for links of several miles across open country, and the remote runs it at full strength for its band.</p>
       </div>
       <div class="reason">
         <h3>Nothing to unlock, launch or plug in</h3>
@@ -245,7 +245,7 @@ footer ul { margin: 0; padding-left: 18px; }
   <div class="wrap">
     <p class="kicker">How it works</p>
     <h2 id="how-h">Two small radios, each doing the job it is good at</h2>
-    <p class="lead">LoRa is a slow, patient radio system that carries small messages a very long way and through things that stop Bluetooth dead (here it runs on the EU 868 MHz band). It takes your press across the distance. Bluetooth LE, the low-energy kind of Bluetooth, only has to cover the last hand's width from the camera unit to the camera.</p>
+    <p class="lead">LoRa is a slow, patient radio system that carries small messages a very long way and through things that stop Bluetooth dead (here it runs on the 868 MHz band in the UK and EU, or the 915 MHz band in the United States). It takes your press across the distance. Bluetooth LE, the low-energy kind of Bluetooth, only has to cover the last hand's width from the camera unit to the camera.</p>
 
     <figure>
       <div class="panel">
@@ -312,7 +312,7 @@ footer ul { margin: 0; padding-left: 18px; }
       </div>
       <div class="card">
         <h3>Legal on the air</h3>
-        <p>This band allows each transmitter 10% of any hour on air (the duty cycle). The remote keeps its own count, stays inside it, and remembers the count through restarts.</p>
+        <p>Tell it where you are with the <code>Region</code> setting: <code>EU 868</code> or <code>US 915</code>. On the UK and EU band, each transmitter is allowed 10% of any hour on air. The remote keeps its own count, stays inside it, and remembers the count through restarts. The US band has no such limit.</p>
       </div>
       <div class="card">
         <h3>Tally light and GPS</h3>
@@ -430,19 +430,21 @@ footer ul { margin: 0; padding-left: 18px; }
         <tbody>
           <tr><th scope="row">Camera</th><td>Fujifilm X and GFX cameras with Bluetooth, through the standard Fujifilm remote release. Built and tested on the X-E5</td></tr>
           <tr><th scope="row">Shooting</th><td>Single shot, half-press focus hold, focus lock, self timer, interval, burst, bulb, video start and stop. Burst and bulb run in direct mode</td></tr>
-          <tr><th scope="row">Long range link</th><td>LoRa on 869.525 MHz (the EU 868 MHz band), 125 kHz bandwidth, spreading factor 7 to 12 chosen automatically, at up to the band's legal power limit</td></tr>
+          <tr><th scope="row">Long range link</th><td>LoRa, spreading factor 7 to 12 chosen automatically, on the band you pick with the <code>Region</code> setting</td></tr>
+          <tr><th scope="row">Region EU 868</th><td>UK and EU. 869.525 MHz, 125 kHz bandwidth, at up to the band's legal power limit</td></tr>
+          <tr><th scope="row">Region US 915</th><td>United States. 918.0 MHz, 500 kHz bandwidth, about 25 dBm into the antenna. Built to the US rules, not yet tested on air</td></tr>
           <tr><th scope="row">Reach</th><td>Built to work for miles with a clear view. Shrugs off walls, hedges and car doors</td></tr>
           <tr><th scope="row">Response, fast setting</th><td>About 180 to 225 ms from the handheld sending to the camera unit accepting the press, then about 140 ms for each Bluetooth command to the camera (bench measurements)</td></tr>
-          <tr><th scope="row">Airtime</th><td>Keeps itself to 10% of any rolling hour, counted on each unit and remembered across restarts</td></tr>
+          <tr><th scope="row">Airtime</th><td>On EU 868, keeps itself to 10% of any rolling hour, counted on each unit and remembered across restarts. No airtime limit on US 915</td></tr>
           <tr><th scope="row">Security</th><td>X25519 key exchange with a six-digit code check at pairing. Every message carries an HMAC-SHA256 signature and a counter, so a recorded press cannot be replayed</td></tr>
           <tr><th scope="row">Boards</th><td>2 x Heltec WiFi LoRa 32 V4 (ESP32-S3, SX1262 LoRa radio, 0.96 inch OLED). The same firmware runs on both</td></tr>
           <tr><th scope="row">Power</th><td>One LiPo cell in each unit (an LP603449 fits the case). The handheld sleeps after 60 seconds idle and wakes on a press</td></tr>
-          <tr><th scope="row">Antenna</th><td>868 MHz, on an SMA connector</td></tr>
+          <tr><th scope="row">Antenna</th><td>868 MHz in the UK and EU, 915 MHz in the US, on an SMA connector</td></tr>
           <tr><th scope="row">Options</th><td>Quectel L76K GPS module, tally LED</td></tr>
           <tr><th scope="row">Handheld</th><td>61 x 45.7 x 21.6 mm without antenna, with a lanyard hole set into the corner</td></tr>
           <tr><th scope="row">Camera unit</th><td>81.3 x 45.7 x 21.6 mm without antenna, flat backed, with a GPS bay</td></tr>
           <tr><th scope="row">Case</th><td>Eight printed pieces for the pair, no supports needed, four M2 x 16 mm screws per unit</td></tr>
-          <tr><th scope="row">Firmware</th><td>0.3.0. Open source, MIT licence</td></tr>
+          <tr><th scope="row">Firmware</th><td>0.4.0. Open source, MIT licence</td></tr>
         </tbody>
       </table>
     </div>
@@ -458,7 +460,7 @@ footer ul { margin: 0; padding-left: 18px; }
     <ol class="steps">
       <li>
         <h3>Get the parts</h3>
-        <p>Two Heltec WiFi LoRa 32 V4 boards, two LiPo cells, two 868 MHz antennas and eight M2 x 16 mm screws. The GPS module and tally LED are optional. Everything is on the <a href="https://github.com/iinde/slr-remote/blob/main/docs/shopping-list.md">shopping list</a>.</p>
+        <p>Two Heltec WiFi LoRa 32 V4 boards, two LiPo cells, two antennas for your band (868 MHz in the UK and EU, 915 MHz in the US) and eight M2 x 16 mm screws. The GPS module and tally LED are optional. Everything is on the <a href="https://github.com/iinde/slr-remote/blob/main/docs/shopping-list.md">shopping list</a>.</p>
       </li>
       <li>
         <h3>Print the case</h3>
@@ -473,8 +475,8 @@ footer ul { margin: 0; padding-left: 18px; }
         <p>The same firmware goes on both boards. With PlatformIO installed, from the <code>firmware</code> folder: <code>pio run -e heltec_v4 -t upload</code></p>
       </li>
       <li>
-        <h3>Choose roles and pair</h3>
-        <p>Set one board to <code>Handheld</code> with mode <code>Relay</code>, the other to <code>Camera</code>. Choose <code>Pair boards</code> on both, check the six-digit code matches, and hold the button on each to say yes. Then choose <code>Pair camera</code> on the camera unit with the camera in Bluetooth pairing registration (that is the X-E5 menu name; other Fujifilm bodies are very similar). Step by step in <a href="https://github.com/iinde/slr-remote/blob/main/docs/flashing-and-pairing.md">flashing and pairing</a>.</p>
+        <h3>Choose roles, set your region and pair</h3>
+        <p>Set one board to <code>Handheld</code> with mode <code>Relay</code>, the other to <code>Camera</code>. Set <code>Region</code> on both to <code>EU 868</code> or <code>US 915</code>, whichever is yours. Choose <code>Pair boards</code> on both, check the six-digit code matches, and hold the button on each to say yes. Then choose <code>Pair camera</code> on the camera unit with the camera in Bluetooth pairing registration (that is the X-E5 menu name; other Fujifilm bodies are very similar). Step by step in <a href="https://github.com/iinde/slr-remote/blob/main/docs/flashing-and-pairing.md">flashing and pairing</a>.</p>
       </li>
       <li>
         <h3>Walk away and shoot</h3>
@@ -491,7 +493,11 @@ footer ul { margin: 0; padding-left: 18px; }
     <h2 id="faq-h">Questions you might have</h2>
     <details>
       <summary>How far does it really reach?</summary>
-      <p>Far beyond any Bluetooth or infrared remote. It uses LoRa at the legal power limit, the same kind of radio used for links of several miles in open country. The one distance I have measured so far is a tough one: about 90 metres with no line of sight, the camera unit inside a parked car, small stock antennas, and it was still firing at the far point of the walk. The open-country test is next.</p>
+      <p>Far beyond any Bluetooth or infrared remote. It uses LoRa at full strength for its band, the same kind of radio used for links of several miles in open country. The one distance I have measured so far is a tough one: about 90 metres with no line of sight, the camera unit inside a parked car, small stock antennas, and it was still firing at the far point of the walk. The open-country test is next.</p>
+    </details>
+    <details>
+      <summary>Can I use it in the United States?</summary>
+      <p>Yes. It is the same board and the same firmware: fit 915 MHz antennas and set <code>Region</code> to <code>US 915</code> on both units. That setting is built to the US rules but has not been tested on air yet, because I am in the UK and cannot legally transmit on 915 MHz here. If you try it, tell me how it goes. More in <a href="https://github.com/iinde/slr-remote/blob/main/docs/safety-and-legal.md">safety and legal</a>.</p>
     </details>
     <details>
       <summary>Do I need my phone?</summary>

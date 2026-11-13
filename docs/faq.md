@@ -47,11 +47,11 @@ They show which gear the radio is in. LoRa has a setting called the spreading fa
 
 ### How far does it reach?
 
-It is built to work for miles with a clear view. LoRa is the radio technology used for links of several miles in open country, and this remote runs it at the legal power limit. My own test so far was a deliberately awkward one: about 90 metres with no line of sight, the camera unit shut inside a parked car, small stock antennas on both ends, and it was still firing at the far point of the walk. I ran out of walk before it ran out of range. If you take yours somewhere open and beat that, I want to hear about it. More in [Range](range.md).
+It is built to work for miles with a clear view. LoRa is the radio technology used for links of several miles in open country, and this remote runs it at the legal power limit on the UK and EU band, and at the most the board can give on the US one. My own test so far was a deliberately awkward one: about 90 metres with no line of sight, the camera unit shut inside a parked car, small stock antennas on both ends, and it was still firing at the far point of the walk. I ran out of walk before it ran out of range. If you take yours somewhere open and beat that, I want to hear about it. More in [Range](range.md).
 
 ### Is there lag?
 
-Less than you would think. On the bench at the fast setting, a press took about 180 to 225 ms to get from the handheld to the camera unit accepting it, and each Bluetooth command to the camera takes about 140 ms. A plain tap then gives the lens half a second to focus before it shoots, which you can change. For timing that matters, hold to focus first and let go to shoot, or use AF LOCK so the shutter goes the instant you tap. On the slowest long-range setting each radio message spends over a second on air, which suits landscapes better than sprint finishes.
+Less than you would think. On the bench at the fast setting, a press took about 180 to 225 ms to get from the handheld to the camera unit accepting it, and each Bluetooth command to the camera takes about 140 ms. A plain tap then gives the lens half a second to focus before it shoots, which you can change. For timing that matters, hold to focus first and let go to shoot, or use AF LOCK so the shutter goes the instant you tap. On the slowest long-range setting of the UK and EU band each radio message spends over a second on air, which suits landscapes better than sprint finishes.
 
 ### Does it know the photo was actually taken?
 
@@ -95,7 +95,7 @@ Anywhere within Bluetooth reach of the camera. It has a flat back, so it sits ha
 
 ### What do I need to build one?
 
-Two Heltec WiFi LoRa 32 V4 boards, two LP603449 LiPo cells, two 868 MHz antennas on SMA connectors, eight M2 x 16 mm screws and access to a 3D printer. A GPS module for geotagging and a tally LED are optional extras for the camera unit. The [Shopping list](shopping-list.md) has search terms for every part, and the [Build guide](build-guide.md) covers assembly.
+Two Heltec WiFi LoRa 32 V4 boards, two LP603449 LiPo cells, two antennas for your band on SMA connectors (868 MHz in the UK and EU, 915 MHz in the US), eight M2 x 16 mm screws and access to a 3D printer. A GPS module for geotagging and a tally LED are optional extras for the camera unit. The [Shopping list](shopping-list.md) has search terms for every part, and the [Build guide](build-guide.md) covers assembly.
 
 ### Do I need to be able to code?
 
@@ -117,11 +117,29 @@ The firmware and the case are both made for the Heltec V4. The core logic is kep
 
 ### Is it legal to use?
 
-In the UK and EU, the firmware is written to keep inside the rules for the band it uses: 869.525 MHz, no more than 500 mW radiated, and on air for no more than 10% of any hour (that last rule is called the duty cycle). It counts its own airtime, remembers the count across restarts and sets its power from the antenna gain you give it. It is a home-built project and not a certified product, so the responsibility for using it properly is yours. [Safety and legal](safety-and-legal.md) has the detail.
+The firmware is written to keep inside the rules for the band it uses, and you tell it which band with the `Region` setting.
 
-### Can I use it outside Europe?
+On `EU 868`, for the UK and EU, that means 869.525 MHz, no more than 500 mW radiated, and on air for no more than 10% of any hour (that last rule is called the duty cycle). It counts its own airtime, remembers the count across restarts and sets its power from the antenna gain you give it.
 
-Not as it stands. It transmits on 869.525 MHz, which is a UK and EU allocation, and other regions use different frequencies and rules. I have built and tested the EU 868 MHz version only.
+On `US 915`, for the United States, it means one fixed channel at 918.0 MHz, 500 kHz wide, under the FCC's digital modulation rule, at well under the 1 W that rule allows. There is no airtime limit on that band.
+
+It is a home-built project and not a certified product, so the responsibility for using it properly is yours. [Safety and legal](safety-and-legal.md) has the detail for both regions.
+
+### Can I use it outside the UK and EU?
+
+In the United States, yes. Set `Region` to `US 915` on both boards in the setup menu, fit 915 MHz antennas, and the remote moves to the US band and the US rules. It is the same board and the same firmware.
+
+One honest note: the US setting is built to the US rules but I have not tested it on air, because I am in the UK and cannot legally transmit on 915 MHz here. If you are the first to try it, I would love to hear how it goes.
+
+Elsewhere it depends on your country. Canada, Australia and New Zealand use a band that includes the US channel, but their rules are not identical and I have not checked them well enough to call any of them supported. [Safety and legal](safety-and-legal.md#other-countries) says what I know. If your country uses neither band, please do not transmit there with it.
+
+### What is the Region setting?
+
+It tells the remote which licence-free band to use: `EU 868` for the UK and EU, `US 915` for the United States. A new board shows `Choose` and stays silent until you pick, with `SET REGION` on the screen as a reminder. Set the same region on both boards before you pair them, because two boards on different regions cannot hear each other.
+
+### Do I need a different board for the US?
+
+No. The Heltec V4 sold as 863 to 928 MHz covers both bands, so everyone buys the same board. Only the antennas differ: 868 MHz ones for the UK and EU, 915 MHz ones for the US.
 
 ### Can someone else trigger my camera?
 
@@ -151,7 +169,7 @@ No. The boards are popular for Meshtastic and the case began life as a Meshtasti
 
 ### How well tested is the firmware?
 
-Firmware 0.3.0 came out of a line-by-line review of roughly 13,000 lines. It found 39 issues, none of them in the security code or the legal airtime limit, and all are fixed apart from three minor ones I left open on purpose. There are 147 automated unit tests that run on a PC, plus the bench sessions and the walk test with the real camera.
+Firmware 0.3.0 came out of a line-by-line review of roughly 13,000 lines. It found 39 issues, none of them in the security code or the legal airtime limit, and all are fixed apart from three minor ones I left open on purpose. Alongside that sits a suite of automated unit tests that runs on a PC, plus the bench sessions and the walk test with the real camera. Firmware 0.4.0 added the `Region` setting on top. The `EU 868` side of it is the remote exactly as reviewed and tested. The `US 915` side is covered by the unit tests and has not been on air yet.
 
 ### What is it built on?
 

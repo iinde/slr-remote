@@ -8,7 +8,7 @@ The order is:
 
 1. Install PlatformIO
 2. Build the firmware and flash both boards
-3. Choose each board's role
+3. Choose each board's role and region
 4. Pair the two boards with each other
 5. Pair the camera unit with the camera
 6. First shot
@@ -18,7 +18,7 @@ The order is:
 
 ## Before you plug anything in
 
-- **Fit an antenna to each board.** Click the antenna lead onto the board's small LoRa socket, then screw the 868 MHz antenna onto the lead's SMA end. Do this before a board is ever powered: a radio transmitting with no antenna can damage its amplifier.
+- **Fit an antenna to each board.** Click the antenna lead onto the board's small LoRa socket, then screw the antenna for your band onto the lead's SMA end (868 MHz in the UK and EU, 915 MHz in the US). Do this before a board is ever powered: a radio transmitting with no antenna can damage its amplifier.
 - Use a USB-C cable that carries data. A charge-only cable powers the board but the computer never sees it.
 - Both boards must run the **same firmware build**. A mixed pair will not talk.
 - There is one firmware for both boards. Which one is the handheld and which is the camera unit is a setting, chosen after flashing.
@@ -34,7 +34,7 @@ Each board has two small push buttons: `PRG` and `RST`. All of setup is done wit
 | Tap `RST` once | Restart the board |
 | Tap `RST`, then tap it again when the screen says `RST AGAIN NOW = SETUP` | Open the setup menu |
 
-The setup menu has the title `SETUP 0.3.0` and shows your position as `n/N`.
+The setup menu has the title `SETUP 0.4.0` and shows your position as `n/N`.
 
 ## 1. Install PlatformIO
 
@@ -80,7 +80,7 @@ Plug in **one** board and run:
 pio run -e heltec_v4 -t upload
 ```
 
-This builds and uploads in one go. When it finishes the board restarts straight into the setup menu, titled `SETUP 0.3.0`, with `Role` showing `--`. (The splash, an iris then `SLR`, `SUPER LONG RANGE`, `REMOTE` and `v0.3.0`, appears from the next start once a role is set.)
+This builds and uploads in one go. When it finishes the board restarts straight into the setup menu, titled `SETUP 0.4.0`, with `Role` showing `--` and `Region` showing `Choose`. (The splash, an iris then `SLR`, `SUPER LONG RANGE`, `REMOTE` and `v0.4.0`, appears from the next start once a role is set.)
 
 Unplug it, plug in the second board, and run the same command again.
 
@@ -119,15 +119,15 @@ Type `help` for the command list and `stat` for a status summary. One command pe
 
 ### Run the unit tests (optional)
 
-The 147 unit tests run on a Mac and need no board (the test build uses macOS CommonCrypto; see [firmware/README.md](../firmware/README.md#tests) for Linux and Windows):
+The unit tests run on a Mac and need no board (the test build uses macOS CommonCrypto; see [firmware/README.md](../firmware/README.md#tests) for Linux and Windows):
 
 ```sh
 pio test -e native
 ```
 
-## 3. Choose each board's role
+## 3. Choose each board's role and region
 
-A freshly flashed board has no role, so it starts straight in the setup menu.
+A freshly flashed board has no role and no region, so it starts straight in the setup menu.
 
 Decide now which board is which and label them. A bit of tape will do.
 
@@ -148,6 +148,25 @@ Decide now which board is which and label them. A bit of tape will do.
 
 `Pair boards` appears in the menu as soon as `Mode` reads `Relay` (it takes the place of `Pair camera`).
 
+### The region, on both boards
+
+`Region` is the item straight after `Role`. It tells the radio which licence-free band to use, and a new board shows `Choose`.
+
+1. Click to `Region`.
+2. Hold `PRG`. It changes to `EU 868`. Hold again for `US 915`, and again to go back to `EU 868`.
+3. Leave it on `EU 868` if you are in the UK or EU, or `US 915` if you are in the United States.
+4. Do the same on the other board. **Both boards must show the same region.**
+
+Each time you change it the screen reminds you: `Same on both boards`.
+
+While `Region` still reads `Choose`, the radio will not transmit at all. `Pair boards` will not start and answers `Set Region first`. Two boards on different regions are on different frequencies and cannot hear each other, so if pairing times out, this is the first thing to check.
+
+The antennas should match the region: 868 MHz antennas for `EU 868`, 915 MHz antennas for `US 915`.
+
+The `US 915` setting is built to the US rules but has not been tested on air yet: I am in the UK and cannot legally transmit on 915 MHz here. If you are setting up a US pair, I would love to hear how it goes.
+
+Updating a pair that already works? Nothing to do. Boards that were set up on an earlier firmware carry on as `EU 868`.
+
 ### Doing the same from the console
 
 ```text
@@ -162,6 +181,8 @@ mode relay
 reboot
 ```
 
+Then the region, on each board: `region eu` or `region us`, followed by `reboot`. `get region` shows what a board is set to.
+
 On a new board, `role` saves and restarts the board at once, so the console disconnects for a moment and the board comes back running its role. Wait for it, then type `mode relay` and `reboot` on the handheld. To pair from here, type `pair boards` on each board (it reopens the menu for you), or tap `RST` twice.
 
 ### If you leave the menu alone
@@ -169,6 +190,7 @@ On a new board, `role` saves and restarts the board at once, so the console disc
 - With no role set, the board shows `NO ROLE` and `Sleeping: PRG wakes`, then sleeps. Press `PRG` to bring the menu back.
 - With a role set, it saves and restarts after 5 minutes.
 - `Exit` with no role set is refused with `Pick a role first`.
+- With a role but no region, the board starts but stays off the air. The handheld shows `SET REGION` and the camera unit shows `SET REGION IN SETUP` until you go back to the menu and choose one.
 
 ## 4. Pair the two boards
 
@@ -190,11 +212,12 @@ From the console, `pair boards` on each board starts the same process. The yes i
 
 | Screen | Meaning | What to do |
 |---|---|---|
-| `Pair timed out` | The boards did not find each other in 2 minutes | Start both again, closer together and closer in time |
+| `Pair timed out` | The boards did not find each other in 2 minutes | Start both again, closer together and closer in time. Check `Region` reads the same on both |
+| `Set Region first` | `Region` still reads `Choose` on this board | Set `Region` on both boards, then start pairing again |
 | `PAIR ABORTED` / `Other pairing nearby?` | A pairing message arrived that did not belong to this session | Try again. Move away from any other pair being set up |
 | `UNSURE: PAIR AGAIN` or `PAIR UNSURE` | One board may have saved the new key and the other not | Pair again on both |
 | `Failed, nothing saved` | The check did not complete | Pair again. The old pairing, if any, is untouched |
-| `DUTY LIMIT` / `Pairing waits for airtime` | The board has used its legal airtime for the hour | Wait. Rare on a new board |
+| `DUTY LIMIT` / `Pairing waits for airtime` | On `EU 868`, the board has used its legal airtime for the hour | Wait. Rare on a new board |
 | `Radio failed` | The radio did not start | Restart the board. Check the firmware matches the board |
 
 ## 5. Pair the camera unit with the camera
@@ -256,7 +279,7 @@ If you get something else:
 
 | Screen | Likely cause |
 |---|---|
-| `NO LINK` / `no reply from cam board` | Camera unit off, not paired, or on a different firmware build |
+| `NO LINK` / `no reply from cam board` | Camera unit off, not paired, on a different firmware build, or set to a different `Region` |
 | `NOT PAIRED` | The boards have not been paired (step 4) |
 | `FAILED` / `CAM NOT READY` | The camera unit heard you but has no Bluetooth link to the camera. Is the camera on? |
 | `UNKNOWN` / `NO REPLY: MAY HAVE FIRED` | The command went out but no answer came back. Check the camera |

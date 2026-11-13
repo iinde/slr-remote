@@ -4,9 +4,13 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "config.h"
+#include "region.h"
 
 struct Settings {
   Role role = Role::Unset;
+  // Radio region. Unset = not chosen yet: the radio never transmits (see region_on_load for
+  // what a board from before this setting loads as).
+  Region region = Region::Unset;
   Mode mode = Mode::Direct;
   bool two_stage = false;        // external two-stage switch fitted (PRG becomes page/menu)
   uint16_t focus_ms = 500;       // one-press focus wait

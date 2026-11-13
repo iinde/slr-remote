@@ -9,7 +9,7 @@ This page follows that one press all the way there and back. It is the plain-Eng
 ## The idea in one line
 
 ```
-thumb  >  handheld  ~~ LoRa radio, 868 MHz ~~  camera unit  ~~ Bluetooth ~~  camera
+thumb  >  handheld  ~~ LoRa radio, 868 or 915 MHz ~~  camera unit  ~~ Bluetooth ~~  camera
 ```
 
 SLR Remote is two small boxes. The **handheld** lives in your pocket and has one button and a small screen. The **camera unit** sits with the camera.
@@ -30,7 +30,7 @@ If the button ends up squashed in a bag, the handheld notices. After 15 seconds 
 
 ### 2. The handheld sends a command by LoRa
 
-The handheld builds a 25 byte message called a **Shot**, which means "focus, wait, shoot, let go". It signs the message with a key that only my two units share, then sends it on 869.525 MHz. On the fast link setting the message is on the air for about 62 ms. The screen shows `SENT`.
+The handheld builds a 25 byte message called a **Shot**, which means "focus, wait, shoot, let go". It signs the message with a key that only my two units share, then sends it on the channel for the region you set: 869.525 MHz on `EU 868`, 918.0 MHz on `US 915`. On the fast link setting the message is on the air for about 62 ms on the EU channel, and about a quarter of that on the wider US one. The screen shows `SENT`.
 
 If no answer comes back, the handheld sends it again, up to four times in all. Every retry carries the same command number, so the camera unit knows it is the same press and will never take a second photo for it. A press that cannot go out promptly is dropped and the screen says so (`NOT SENT`). It never fires late, when you have stopped expecting it.
 

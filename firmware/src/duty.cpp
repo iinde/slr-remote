@@ -44,7 +44,7 @@ struct RtcDuty {
 
 RTC_NOINIT_ATTR RtcDuty s_rtc;
 
-DutyCycle g_duty{radiocfg::DUTY_LIMIT};
+DutyCycle g_duty;  // rebuilt with the region's limit in duty_begin()
 bool g_begun = false;
 bool g_dirty = false;         // recorded since the last NVS snapshot
 bool g_flag_nvs = false;      // the NVS dirty flag is (known to be) set
@@ -133,9 +133,10 @@ DutySnapshot g_boot_snap{};
 uint32_t g_boot_ms = 0, g_boot_stamp = 0;
 bool g_reage_pending = false;
 
-void duty_begin() {
+void duty_begin(float limit) {
   if (g_begun) return;
   g_begun = true;
+  g_duty = DutyCycle(limit);
   const uint32_t now = duty_now_ms();
   const bool flag = get_flag();
   g_flag_nvs = flag;
@@ -193,9 +194,21 @@ void duty_begin() {
   g_last_checkpoint = millis();
 }
 
+void duty_set_limit(float limit) {
+  // The buckets hold plain milliseconds, so the history carries over as it is: airtime sent
+  // under a region with no limit still counts in full against the EU's 10 %.
+  DutySnapshot snap;
+  g_duty.save(snap);
+  g_duty = DutyCycle(limit);
+  g_duty.restore(snap);
+}
+
+uint32_t duty_budget_ms() { return g_duty.budgetMs(); }
+
 bool duty_allows(uint32_t airtime_ms, bool priority) {
   // NVS is failing and the unsaved airtime has reached what a cold start can account for:
-  // nothing more goes out until a snapshot is written (10 % in any rolling hour is a hard rule).
+  // nothing more goes out until a snapshot is written (the EU's 10 % in any rolling hour is a
+  // hard rule).
   if (g_store_fail && g_unsaved_ms >= kUnsavedHardMs) return false;
   return g_duty.canSend(airtime_ms, duty_now_ms(), priority);
 }

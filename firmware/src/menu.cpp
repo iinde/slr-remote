@@ -22,7 +22,7 @@
 namespace {
 
 enum class Item : uint8_t {
-  Role, Mode, PairCam, PairBoards, Shutter, Press, Focus, AfLimit, Modes, WakePress, Sf, Gain,
+  Role, Region, Mode, PairCam, PairBoards, Shutter, Press, Focus, AfLimit, Modes, WakePress, Sf, Gain,
   Geotag, HhGps, ResetTaps, Aux, Led, Tally, About, ForgetCam, Reset, Exit
 };
 
@@ -118,6 +118,7 @@ uint8_t build_items(const Settings& s, Item* out) {
   uint8_t n = 0;
   const bool hh = is_handheld(s), relay = s.mode == Mode::Relay;
   out[n++] = Item::Role;
+  out[n++] = Item::Region;
   if (hh) out[n++] = Item::Mode;
   if (!hh || !relay) out[n++] = Item::PairCam;
   if (!hh || relay) out[n++] = Item::PairBoards;
@@ -147,6 +148,7 @@ uint8_t build_items(const Settings& s, Item* out) {
 const char* item_name(Item it) {
   switch (it) {
     case Item::Role: return "Role";
+    case Item::Region: return "Region";
     case Item::Mode: return "Mode";
     case Item::PairCam: return "Pair camera";
     case Item::PairBoards: return "Pair boards";
@@ -176,6 +178,7 @@ const char* item_value(const Settings& s, Item it, char* buf, size_t cap) {
   switch (it) {
     case Item::Role:
       return s.role == Role::Camera ? "Camera" : s.role == Role::Handheld ? "Handheld" : "--";
+    case Item::Region: return region_label(s.region);
     case Item::Mode: return s.mode == Mode::Relay ? "Relay" : "Direct";
     case Item::PairBoards: {
       PairRecord p;
@@ -303,7 +306,22 @@ int pair_input() {
   return 0;
 }
 
+// The region changed (menu or console): the radio and the airtime governor follow at once,
+// so a pairing later in this menu session runs on the new channel under the new limit.
+void apply_region(const Settings& s) {
+  if (g_radio_up) radio_sleep();
+  g_radio_up = false;
+  radio_set_region(s.region);
+  duty_set_limit(region_cfg(s.region).duty_limit);
+}
+
 void pair_boards(Settings& s) {
+  // Pairing transmits, and it does so on the region's channel: not before one is chosen.
+  if (!region_can_tx(s.region)) {
+    Serial.println(F("pair: set the region first (Region in this menu, or 'region eu|us')"));
+    toast("Set Region first");
+    return;
+  }
   if (!g_radio_up) g_radio_up = radio_begin(s.last_sf, s.ant_gain_dbi);
   if (!g_radio_up) {
     toast("Radio failed");
@@ -373,6 +391,11 @@ bool activate(Settings& s, Item it) {
       }
       break;
     }
+    case Item::Region:
+      s.region = region_next(s.region);
+      apply_region(s);
+      toast("Same on both boards");
+      break;
     case Item::Mode: s.mode = s.mode == Mode::Relay ? Mode::Direct : Mode::Relay; break;
     case Item::PairCam: pair_camera(); break;
     case Item::PairBoards: pair_boards(s); break;
@@ -441,7 +464,7 @@ bool activate(Settings& s, Item it) {
       snprintf(l[1], sizeof l[1], "fw %s  %s", XE5_FW_VERSION, s.role == Role::Camera ? "camera unit" : "handheld");
       snprintf(l[2], sizeof l[2], "id %02X%02X%02X  %s", (unsigned)(mac >> 24 & 0xFF), (unsigned)(mac >> 32 & 0xFF),
                (unsigned)(mac >> 40 & 0xFF), __DATE__);
-      snprintf(l[3], sizeof l[3], "Heltec V4  LoRa 869.5");
+      snprintf(l[3], sizeof l[3], "Heltec V4  LoRa %s", region_cfg(s.region).about);
       snprintf(l[4], sizeof l[4], "case: Chem_Kid   click");
       const char* lines[5] = {l[0], l[1], l[2], l[3], l[4]};
       ui_about(lines, 5);
@@ -535,7 +558,9 @@ void menu_run(Settings& s, uint8_t start) {
     else if (req == (uint8_t)MenuNext::PairBoards) pair_boards(s);
     // The USB console works here too: 'role h|c' picks a role and boots it.
     const Role before = s.role;
+    const Region region_before = s.region;
     serial_poll(s, true);
+    if (s.region != region_before) apply_region(s);  // 'region eu|us' typed here
     if (before == Role::Unset && s.role != Role::Unset) save_and_reboot(s, "SAVED");
     // X23: a stale tap flag opened the menu on a unit nobody is holding: boot the role after
     // 30 s, not 5 min (saved first, like the long idle exit below).

@@ -540,7 +540,7 @@ void drawLink(const UiModel& m) {
   snprintf(c, sizeof c, "%s dB", m.lora_ok ? a : "--");
   linkRow(ys[2], "MARGIN", c, m.adaptive ? "ADAPT" : "FIXED");
 
-  snprintf(c, sizeof c, "%u/%u", m.sf, (unsigned)radiocfg::BW_KHZ);
+  snprintf(c, sizeof c, "%u/%u", m.sf, (unsigned)m.bw_khz);
   snprintf(d, sizeof d, "TX %d dBm", m.tx_out_dbm);
   linkRow(ys[3], m.rescue ? "SF RSC" : "SF/BW", c, d);
 

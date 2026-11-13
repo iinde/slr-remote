@@ -302,7 +302,7 @@ L 547.2 450
     <text style="font-size: 11.88px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="96.48" transform="rotate(-0 32.4 96.48)">LoRa has six speed settings, called spreading factors (SF7 to SF12). The remote picks one by itself and shows FAST or SLOW on screen.</text>
    </g>
    <g id="text_5">
-    <text style="font-size: 11.88px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="112.8744" transform="rotate(-0 32.4 112.8744)">Slower settings reach further.</text>
+    <text style="font-size: 11.88px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="32.4" y="112.8744" transform="rotate(-0 32.4 112.8744)">Slower settings reach further. The times here are for the EU 868 setting.</text>
    </g>
    <g id="text_6">
     <text style="font-size: 8.28px; font-family: 'DIN Alternate'; text-anchor: start; fill: #868a8f" x="118.8" y="158.4" transform="rotate(-0 118.8 158.4)">SETTING</text>
@@ -419,27 +419,30 @@ L 547.2 450
     <text style="font-size: 11.16px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #0e0f11" x="577.2" y="497.52" transform="rotate(-0 577.2 497.52)">It stays legal</text>
    </g>
    <g id="text_44">
-    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="577.2" y="514.08" transform="rotate(-0 577.2 514.08)">On this band each unit may transmit for 10% of any hour (360</text>
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="577.2" y="514.08" transform="rotate(-0 577.2 514.08)">On EU 868 each unit may transmit for 10% of any hour (360</text>
    </g>
    <g id="text_45">
     <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="577.2" y="526.5" transform="rotate(-0 577.2 526.5)">seconds). The firmware counts every message, keeps count</text>
    </g>
    <g id="text_46">
-    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="577.2" y="538.92" transform="rotate(-0 577.2 538.92)">across restarts, and refuses to go over.</text>
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="577.2" y="538.92" transform="rotate(-0 577.2 538.92)">across restarts, and refuses to go over. US 915 has no hourly</text>
    </g>
    <g id="text_47">
-    <text style="font-size: 9px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #23272b" x="32.4" y="589.68" transform="rotate(-0 32.4 589.68)">SLR Remote</text>
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="577.2" y="551.34" transform="rotate(-0 577.2 551.34)">limit.</text>
    </g>
    <g id="text_48">
-    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="88.381406" y="589.68" transform="rotate(-0 88.381406 589.68)">by Aaron Phull</text>
+    <text style="font-size: 9px; font-family: 'Avenir Next Demi Bold'; text-anchor: start; fill: #23272b" x="32.4" y="589.68" transform="rotate(-0 32.4 589.68)">SLR Remote</text>
    </g>
    <g id="text_49">
-    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="831.6" y="589.68" transform="rotate(-0 831.6 589.68)">Airtime worked out from the radio settings (869.525 MHz, 125 kHz bandwidth).</text>
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: start; fill: #5b6066" x="88.381406" y="589.68" transform="rotate(-0 88.381406 589.68)">by Aaron Phull</text>
    </g>
    <g id="text_50">
-    <text style="font-size: 14.4px; font-family: 'DIN Alternate'; text-anchor: middle; fill: #eceef0" x="73.08" y="253.252266" transform="rotate(-0 73.08 253.252266)">FAST</text>
+    <text style="font-size: 9px; font-family: 'Avenir Next'; text-anchor: end; fill: #5b6066" x="831.6" y="589.68" transform="rotate(-0 831.6 589.68)">EU 868 setting: 869.525 MHz, 125 kHz bandwidth. On US 915 each message is about four times shorter.</text>
    </g>
    <g id="text_51">
+    <text style="font-size: 14.4px; font-family: 'DIN Alternate'; text-anchor: middle; fill: #eceef0" x="73.08" y="253.252266" transform="rotate(-0 73.08 253.252266)">FAST</text>
+   </g>
+   <g id="text_52">
     <text style="font-size: 14.4px; font-family: 'DIN Alternate'; text-anchor: middle; fill: #eceef0" x="73.08" y="391.492266" transform="rotate(-0 73.08 391.492266)">SLOW</text>
    </g>
   </g>

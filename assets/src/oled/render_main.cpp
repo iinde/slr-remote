@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
 
   // Splash: keep the last frame the boot animation sends.
   g_now = 0; g_name = "splash";
-  ui_splash(false, "v0.3.0");
+  ui_splash(false, "v0.4.0");
   g_name.clear();
 
   { UiModel m = handheld(); shoot("ready", m, T); }
@@ -169,13 +169,13 @@ int main(int argc, char** argv) {
 
   { UiModel m;                         // setup menu, relay handheld
     m.role = Role::Handheld; m.mode = Mode::Relay;
-    static const char* it[] = {"Role", "Mode", "Pair boards", "Shutter", "Press", "Focus wait", "AF limit",
+    static const char* it[] = {"Role", "Region", "Mode", "Pair boards", "Shutter", "Press", "Focus wait", "AF limit",
                                "Modes shown", "Wake press", "SF", "Antenna", "GPS", "Reset taps",
                                "Aux button", "LED", "Tally LED", "About", "Factory reset", "Exit"};
-    static const char* va[] = {"Handheld", "Relay", "Paired", "PRG", "A", "500 ms", "4 s", "Basic", "Act",
-                               "Auto", "3 dBi", "Off", "On", "Off", "Bright", "Off", "SLR 0.3.0", nullptr, nullptr};
-    m.menu.active = true; m.menu.title = "SETUP 0.3.0"; m.menu.n = 19; m.menu.sel = 4;
-    for (int i = 0; i < 19; i++) { m.menu.items[i] = it[i]; m.menu.values[i] = va[i]; }
+    static const char* va[] = {"Handheld", "EU 868", "Relay", "Paired", "PRG", "A", "500 ms", "4 s", "Basic", "Act",
+                               "Auto", "3 dBi", "Off", "On", "Off", "Bright", "Off", "SLR 0.4.0", nullptr, nullptr};
+    m.menu.active = true; m.menu.title = "SETUP 0.4.0"; m.menu.n = 20; m.menu.sel = 1;
+    for (int i = 0; i < 20; i++) { m.menu.items[i] = it[i]; m.menu.values[i] = va[i]; }
     shoot("menu", m, T); }
 
   { UiModel m;                         // camera unit status page
