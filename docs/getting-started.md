@@ -50,8 +50,8 @@ If you have ever fitted a battery grip and updated a lens's firmware, you can bu
 
 3. Fit an antenna to each board. Click the antenna lead onto the board's small LoRa socket, then screw the antenna onto the lead's SMA end. Do this before a board is ever powered: a radio transmitting with no antenna can damage itself.
 
-4. Flash both boards. One firmware goes on both. Do it with the bare boards on the desk, where you can reach the buttons and see the screens.
-   Detail: [flashing-and-pairing.md](flashing-and-pairing.md#2-build-and-flash)
+4. Flash both boards. One firmware goes on both. Do it with the bare boards on the desk, where you can reach the buttons and see the screens. The easiest way is the ready-made file from the [latest release](https://github.com/iinde/slr-remote/releases/latest), flashed from Chrome or Edge with nothing to install.
+   Detail: [flashing-and-pairing.md](flashing-and-pairing.md#the-quick-way-flash-from-your-browser)
 
 5. Choose each board's role and region. One becomes the handheld (in relay mode), the other the camera unit. Then set `Region` on both to `EU 868` or `US 915`, the same on each. The radio stays silent until you have.
    Detail: [flashing-and-pairing.md](flashing-and-pairing.md#3-choose-each-boards-role-and-region)

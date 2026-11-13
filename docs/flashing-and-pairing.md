@@ -36,6 +36,32 @@ Each board has two small push buttons: `PRG` and `RST`. All of setup is done wit
 
 The setup menu has the title `SETUP 0.4.0` and shows your position as `n/N`.
 
+## The quick way: flash from your browser
+
+No tools to install. You need Chrome or Edge on a computer (Safari and Firefox cannot talk to USB boards).
+
+1. Download `slr-remote-0.4.0-full.bin` from the [latest release](https://github.com/iinde/slr-remote/releases/latest).
+2. Plug in **one** board and open Espressif's web flasher: [espressif.github.io/esptool-js](https://espressif.github.io/esptool-js/).
+3. Click **Connect** and pick the board's port from the list. If nothing shows up, put the board into its bootloader: hold `PRG`, tap `RST`, release `PRG`, then try again.
+4. Under **Program**, set the Flash Address to `0x0` and choose `slr-remote-0.4.0-full.bin`.
+5. Click **Program** and wait for it to finish, then tap `RST`. The board starts in the setup menu, titled `SETUP 0.4.0`.
+6. Unplug it and do the same for the second board.
+
+Then carry on from [step 3](#3-choose-each-boards-role-and-region). Steps 1 and 2 below are the other way in, building the firmware yourself from source, which is what you want if you plan to change anything.
+
+Two files come with each release:
+
+| File | Address | Use it for |
+|---|---|---|
+| `slr-remote-0.4.0-full.bin` | `0x0` | A new board. It writes everything, and clears any settings and pairings already on the board. |
+| `slr-remote-0.4.0-update.bin` | `0x10000` | Updating a board that already runs SLR Remote. It keeps the role, region, settings and pairings. |
+
+If you prefer the command line, the same thing with esptool is:
+
+```sh
+esptool.py --chip esp32s3 write_flash 0x0 slr-remote-0.4.0-full.bin
+```
+
 ## 1. Install PlatformIO
 
 PlatformIO is the build tool. It downloads the compiler and the libraries the firmware needs by itself.
@@ -350,7 +376,7 @@ After a factory reset on either board, pair the two boards again. After one on t
 
 ### Updating the firmware later
 
-Flash **both** boards with the new build, using the same upload command as in step 2. Settings and pairings are kept in a separate part of the board's storage. If a pair ever acts oddly after an update, a factory reset on both and a fresh pairing puts everything back to a clean start.
+Flash **both** boards with the new build, using the same upload command as in step 2, or from the browser with the release's `update.bin` file at address `0x10000` (see [the quick way](#the-quick-way-flash-from-your-browser)). Settings and pairings are kept in a separate part of the board's storage. If a pair ever acts oddly after an update, a factory reset on both and a fresh pairing puts everything back to a clean start.
 
 ## Console quick reference
 

@@ -38,7 +38,7 @@ The design is adapted from the "Meshtastic Heltec V4 Miniworks case" by Chem_Kid
 
 ### Which files
 
-The ready-to-print plates are in [`case/final/miniworks_refined/print/`](../case/final/miniworks_refined/print/). Print these three:
+The ready-to-print plates are in [`case/final/miniworks_refined/print/`](../case/final/miniworks_refined/print/), and all of them come in one zip, `slr-remote-case-print-files.zip`, on the [latest release](https://github.com/iinde/slr-remote/releases/latest). Print these three:
 
 | Plate file | What is on it | Slicer estimate |
 |---|---|---|

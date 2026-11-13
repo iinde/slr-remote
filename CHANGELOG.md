@@ -26,6 +26,7 @@ The one that crosses the Atlantic. The remote now has a `Region` setting, so a b
 - The console gains `region eu` and `region us`, and `get region`.
 - Everything that depends on the radio settings now follows the active region: airtime sums, link timing, the interval planner and the figures on screen.
 - More automated unit tests, covering the region table, the power cap for each region and airtime on the wider US channel.
+- Ready-made firmware files on the release page, so you can flash a board from Chrome or Edge without installing anything.
 
 ## 0.3.0 (November 2026)
 

@@ -114,6 +114,16 @@ Every gesture and every screen word is explained in [docs/user-guide.md](docs/us
 3. Flash the same firmware onto both boards, choose which is the handheld, set your region, and pair them with each other and the camera. See [docs/flashing-and-pairing.md](docs/flashing-and-pairing.md).
 4. Go and shoot. Keep [docs/user-guide.md](docs/user-guide.md) open the first time out.
 
+### Downloads
+
+Everything you need is on the [latest release](https://github.com/iinde/slr-remote/releases/latest):
+
+- `slr-remote-0.4.0-full.bin`, the firmware ready to flash, straight from your browser with no tools to install. How: [docs/flashing-and-pairing.md](docs/flashing-and-pairing.md#the-quick-way-flash-from-your-browser).
+- `slr-remote-0.4.0-update.bin`, for updating boards that already run SLR Remote, keeping their settings and pairings.
+- `slr-remote-case-print-files.zip`, every case part as an STL plus ready-made print plates for Bambu Studio and other 3MF slicers. No supports needed.
+
+The same print files are in [case/final/miniworks_refined/print/](case/final/miniworks_refined/print/) if you would rather grab them one at a time.
+
 New to all of this? Start at [docs/getting-started.md](docs/getting-started.md). If something will not behave, try [docs/troubleshooting.md](docs/troubleshooting.md) and the [FAQ](docs/faq.md). Read [docs/safety-and-legal.md](docs/safety-and-legal.md) before you transmit, and always fit the antenna before you switch on.
 
 Building in the United States? It is the same board and the same firmware. Buy 915 MHz antennas and set `Region` to `US 915` on both boards. The `US 915` setting is built to the US rules but has not been tested on air yet: I am in the UK and cannot legally transmit on 915 MHz here. If you build one in the States, tell me how it goes.
